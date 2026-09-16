@@ -1,0 +1,428 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "contact": "Contact",
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "cars": "Vehicles",
+    "messages": "Messages",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "badge": "Family garage since 1980",
+      "title": "Your next vehicle <span>is waiting</span>",
+      "description": "Wide selection of new and used vehicles, inspected and guaranteed. Trade-in, financing and home delivery.",
+      "ctaCatalog": "View catalog",
+      "ctaContact": "Contact us"
+    },
+    "featured": {
+      "title": "Our featured vehicles",
+      "subtitle": "Hand-picked for you, available immediately",
+      "viewAll": "View all catalog"
+    },
+    "services": {
+      "title": "Our services",
+      "subtitle": "Everything to simplify your purchase and vehicle maintenance",
+      "items": {
+        "delivery": { "title": "Home delivery", "desc": "We deliver your vehicle anywhere in mainland France." },
+        "warranty": { "title": "12-month warranty", "desc": "All our used vehicles come with a minimum 12-month warranty." },
+        "maintenance": { "title": "Maintenance & Repair", "desc": "Our workshop handles your car's maintenance and repairs." },
+        "financing": { "title": "Custom financing", "desc": "Financing solutions tailored to your budget, with or without down payment." },
+        "tradein": { "title": "Trade-in your old vehicle", "desc": "Free valuation and cash trade-in of your current vehicle." },
+        "admin": { "title": "Administrative paperwork", "desc": "We handle registration and all formalities for you." }
+      }
+    },
+    "cta": {
+      "title": "Ready to find your vehicle?",
+      "description": "Contact us for a test drive, trade-in or just for advice.",
+      "contact": "Contact us",
+      "catalog": "Browse catalog"
+    },
+    "garage": {
+      "about": "We are a family garage passionate about automobiles since 1980.",
+      "address": "Address",
+      "hours": "Hours",
+      "phone": "Phone",
+      "email": "Email",
+      "map": "View on Google Maps",
+      "contactTitle": "Contact us",
+      "contactDesc": "A question? A project? We'll reply within 24h."
+    }
+  },
+  "catalog": {
+    "title": "Our catalog",
+    "filters": "Filters",
+    "clear": "Clear",
+    "reset": "Reset filters",
+    "noFilters": "No active filters",
+    "results": "{count} vehicle{count, plural, one {} other {s}} available",
+    "brand": "Brand",
+    "model": "Model",
+    "bodyType": "Body type",
+    "fuel": "Fuel",
+    "gearbox": "Gearbox",
+    "price": "Price (€)",
+    "year": "Year",
+    "mileage": "Mileage",
+    "min": "Min",
+    "max": "Max",
+    "newOnly": "New vehicles only",
+    "featuredOnly": "Featured only",
+    "allBrands": "All brands",
+    "allModels": "All models",
+    "allTypes": "All types",
+    "allFuels": "All fuels",
+    "allGearboxes": "All",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {current} of {total}",
+    "noResults": "No vehicles match your criteria.",
+    "clearFilters": "Reset filters",
+    "bodyTypes": {
+      "sedan": "Sedan",
+      "suv": "SUV",
+      "wagon": "Wagon",
+      "city": "City car",
+      "coupe": "Coupe",
+      "convertible": "Convertible",
+      "utility": "Utility",
+      "minivan": "Minivan"
+    },
+    "fuels": {
+      "gasoline": "Gasoline",
+      "diesel": "Diesel",
+      "hybrid": "Hybrid",
+      "electric": "Electric",
+      "lpg": "LPG",
+      "e85": "E85"
+    },
+    "gearboxes": {
+      "manual": "Manual",
+      "automatic": "Automatic",
+      "sequential": "Sequential"
+    }
+  },
+  "car": {
+    "new": "New",
+    "featured": "Featured",
+    "specs": "Technical specifications",
+    "description": "Description",
+    "features": "Equipment & Options",
+    "year": "Year",
+    "mileage": "Mileage",
+    "fuel": "Fuel",
+    "gearbox": "Gearbox",
+    "color": "Color",
+    "bodyType": "Body type",
+    "price": "Price",
+    "contactTitle": "Contact us about this vehicle",
+    "includedServices": "Included services",
+    "services": {
+      "warranty": "12-month minimum warranty",
+      "inspected": "Inspected and checked vehicle",
+      "admin": "Free administrative paperwork",
+      "delivery": "Home delivery available",
+      "tradein": "Trade-in your old vehicle",
+      "financing": "Financing solutions"
+    },
+    "viewDetails": "View details"
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "A question about a vehicle? Need financing? Want a test drive? Our team replies within 24h.",
+    "form": {
+      "title": "Send us a message",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "success": "Message sent",
+      "successDesc": "We'll get back to you shortly.",
+      "error": "Error",
+      "errorDesc": "Failed to send message",
+      "required": "Fields marked with * are required.",
+      "placeholders": {
+        "name": "John Doe",
+        "email": "john.doe@email.com",
+        "phone": "555-123-4567",
+        "message": "Describe your request..."
+      },
+      "subjects": {
+        "info": "Information request",
+        "testDrive": "Test drive request",
+        "financing": "Financing / Trade-in",
+        "other": "Other"
+      }
+    },
+    "info": {
+      "title": "Practical information",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Opening hours",
+      "directions": "Directions",
+      "quickCall": "Need a quick answer?",
+      "quickCallDesc": "Call us directly during opening hours, we'll be happy to help.",
+      "callNow": "Call now"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "subtitle": "Access the management dashboard",
+      "email": "Email",
+      "password": "Password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "success": "Login successful",
+      "successDesc": "Redirecting to dashboard...",
+      "back": "Back to public site"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of garage activity",
+      "kpis": {
+        "totalCars": "Total vehicles",
+        "newCars": "New vehicles",
+        "unreadMessages": "Unread messages",
+        "featuredCars": "Featured"
+      },
+      "recentCars": "Recently added vehicles",
+      "recentMessages": "Recent messages",
+      "viewAll": "View all",
+      "quickActions": "Quick actions",
+      "actions": {
+        "addCar": { "title": "Add vehicle", "desc": "New in catalog" },
+        "manageCars": { "title": "Manage vehicles", "desc": "List, edit, delete" },
+        "messages": { "title": "Client messages", "desc": "{count} unread" },
+        "settings": { "title": "Settings", "desc": "Garage, users" }
+      },
+      "status": {
+        "new": "New",
+        "read": "Read",
+        "replied": "Replied"
+      }
+    },
+    "cars": {
+      "title": "Vehicle management",
+      "addNew": "New vehicle",
+      "search": "Search brand, model...",
+      "filters": "Filters",
+      "clearFilters": "Clear filters",
+      "brand": "Brand",
+      "allBrands": "All brands",
+      "condition": "New / Used",
+      "allConditions": "All",
+      "new": "New",
+      "used": "Used",
+      "featured": "Featured",
+      "allFeatured": "All",
+      "featuredYes": "Featured",
+      "featuredNo": "Not featured",
+      "availability": "Availability",
+      "allAvailability": "All",
+      "available": "Available",
+      "sold": "Sold/Removed",
+      "table": {
+        "image": "Image",
+        "vehicle": "Vehicle",
+        "year": "Year",
+        "mileage": "Mileage",
+        "price": "Price",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "statuses": {
+        "new": "New",
+        "featured": "Featured",
+        "sold": "Sold",
+        "available": "Available"
+      },
+      "actions": {
+        "view": "View details",
+        "edit": "Edit",
+        "images": "Images",
+        "delete": "Delete"
+      },
+      "noCars": "No vehicles yet",
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "page": "Page {current} of {total}"
+      }
+    },
+    "carForm": {
+      "title": "New vehicle",
+      "editTitle": "Edit vehicle",
+      "subtitle": "Fill in vehicle information",
+      "mainInfo": "Main information",
+      "brand": "Brand",
+      "model": "Model",
+      "year": "Year",
+      "mileage": "Mileage",
+      "price": "Price",
+      "currency": "Currency",
+      "color": "Color",
+      "gearbox": "Gearbox",
+      "fuel": "Fuel",
+      "condition": "Condition",
+      "description": "Description & Equipment",
+      "descriptionLabel": "Description",
+      "features": "Equipment & Options (JSON)",
+      "featuresHelp": "JSON format. Key = equipment name, value = true/false or text.",
+      "statuses": "Status",
+      "isNew": "New vehicle",
+      "isFeatured": "Feature on homepage",
+      "isAvailable": "Available for sale",
+      "cancel": "Cancel",
+      "save": "Create",
+      "update": "Update",
+      "saving": "Saving...",
+      "selectBrand": "Select a brand",
+      "selectModel": "Select a model",
+      "selectGearbox": "Select",
+      "selectFuel": "Select",
+      "selectCondition": "Select",
+      "conditions": {
+        "excellent": "Excellent",
+        "veryGood": "Very good",
+        "good": "Good",
+        "fair": "Fair",
+        "restore": "To restore"
+      }
+    },
+    "carImages": {
+      "title": "Image management",
+      "subtitle": "Drag and drop to reorder. First image = primary image.",
+      "uploadTitle": "Add images",
+      "dragDrop": "Drag and drop images here",
+      "orClick": "or click to select",
+      "formats": "PNG, JPG, WebP - Max 5MB per image",
+      "uploading": "Uploading...",
+      "noImages": "No images for this vehicle",
+      "addFirst": "Add first image above",
+      "primary": "Primary",
+      "deleteConfirm": "Delete this image?",
+      "reorderHint": "Drag to reorder"
+    },
+    "messages": {
+      "title": "Client messages",
+      "search": "Search name, email...",
+      "status": "Status",
+      "allStatus": "All statuses",
+      "statusNew": "New",
+      "statusRead": "Read",
+      "statusReplied": "Replied",
+      "clearFilters": "Clear filters",
+      "table": {
+        "id": "#",
+        "client": "Client",
+        "contact": "Contact",
+        "vehicle": "Vehicle",
+        "message": "Message",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "noVehicle": "No vehicle",
+      "actions": {
+        "markRead": "Mark as read",
+        "markReplied": "Mark as replied",
+        "delete": "Delete"
+      },
+      "deleteConfirm": "Delete this message?",
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "page": "Page {current} of {total}"
+      }
+    },
+    "settings": {
+      "title": "Garage settings",
+      "subtitle": "Configure your garage's public information",
+      "info": "Garage information",
+      "name": "Garage name",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Contact email",
+      "mapsUrl": "Google Maps link",
+      "hours": "Opening hours",
+      "hoursHelp": "One line per day or time range",
+      "about": "About the garage",
+      "logoUrl": "Logo URL",
+      "logoHelp": "Publicly accessible URL (Supabase Storage, CDN, etc.)",
+      "save": "Save changes",
+      "storage": "Image storage",
+      "bucketInfo": "Supabase Storage bucket: car-images",
+      "bucketDetails": [
+        "Images uploaded to car-images/{{car_id}}/",
+        "Public URLs generated automatically",
+        "RLS policies: public read, authenticated write"
+      ],
+      "rlsTitle": "Recommended RLS policies",
+      "users": "Admin users",
+      "usersDesc": "Authentication handled by Supabase Auth. To add an admin:",
+      "usersSteps": [
+        "Go to Supabase Dashboard → Authentication → Users",
+        "Click \"Invite user\" or create account",
+        "User can then login at /login",
+        "All authenticated users have admin access (RLS: auth.uid() is not null)"
+      ],
+      "restrictNote": "To restrict: modify RLS policies with auth.jwt() ->> 'email'"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Page not found",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "create": "Create",
+    "update": "Update",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "page": "Page",
+    "of": "of",
+    "items": "items",
+    "item": "item",
+    "total": "Total",
+    "none": "None",
+    "select": "Select",
+    "optional": "Optional",
+    "required": "Required",
+    "available": "Available",
+    "vehicles": "vehicles",
+    "viewAll": "View all",
+    "noData": "No data",
+    "upToDate": "Up to date",
+    "needResponse": "Need response",
+    "featuredOnHome": "Featured on homepage"
+  },
+  "admin": {
+    "dashboard": {
+      "status": {
+        "featured": "Featured"
+      }
+    }
+  }
+}

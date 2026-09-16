@@ -1,0 +1,428 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "catalog": "Catalogue",
+    "contact": "Contact",
+    "login": "Connexion",
+    "dashboard": "Tableau de bord",
+    "cars": "Véhicules",
+    "messages": "Messages",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "home": {
+    "hero": {
+      "badge": "Garage familial depuis 1980",
+      "title": "Votre prochain véhicule <span>vous attend</span>",
+      "description": "Large choix de véhicules neufs et d'occasion, révisés et garantis. Reprise, financement et livraison à domicile.",
+      "ctaCatalog": "Voir le catalogue",
+      "ctaContact": "Nous contacter"
+    },
+    "featured": {
+      "title": "Nos véhicules vedettes",
+      "subtitle": "Sélectionnés pour vous, disponibles immédiatement",
+      "viewAll": "Voir tout le catalogue"
+    },
+    "services": {
+      "title": "Nos services",
+      "subtitle": "Tout pour simplifier votre achat et l'entretien de votre véhicule",
+      "items": {
+        "delivery": { "title": "Livraison à domicile", "desc": "Nous livrons votre véhicule partout en France métropolitaine." },
+        "warranty": { "title": "Garantie 12 mois", "desc": "Tous nos véhicules d'occasion sont garantis 12 mois minimum." },
+        "maintenance": { "title": "Entretien & Réparation", "desc": "Notre atelier assure l'entretien et la réparation de votre voiture." },
+        "financing": { "title": "Financement sur mesure", "desc": "Solutions de financement adaptées à votre budget, avec ou sans apport." },
+        "tradein": { "title": "Reprise de votre ancien véhicule", "desc": "Estimation gratuite et reprise cash de votre véhicule actuel." },
+        "admin": { "title": "Démarches administratives", "desc": "Nous gérons l'immatriculation et toutes les formalités pour vous." }
+      }
+    },
+    "cta": {
+      "title": "Prêt à trouver votre véhicule ?",
+      "description": "Contactez-nous pour un essai, une reprise ou simplement pour un conseil.",
+      "contact": "Nous contacter",
+      "catalog": "Parcourir le catalogue"
+    },
+    "garage": {
+      "about": "Nous sommes un garage familial passionné par les automobiles depuis 1980.",
+      "address": "Adresse",
+      "hours": "Horaires",
+      "phone": "Téléphone",
+      "email": "Email",
+      "map": "Voir sur Google Maps",
+      "contactTitle": "Nous contacter",
+      "contactDesc": "Une question ? Un projet ? Nous vous répondrons sous 24h."
+    }
+  },
+  "catalog": {
+    "title": "Notre catalogue",
+    "filters": "Filtres",
+    "clear": "Effacer",
+    "reset": "Réinitialiser les filtres",
+    "noFilters": "Aucun filtre actif",
+    "results": "{count} véhicule{count, plural, one {} other {s}} disponible{count, plural, one {} other {s}}",
+    "brand": "Marque",
+    "model": "Modèle",
+    "bodyType": "Type de carrosserie",
+    "fuel": "Carburant",
+    "gearbox": "Boîte de vitesses",
+    "price": "Prix (€)",
+    "year": "Année",
+    "mileage": "Kilométrage",
+    "min": "Min",
+    "max": "Max",
+    "newOnly": "Véhicules neufs uniquement",
+    "featuredOnly": "Vedettes uniquement",
+    "allBrands": "Toutes les marques",
+    "allModels": "Tous les modèles",
+    "allTypes": "Tous types",
+    "allFuels": "Tous carburants",
+    "allGearboxes": "Toutes",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "page": "Page {current} sur {total}",
+    "noResults": "Aucun véhicule ne correspond à vos critères.",
+    "clearFilters": "Réinitialiser les filtres",
+    "bodyTypes": {
+      "sedan": "Berline",
+      "suv": "SUV",
+      "wagon": "Break",
+      "city": "Citadine",
+      "coupe": "Coupé",
+      "convertible": "Cabriolet",
+      "utility": "Utilitaire",
+      "minivan": "Monospace"
+    },
+    "fuels": {
+      "gasoline": "Essence",
+      "diesel": "Diesel",
+      "hybrid": "Hybride",
+      "electric": "Électrique",
+      "lpg": "GPL",
+      "e85": "E85"
+    },
+    "gearboxes": {
+      "manual": "Manuelle",
+      "automatic": "Automatique",
+      "sequential": "Séquentielle"
+    }
+  },
+  "car": {
+    "new": "Neuf",
+    "featured": "Vedette",
+    "specs": "Caractéristiques techniques",
+    "description": "Description",
+    "features": "Équipements & Options",
+    "year": "Année",
+    "mileage": "Kilométrage",
+    "fuel": "Carburant",
+    "gearbox": "Boîte",
+    "color": "Couleur",
+    "bodyType": "Carrosserie",
+    "price": "Prix",
+    "contactTitle": "Contactez-nous pour ce véhicule",
+    "includedServices": "Services inclus",
+    "services": {
+      "warranty": "Garantie 12 mois minimum",
+      "inspected": "Véhicule révisé et contrôlé",
+      "admin": "Démarches administratives offertes",
+      "delivery": "Livraison possible à domicile",
+      "tradein": "Reprise de votre ancien véhicule",
+      "financing": "Solutions de financement"
+    },
+    "viewDetails": "Voir les détails"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question sur un véhicule ? Besoin d'un financement ? Envie d'essayer une voiture ? Notre équipe vous répond sous 24h.",
+    "form": {
+      "title": "Envoyez-nous un message",
+      "name": "Nom complet",
+      "email": "Email",
+      "phone": "Téléphone",
+      "subject": "Sujet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "success": "Message envoyé",
+      "successDesc": "Nous vous répondrons dans les plus brefs délais.",
+      "error": "Erreur",
+      "errorDesc": "Impossible d'envoyer le message",
+      "required": "Les champs marqués d'un * sont obligatoires.",
+      "placeholders": {
+        "name": "Jean Dupont",
+        "email": "jean.dupont@email.fr",
+        "phone": "06 12 34 56 78",
+        "message": "Décrivez votre demande..."
+      },
+      "subjects": {
+        "info": "Demande d'information",
+        "testDrive": "Demande d'essai",
+        "financing": "Financement / Reprise",
+        "other": "Autre"
+      }
+    },
+    "info": {
+      "title": "Informations pratiques",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "hours": "Horaires d'ouverture",
+      "directions": "Itinéraire",
+      "quickCall": "Besoin d'une réponse rapide ?",
+      "quickCallDesc": "Appelez-nous directement aux horaires d'ouverture, nous serons ravis de vous renseigner.",
+      "callNow": "Appeler maintenant"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Connexion Admin",
+      "subtitle": "Accédez au tableau de bord de gestion",
+      "email": "Email",
+      "password": "Mot de passe",
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion...",
+      "success": "Connexion réussie",
+      "successDesc": "Redirection vers le tableau de bord...",
+      "back": "Retour au site public"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "subtitle": "Vue d'ensemble de l'activité du garage",
+      "kpis": {
+        "totalCars": "Véhicules totaux",
+        "newCars": "Véhicules neufs",
+        "unreadMessages": "Messages non lus",
+        "featuredCars": "Védettes"
+      },
+      "recentCars": "Derniers véhicules ajoutés",
+      "recentMessages": "Derniers messages",
+      "viewAll": "Voir tout",
+      "quickActions": "Actions rapides",
+      "actions": {
+        "addCar": { "title": "Ajouter un véhicule", "desc": "Nouveau dans le catalogue" },
+        "manageCars": { "title": "Gérer les véhicules", "desc": "Liste, modifier, supprimer" },
+        "messages": { "title": "Messages clients", "desc": "{count} non lus" },
+        "settings": { "title": "Paramètres", "desc": "Garage, utilisateurs" }
+      },
+      "status": {
+        "new": "Nouveau",
+        "read": "Lu",
+        "replied": "Répondu"
+      }
+    },
+    "cars": {
+      "title": "Gestion des véhicules",
+      "addNew": "Nouveau véhicule",
+      "search": "Rechercher marque, modèle...",
+      "filters": "Filtres",
+      "clearFilters": "Effacer les filtres",
+      "brand": "Marque",
+      "allBrands": "Toutes les marques",
+      "condition": "Neuf / Occasion",
+      "allConditions": "Tous",
+      "new": "Neufs",
+      "used": "Occasion",
+      "featured": "Vedettes",
+      "allFeatured": "Toutes",
+      "featuredYes": "Vedettes",
+      "featuredNo": "Non vedettes",
+      "availability": "Disponibilité",
+      "allAvailability": "Toutes",
+      "available": "Disponibles",
+      "sold": "Vendus/Retirés",
+      "table": {
+        "image": "Image",
+        "vehicle": "Véhicule",
+        "year": "Année",
+        "mileage": "Kilométrage",
+        "price": "Prix",
+        "status": "Statuts",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "statuses": {
+        "new": "Neuf",
+        "featured": "Vedette",
+        "sold": "Vendu",
+        "available": "Disponible"
+      },
+      "actions": {
+        "view": "Voir détails",
+        "edit": "Modifier",
+        "images": "Images",
+        "delete": "Supprimer"
+      },
+      "noCars": "Aucun véhicule pour le moment",
+      "pagination": {
+        "prev": "Précédent",
+        "next": "Suivant",
+        "page": "Page {current} sur {total}"
+      }
+    },
+    "carForm": {
+      "title": "Nouveau véhicule",
+      "editTitle": "Modifier le véhicule",
+      "subtitle": "Remplissez les informations du véhicule",
+      "mainInfo": "Informations principales",
+      "brand": "Marque",
+      "model": "Modèle",
+      "year": "Année",
+      "mileage": "Kilométrage",
+      "price": "Prix",
+      "currency": "Devise",
+      "color": "Couleur",
+      "gearbox": "Boîte de vitesses",
+      "fuel": "Carburant",
+      "condition": "État",
+      "description": "Description & Équipements",
+      "descriptionLabel": "Description",
+      "features": "Équipements & Options (JSON)",
+      "featuresHelp": "Format JSON. Clé = nom de l'équipement, valeur = true/false ou texte.",
+      "statuses": "Statuts",
+      "isNew": "Véhicule neuf",
+      "isFeatured": "Mettre en vedette (page d'accueil)",
+      "isAvailable": "Disponible à la vente",
+      "cancel": "Annuler",
+      "save": "Créer",
+      "update": "Mettre à jour",
+      "saving": "Sauvegarde...",
+      "selectBrand": "Sélectionner une marque",
+      "selectModel": "Sélectionner un modèle",
+      "selectGearbox": "Sélectionner",
+      "selectFuel": "Sélectionner",
+      "selectCondition": "Sélectionner",
+      "conditions": {
+        "excellent": "Excellent",
+        "veryGood": "Très bon",
+        "good": "Bon",
+        "fair": "Correct",
+        "restore": "À restaurer"
+      }
+    },
+    "carImages": {
+      "title": "Gestion des images",
+      "subtitle": "Glissez-déposez pour réorganiser. La première image = image principale.",
+      "uploadTitle": "Ajouter des images",
+      "dragDrop": "Glissez-déposez vos images ici",
+      "orClick": "ou cliquez pour sélectionner",
+      "formats": "PNG, JPG, WebP - Max 5MB par image",
+      "uploading": "Upload en cours...",
+      "noImages": "Aucune image pour ce véhicule",
+      "addFirst": "Ajoutez la première image ci-dessus",
+      "primary": "Principale",
+      "deleteConfirm": "Supprimer cette image ?",
+      "reorderHint": "Glissez pour réorganiser"
+    },
+    "messages": {
+      "title": "Messages clients",
+      "search": "Rechercher nom, email...",
+      "status": "Statut",
+      "allStatus": "Tous les statuts",
+      "statusNew": "Nouveaux",
+      "statusRead": "Lus",
+      "statusReplied": "Répondus",
+      "clearFilters": "Effacer les filtres",
+      "table": {
+        "id": "#",
+        "client": "Client",
+        "contact": "Contact",
+        "vehicle": "Véhicule concerné",
+        "message": "Message",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "noVehicle": "Aucun véhicule",
+      "actions": {
+        "markRead": "Marquer comme lu",
+        "markReplied": "Marquer comme répondu",
+        "delete": "Supprimer"
+      },
+      "deleteConfirm": "Supprimer ce message ?",
+      "pagination": {
+        "prev": "Précédent",
+        "next": "Suivant",
+        "page": "Page {current} sur {total}"
+      }
+    },
+    "settings": {
+      "title": "Paramètres du garage",
+      "subtitle": "Configurez les informations publiques de votre garage",
+      "info": "Informations du garage",
+      "name": "Nom du garage",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email de contact",
+      "mapsUrl": "Lien Google Maps",
+      "hours": "Horaires d'ouverture",
+      "hoursHelp": "Une ligne par jour ou plage horaire",
+      "about": "Présentation du garage",
+      "logoUrl": "URL du logo",
+      "logoHelp": "URL accessible publiquement (Supabase Storage, CDN, etc.)",
+      "save": "Enregistrer les modifications",
+      "storage": "Stockage images",
+      "bucketInfo": "Bucket Supabase Storage : car-images",
+      "bucketDetails": [
+        "Les images sont uploadées dans car-images/{{car_id}}/",
+        "URLs publiques générées automatiquement",
+        "Politiques RLS : lecture publique, écriture authentifiée"
+      ],
+      "rlsTitle": "Politiques RLS recommandées",
+      "users": "Utilisateurs administrateurs",
+      "usersDesc": "L'authentification est gérée par Supabase Auth. Pour ajouter un admin :",
+      "usersSteps": [
+        "Aller dans Supabase Dashboard → Authentication → Users",
+        "Cliquer \"Invite user\" ou créer un compte",
+        "L'utilisateur pourra se connecter sur /login",
+        "Tous les utilisateurs authentifiés ont accès admin (RLS: auth.uid() is not null)"
+      ],
+      "restrictNote": "Pour restreindre : modifier les politiques RLS avec auth.jwt() ->> 'email'"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "notFound": "Page introuvable",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "create": "Créer",
+    "update": "Mettre à jour",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "clear": "Effacer",
+    "yes": "Oui",
+    "no": "Non",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "page": "Page",
+    "of": "sur",
+    "items": "éléments",
+    "item": "élément",
+    "total": "Total",
+    "none": "Aucun",
+    "select": "Sélectionner",
+    "optional": "Optionnel",
+    "required": "Requis",
+    "available": "Disponibles",
+    "vehicles": "véhicules",
+    "viewAll": "Voir tout",
+    "noData": "Aucune donnée",
+    "upToDate": "À jour",
+    "needResponse": "Nécessitent une réponse",
+    "featuredOnHome": "Mises en avant sur l'accueil"
+  },
+  "admin": {
+    "dashboard": {
+      "status": {
+        "featured": "En vedette"
+      }
+    }
+  }
+}

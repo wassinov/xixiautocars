@@ -1,0 +1,428 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "catalog": "الكتالوج",
+    "contact": "اتصل بنا",
+    "login": "تسجيل الدخول",
+    "dashboard": "لوحة التحكم",
+    "cars": "المركبات",
+    "messages": "الرسائل",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "home": {
+    "hero": {
+      "badge": "كراج عائلي منذ 1980",
+      "title": "مركبتك القادمة <span>في انتظارك</span>",
+      "description": "تشكيلة واسعة من المركبات الجديدة والمستعملة، مفحوصة ومضمونة. استبدال، تمويل وتوصيل للمنزل.",
+      "ctaCatalog": "عرض الكتالوج",
+      "ctaContact": "اتصل بنا"
+    },
+    "featured": {
+      "title": "مركباتنا المميزة",
+      "subtitle": "مختارة لك، متاحة فوراً",
+      "viewAll": "عرض كل الكتالوج"
+    },
+    "services": {
+      "title": "خدماتنا",
+      "subtitle": "كل شيء لتبسيط شراء وصيانة مركبتك",
+      "items": {
+        "delivery": { "title": "التوصيل للمنزل", "desc": "نوصل مركبتك إلى أي مكان في فرنسا." },
+        "warranty": { "title": "ضمان 12 شهراً", "desc": "جميع مركباتنا المستعملة مضمونة لمدة 12 شهراً على الأقل." },
+        "maintenance": { "title": "الصيانة والإصلاح", "desc": "ورشتنا تهتم بصيانة وإصلاح سيارتك." },
+        "financing": { "title": "تمويل مخصص", "desc": "حلول تمويل تناسب ميزانيتك، مع أو بدون دفعة مقدمة." },
+        "tradein": { "title": "استبدال مركبتك القديمة", "desc": "تقييم مجاني واستبدال نقدي لمركبتك الحالية." },
+        "admin": { "title": "الإجراءات الإدارية", "desc": "نتولى التسجيل وجميع الإجراءات نيابة عنك." }
+      }
+    },
+    "cta": {
+      "title": "مستعد لإيجاد مركبتك؟",
+      "description": "تواصل معنا لتجربة قيادة، استبدال أو مجرد استشارة.",
+      "contact": "اتصل بنا",
+      "catalog": "تصفح الكتالوج"
+    },
+    "garage": {
+      "about": "نحن كراج عائلي شغوف بالسيارات منذ 1980.",
+      "address": "العنوان",
+      "hours": "ساعات العمل",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "map": "عرض على خرائط جوجل",
+      "contactTitle": "اتصل بنا",
+      "contactDesc": "سؤال؟ مشروع؟ سنرد عليك خلال 24 ساعة."
+    }
+  },
+  "catalog": {
+    "title": "كتالوجنا",
+    "filters": "المرشحات",
+    "clear": "مسح",
+    "reset": "إعادة تعيين المرشحات",
+    "noFilters": "لا توجد مرشحات نشطة",
+    "results": "{count} مركبة متاحة",
+    "brand": "الماركة",
+    "model": "الموديل",
+    "bodyType": "نوع الهيكل",
+    "fuel": "الوقود",
+    "gearbox": "علبة التروس",
+    "price": "السعر (€)",
+    "year": "السنة",
+    "mileage": "الكيلومترات",
+    "min": "الأدنى",
+    "max": "الأقصى",
+    "newOnly": "المركبات الجديدة فقط",
+    "featuredOnly": "المميزة فقط",
+    "allBrands": "جميع الماركات",
+    "allModels": "جميع الموديلات",
+    "allTypes": "جميع الأنواع",
+    "allFuels": "جميع أنواع الوقود",
+    "allGearboxes": "الكل",
+    "prev": "السابق",
+    "next": "التالي",
+    "page": "صفحة {current} من {total}",
+    "noResults": "لا توجد مركبات تطابق معاييرك.",
+    "clearFilters": "إعادة تعيين المرشحات",
+    "bodyTypes": {
+      "sedan": "سيدان",
+      "suv": "دفع رباعي",
+      "wagon": "ستيشن",
+      "city": "مدينة",
+      "coupe": "كوبيه",
+      "convertible": "قابلت للتحويل",
+      "utility": "خدمات",
+      "minivan": "ميني فان"
+    },
+    "fuels": {
+      "gasoline": "بنزين",
+      "diesel": "ديزل",
+      "hybrid": "هجين",
+      "electric": "كهربائي",
+      "lpg": "غاز البترول المسال",
+      "e85": "إي 85"
+    },
+    "gearboxes": {
+      "manual": "يدوي",
+      "automatic": "أوتوماتيكي",
+      "sequential": "تسلسلي"
+    }
+  },
+  "car": {
+    "new": "جديد",
+    "featured": "مميز",
+    "specs": "المواصفات التقنية",
+    "description": "الوصف",
+    "features": "المعدات والخيارات",
+    "year": "السنة",
+    "mileage": "الكيلومترات",
+    "fuel": "الوقود",
+    "gearbox": "علبة التروس",
+    "color": "اللون",
+    "bodyType": "نوع الهيكل",
+    "price": "السعر",
+    "contactTitle": "اتصل بنا بخصوص هذه المركبة",
+    "includedServices": "الخدمات المشمولة",
+    "services": {
+      "warranty": "ضمان 12 شهراً على الأقل",
+      "inspected": "مركبة مفحوصة ومتحقق منها",
+      "admin": "إجراءات إدارية مجانية",
+      "delivery": "توصيل للمنزل متاح",
+      "tradein": "استبدال مركبتك القديمة",
+      "financing": "حلول تمويل"
+    },
+    "viewDetails": "عرض التفاصيل"
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "subtitle": "سؤال عن مركبة؟ تحتاج تمويل؟ تريد تجربة قيادة؟ فريقنا يرد خلال 24 ساعة.",
+    "form": {
+      "title": "أرسل لنا رسالة",
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "subject": "الموضوع",
+      "message": "الرسالة",
+      "submit": "إرسال الرسالة",
+      "submitting": "جاري الإرسال...",
+      "success": "تم إرسال الرسالة",
+      "successDesc": "سنرد عليك في أقرب وقت ممكن.",
+      "error": "خطأ",
+      "errorDesc": "تعذر إرسال الرسالة",
+      "required": "الحقول marcada بـ * مطلوبة.",
+      "placeholders": {
+        "name": "أحمد محمد",
+        "email": "ahmed@email.com",
+        "phone": "06 12 34 56 78",
+        "message": "صف طلبك..."
+      },
+      "subjects": {
+        "info": "طلب معلومات",
+        "testDrive": "طلب تجربة قيادة",
+        "financing": "تمويل / استبدال",
+        "other": "أخرى"
+      }
+    },
+    "info": {
+      "title": "معلومات عملية",
+      "address": "العنوان",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "hours": "ساعات العمل",
+      "directions": "الاتجاهات",
+      "quickCall": "تحتاج إجابة سريعة؟",
+      "quickCallDesc": "اتصل بنا مباشرة خلال ساعات العمل، يسعدنا مساعدتك.",
+      "callNow": "اتصل الآن"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "تسجيل دخول المدير",
+      "subtitle": "الوصول إلى لوحة التحكم الإدارية",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "submit": "تسجيل الدخول",
+      "submitting": "جاري تسجيل الدخول...",
+      "success": "تم تسجيل الدخول بنجاح",
+      "successDesc": "جاري التوجيه إلى لوحة التحكم...",
+      "back": "العودة للموقع العام"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "subtitle": "نظرة عامة على نشاط الكراج",
+      "kpis": {
+        "totalCars": "إجمالي المركبات",
+        "newCars": "المركبات الجديدة",
+        "unreadMessages": "الرسائل غير المقروءة",
+        "featuredCars": "المميزة"
+      },
+      "recentCars": "أحدث المركبات المضافة",
+      "recentMessages": "أحدث الرسائل",
+      "viewAll": "عرض الكل",
+      "quickActions": "إجراءات سريعة",
+      "actions": {
+        "addCar": { "title": "إضافة مركبة", "desc": "جديدة في الكتالوج" },
+        "manageCars": { "title": "إدارة المركبات", "desc": "قائمة، تعديل، حذف" },
+        "messages": { "title": "رسائل العملاء", "desc": "{count} غير مقروءة" },
+        "settings": { "title": "الإعدادات", "desc": "الكراج، المستخدمون" }
+      },
+      "status": {
+        "new": "جديد",
+        "read": "مقروء",
+        "replied": "مردود عليه"
+      }
+    },
+    "cars": {
+      "title": "إدارة المركبات",
+      "addNew": "مركبة جديدة",
+      "search": "بحث الماركة، الموديل...",
+      "filters": "المرشحات",
+      "clearFilters": "مسح المرشحات",
+      "brand": "الماركة",
+      "allBrands": "جميع الماركات",
+      "condition": "جديد / مستعمل",
+      "allConditions": "الكل",
+      "new": "جديد",
+      "used": "مستعمل",
+      "featured": "مميز",
+      "allFeatured": "الكل",
+      "featuredYes": "مميز",
+      "featuredNo": "غير مميز",
+      "availability": "التوفر",
+      "allAvailability": "الكل",
+      "available": "متاح",
+      "sold": "مباع/مسحوب",
+      "table": {
+        "image": "الصورة",
+        "vehicle": "المركبة",
+        "year": "السنة",
+        "mileage": "الكيلومترات",
+        "price": "السعر",
+        "status": "الحالة",
+        "date": "التاريخ",
+        "actions": "الإجراءات"
+      },
+      "statuses": {
+        "new": "جديد",
+        "featured": "مميز",
+        "sold": "مباع",
+        "available": "متاح"
+      },
+      "actions": {
+        "view": "عرض التفاصيل",
+        "edit": "تعديل",
+        "images": "الصور",
+        "delete": "حذف"
+      },
+      "noCars": "لا توجد مركبات حالياً",
+      "pagination": {
+        "prev": "السابق",
+        "next": "التالي",
+        "page": "صفحة {current} من {total}"
+      }
+    },
+    "carForm": {
+      "title": "مركبة جديدة",
+      "editTitle": "تعديل المركبة",
+      "subtitle": "أدخل معلومات المركبة",
+      "mainInfo": "المعلومات الرئيسية",
+      "brand": "الماركة",
+      "model": "الموديل",
+      "year": "السنة",
+      "mileage": "الكيلومترات",
+      "price": "السعر",
+      "currency": "العملة",
+      "color": "اللون",
+      "gearbox": "علبة التروس",
+      "fuel": "الوقود",
+      "condition": "الحالة",
+      "description": "الوصف والمعدات",
+      "descriptionLabel": "الوصف",
+      "features": "المعدات والخيارات (JSON)",
+      "featuresHelp": "تنسيق JSON. المفتاح = اسم المعدة، القيمة = true/false أو نص.",
+      "statuses": "الحالات",
+      "isNew": "مركبة جديدة",
+      "isFeatured": "عرض في الصفحة الرئيسية",
+      "isAvailable": "متاحة للبيع",
+      "cancel": "إلغاء",
+      "save": "إنشاء",
+      "update": "تحديث",
+      "saving": "جاري الحفظ...",
+      "selectBrand": "اختر الماركة",
+      "selectModel": "اختر الموديل",
+      "selectGearbox": "اختر",
+      "selectFuel": "اختر",
+      "selectCondition": "اختر",
+      "conditions": {
+        "excellent": "ممتاز",
+        "veryGood": "جيد جداً",
+        "good": "جيد",
+        "fair": "مقبول",
+        "restore": "يحتاج ترميم"
+      }
+    },
+    "carImages": {
+      "title": "إدارة الصور",
+      "subtitle": "اسحب وأفلت لإعادة الترتيب. الصورة الأولى = الصورة الرئيسية.",
+      "uploadTitle": "إضافة صور",
+      "dragDrop": "اسحب وأفلت صورك هنا",
+      "orClick": "أو انقر للاختيار",
+      "formats": "PNG, JPG, WebP - بحد أقصى 5 ميغابايت للصورة",
+      "uploading": "جاري الرفع...",
+      "noImages": "لا توجد صور لهذه المركبة",
+      "addFirst": "أضف أول صورة أعلاه",
+      "primary": "رئيسية",
+      "deleteConfirm": "حذف هذه الصورة؟",
+      "reorderHint": "اسحب لإعادة الترتيب"
+    },
+    "messages": {
+      "title": "رسائل العملاء",
+      "search": "بحث الاسم، البريد...",
+      "status": "الحالة",
+      "allStatus": "جميع الحالات",
+      "statusNew": "جديد",
+      "statusRead": "مقروء",
+      "statusReplied": "مردود عليه",
+      "clearFilters": "مسح المرشحات",
+      "table": {
+        "id": "#",
+        "client": "العميل",
+        "contact": "الاتصال",
+        "vehicle": "المركبة المعنية",
+        "message": "الرسالة",
+        "status": "الحالة",
+        "date": "التاريخ",
+        "actions": "الإجراءات"
+      },
+      "noVehicle": "لا توجد مركبة",
+      "actions": {
+        "markRead": "تحديد كمقروء",
+        "markReplied": "تحديد كمردود عليه",
+        "delete": "حذف"
+      },
+      "deleteConfirm": "حذف هذه الرسالة؟",
+      "pagination": {
+        "prev": "السابق",
+        "next": "التالي",
+        "page": "صفحة {current} من {total}"
+      }
+    },
+    "settings": {
+      "title": "إعدادات الكراج",
+      "subtitle": "قم بتكوين معلومات الكراج العامة",
+      "info": "معلومات الكراج",
+      "name": "اسم الكراج",
+      "address": "العنوان",
+      "phone": "الهاتف",
+      "email": "بريد الاتصال",
+      "mapsUrl": "رابط خرائط جوجل",
+      "hours": "ساعات العمل",
+      "hoursHelp": "سطر لكل يوم أو فترة زمنية",
+      "about": "نبذة عن الكراج",
+      "logoUrl": "رابط الشعار",
+      "logoHelp": "رابط متاح للجميع (Supabase Storage، CDN، إلخ.)",
+      "save": "حفظ التغييرات",
+      "storage": "تخزين الصور",
+      "bucketInfo": "دلو Supabase Storage: car-images",
+      "bucketDetails": [
+        "الصور تُرفع في car-images/{{car_id}}/",
+        "روابط عامة تُنشأ تلقائياً",
+        "سياسات RLS: قراءة عامة، كتابة للمصادق عليهم"
+      ],
+      "rlsTitle": "سياسات RLS المقترحة",
+      "users": "المستخدمون المديرون",
+      "usersDesc": "المصادقة تدار بواسطة Supabase Auth. لإضافة مدير:",
+      "usersSteps": [
+        "اذهب إلى Supabase Dashboard → Authentication → Users",
+        "انقر \"Invite user\" أو أنشئ حساباً",
+        "سيتمكن المستخدم من تسجيل الدخول على /login",
+        "جميع المستخدمين المصادق عليهم لديهم وصول مدير (RLS: auth.uid() is not null)"
+      ],
+      "restrictNote": "للتقييد: عدل سياسات RLS باستخدام auth.jwt() ->> 'email'"
+    }
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "notFound": "الصفحة غير موجودة",
+    "back": "رجوع",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "create": "إنشاء",
+    "update": "تحديث",
+    "search": "بحث",
+    "filter": "تصفية",
+    "clear": "مسح",
+    "yes": "نعم",
+    "no": "لا",
+    "confirm": "تأكيد",
+    "close": "إغلاق",
+    "next": "التالي",
+    "previous": "السابق",
+    "page": "صفحة",
+    "of": "من",
+    "items": "عناصر",
+    "item": "عنصر",
+    "total": "الإجمالي",
+    "none": "لا شيء",
+    "select": "اختر",
+    "optional": "اختياري",
+    "required": "مطلوب",
+    "available": "متوفر",
+    "vehicles": "مركبات",
+    "viewAll": "عرض الكل",
+    "noData": "لا توجد بيانات",
+    "upToDate": "محدّث",
+    "needResponse": "بحاجة للرد",
+    "featuredOnHome": "مميزة في الصفحة الرئيسية"
+  },
+  "admin": {
+    "dashboard": {
+      "status": {
+        "featured": "مميز"
+      }
+    }
+  }
+}

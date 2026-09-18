@@ -31,10 +31,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
           <div className="flex items-center gap-4">
             <LanguageSelector />
-            <Link href={`/${locale}/login`} className="hidden sm:block px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">
-              {t('login')}
-            </Link>
-
             <button className="md:hidden p-2 text-neutral-600 hover:text-neutral-900" aria-label="Menu">
               <Menu className="h-6 w-6" />
             </button>

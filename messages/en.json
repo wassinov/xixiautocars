@@ -184,6 +184,7 @@
       "submitting": "Signing in...",
       "success": "Login successful",
       "successDesc": "Redirecting to dashboard...",
+      "error": "Error",
       "back": "Back to public site"
     },
     "dashboard": {
@@ -208,7 +209,8 @@
       "status": {
         "new": "New",
         "read": "Read",
-        "replied": "Replied"
+        "replied": "Replied",
+        "featured": "Featured"
       }
     },
     "cars": {
@@ -280,6 +282,7 @@
       "features": "Equipment & Options (JSON)",
       "featuresHelp": "JSON format. Key = equipment name, value = true/false or text.",
       "statuses": "Status",
+      "carImages": "Vehicle Photos",
       "isNew": "New vehicle",
       "isFeatured": "Feature on homepage",
       "isAvailable": "Available for sale",
@@ -289,6 +292,7 @@
       "saving": "Saving...",
       "selectBrand": "Select a brand",
       "selectModel": "Select a model",
+      "selectBrandFirst": "Select a brand first",
       "selectGearbox": "Select",
       "selectFuel": "Select",
       "selectCondition": "Select",
@@ -312,7 +316,25 @@
       "addFirst": "Add first image above",
       "primary": "Primary",
       "deleteConfirm": "Delete this image?",
-      "reorderHint": "Drag to reorder"
+      "reorderHint": "Drag to reorder",
+      "error": "Error",
+      "success": "Success",
+      "imageAdded": "Image added",
+      "confirmDelete": "Confirm deletion?",
+      "imageDeleted": "Image deleted",
+      "imageSetPrimary": "Primary image set",
+      "dropImagesHere": "Drop images here",
+      "dragDropImagesHere": "Drag and drop images here",
+      "orClickToSelect": "or click to select",
+      "fileFormats": "PNG, JPG, WebP - Max 5MB per image",
+      "saveVehicleFirst": "Save the vehicle first to add photos.",
+      "imagesCount": "Images ({count})",
+      "image": "Image",
+      "alreadyPrimary": "Already primary",
+      "setAsPrimary": "Set as primary",
+      "deleteImage": "Delete image",
+      "noImages": "No images for this vehicle",
+      "addFirstImage": "Add first image above"
     },
     "messages": {
       "title": "Client messages",
@@ -416,13 +438,14 @@
     "noData": "No data",
     "upToDate": "Up to date",
     "needResponse": "Need response",
-    "featuredOnHome": "Featured on homepage"
-  },
-  "admin": {
-    "dashboard": {
-      "status": {
-        "featured": "Featured"
-      }
-    }
+    "featuredOnHome": "Featured on homepage",
+    "confirmDelete": "Confirm deletion?",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "saveError": "Save error",
+    "deleted": "Deleted",
+    "imageDeleted": "Image deleted",
+    "toProcess": "To process",
+    "currency": "Currency"
   }
 }

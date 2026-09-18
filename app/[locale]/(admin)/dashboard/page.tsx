@@ -136,7 +136,7 @@ export default async function DashboardPage() {
                         <Car className="h-6 w-6 text-primary-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-neutral-900">{car.models?.brands?.name} {car.models?.name}</p>
+                        <p className="font-medium text-neutral-900">{car.models?.[0]?.brands?.[0]?.name} {car.models?.[0]?.name}</p>
                         <p className="text-sm text-neutral-500">{formatPrice(car.price, car.currency)}</p>
                       </div>
                     </div>
@@ -163,30 +163,33 @@ export default async function DashboardPage() {
               <p className="text-center text-neutral-500 py-8">{tCommon('noData')}</p>
             ) : (
               <div className="space-y-4">
-                {recentMessages.map((msg) => (
-                  <div key={msg.id} className="flex items-start justify-between p-3 bg-neutral-50 rounded-lg">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-neutral-900 truncate">{msg.full_name}</p>
-                        <Badge
-                          variant={msg.status === 'new' ? 'destructive' : msg.status === 'read' ? 'default' : 'success'}
-                          className="text-xs"
-                        >
-                          {msg.status === 'new' ? t('status.new') : msg.status === 'read' ? t('status.read') : t('status.replied')}
-                        </Badge>
+                {recentMessages.map((msg) => {
+                  const car = msg.car as { models?: { brands?: { name: string }; name: string } } | null;
+                  return (
+                    <div key={msg.id} className="flex items-start justify-between p-3 bg-neutral-50 rounded-lg">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-neutral-900 truncate">{msg.full_name}</p>
+                          <Badge
+                            variant={msg.status === 'new' ? 'destructive' : msg.status === 'read' ? 'default' : 'success'}
+                            className="text-xs"
+                          >
+                            {msg.status === 'new' ? t('status.new') : msg.status === 'read' ? t('status.read') : t('status.replied')}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-neutral-500">{msg.email}</p>
+                        {car?.models && (
+                          <p className="text-xs text-neutral-400 mt-1">
+                            {tCommon('about')} : {car.models.brands?.name} {car.models.name}
+                          </p>
+                        )}
                       </div>
-                      <p className="text-sm text-neutral-500">{msg.email}</p>
-                      {msg.car?.models && (
-                        <p className="text-xs text-neutral-400 mt-1">
-                          {tCommon('about')} : {msg.car.models.brands?.name} {msg.car.models.name}
-                        </p>
-                      )}
+                      <p className="text-xs text-neutral-400 whitespace-nowrap ml-4">
+                        {format(new Date(msg.created_at), 'dd/MM HH:mm', { locale: fr })}
+                      </p>
                     </div>
-                    <p className="text-xs text-neutral-400 whitespace-nowrap ml-4">
-                      {format(new Date(msg.created_at), 'dd/MM HH:mm', { locale: fr })}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardContent>

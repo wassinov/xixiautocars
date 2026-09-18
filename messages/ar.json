@@ -179,11 +179,12 @@
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
       "showPassword": "إظهار كلمة المرور",
-      "hidePassword": "إخفاء كلمة المرور",
+      "hidePassword": "إخفاء كلمة de passe",
       "submit": "تسجيل الدخول",
       "submitting": "جاري تسجيل الدخول...",
       "success": "تم تسجيل الدخول بنجاح",
       "successDesc": "جاري التوجيه إلى لوحة التحكم...",
+      "error": "خطأ",
       "back": "العودة للموقع العام"
     },
     "dashboard": {
@@ -208,7 +209,8 @@
       "status": {
         "new": "جديد",
         "read": "مقروء",
-        "replied": "مردود عليه"
+        "replied": "مردود عليه",
+        "featured": "مميز"
       }
     },
     "cars": {
@@ -280,6 +282,7 @@
       "features": "المعدات والخيارات (JSON)",
       "featuresHelp": "تنسيق JSON. المفتاح = اسم المعدة، القيمة = true/false أو نص.",
       "statuses": "الحالات",
+      "carImages": "صور المركبة",
       "isNew": "مركبة جديدة",
       "isFeatured": "عرض في الصفحة الرئيسية",
       "isAvailable": "متاحة للبيع",
@@ -289,6 +292,7 @@
       "saving": "جاري الحفظ...",
       "selectBrand": "اختر الماركة",
       "selectModel": "اختر الموديل",
+      "selectBrandFirst": "اختر الماركة أولاً",
       "selectGearbox": "اختر",
       "selectFuel": "اختر",
       "selectCondition": "اختر",
@@ -312,7 +316,25 @@
       "addFirst": "أضف أول صورة أعلاه",
       "primary": "رئيسية",
       "deleteConfirm": "حذف هذه الصورة؟",
-      "reorderHint": "اسحب لإعادة الترتيب"
+      "reorderHint": "اسحب لإعادة الترتيب",
+      "error": "خطأ",
+      "success": "نجاح",
+      "imageAdded": "تمت إضافة الصورة",
+      "confirmDelete": "تأكيد الحذف؟",
+      "imageDeleted": "تم حذف الصورة",
+      "imageSetPrimary": "تم تعيين الصورة الرئيسية",
+      "dropImagesHere": "أفلت الصور هنا",
+      "dragDropImagesHere": "اسحب وأفلت الصور هنا",
+      "orClickToSelect": "أو انقر للاختيار",
+      "fileFormats": "PNG, JPG, WebP - بحد أقصى 5 ميغابايت للصورة",
+      "saveVehicleFirst": "احفظ المركبة أولاً لإضافة الصور.",
+      "imagesCount": "الصور ({count})",
+      "image": "صورة",
+      "alreadyPrimary": "رئيسية بالفعل",
+      "setAsPrimary": "تعيين كرئيسية",
+      "deleteImage": "حذف الصورة",
+      "noImages": "لا توجد صور لهذه المركبة",
+      "addFirstImage": "أضف أول صورة أعلاه"
     },
     "messages": {
       "title": "رسائل العملاء",
@@ -389,7 +411,7 @@
     "cancel": "إلغاء",
     "delete": "حذف",
     "edit": "تعديل",
-    "view": "عرض",
+    "view": "Display",
     "create": "إنشاء",
     "update": "تحديث",
     "search": "بحث",
@@ -416,13 +438,14 @@
     "noData": "لا توجد بيانات",
     "upToDate": "محدّث",
     "needResponse": "بحاجة للرد",
-    "featuredOnHome": "مميزة في الصفحة الرئيسية"
-  },
-  "admin": {
-    "dashboard": {
-      "status": {
-        "featured": "مميز"
-      }
-    }
+    "featuredOnHome": "مميزة في الصفحة الرئيسية",
+    "confirmDelete": "تأكيد الحذف؟",
+    "created": "تم الإنشاء بنجاح",
+    "updated": "تم التحديث بنجاح",
+    "saveError": "خطأ في الحفظ",
+    "deleted": "تم الحذف",
+    "imageDeleted": "تم حذف الصورة",
+    "toProcess": "قيد المعالجة",
+    "currency": "العملة"
   }
 }

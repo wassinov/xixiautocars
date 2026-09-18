@@ -17,9 +17,11 @@ import { toast } from '@/components/ui/use-toast';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
+import CarImagesUploader from '@/components/admin/CarImagesUploader';
 
 const carSchema = z.object({
-  brand_id: z.string().uuid('Brand required'),
+  // brand_id is used only for UI filtering, NOT sent to database (cars table has only model_id)
+  brand_id: z.string().uuid().optional(),
   model_id: z.string().uuid('Model required'),
   is_new: z.boolean().default(false),
   year: z.coerce.number().min(1990).max(new Date().getFullYear() + 1),
@@ -75,6 +77,19 @@ export default function CarFormPage() {
     is_featured: false,
   });
 
+  // Images state
+  const [images, setImages] = useState<Array<{ id: string; car_id: string; image_url: string; is_primary: boolean; order_index: number; created_at: string }>>([]);
+
+  const loadImages = async (carId: string) => {
+    const supabase = createClient();
+    const { data } = await supabase
+      .from('car_images')
+      .select('*')
+      .eq('car_id', carId)
+      .order('order_index');
+    setImages(data || []);
+  };
+
   useEffect(() => {
     loadBrands();
   }, []);
@@ -91,6 +106,7 @@ export default function CarFormPage() {
   useEffect(() => {
     if (isEditing) {
       loadCar(carId);
+      loadImages(carId);
     }
   }, [carId, isEditing]);
 
@@ -109,7 +125,12 @@ export default function CarFormPage() {
   const loadCar = async (id: string) => {
     setIsLoading(true);
     const supabase = createClient();
-    const { data, error } = await supabase.from('cars').select('*').eq('id', id).single();
+    // Load car with model and brand info to pre-select brand in UI
+    const { data, error } = await supabase
+      .from('cars')
+      .select('*, models(id, name, brand_id, brands(id, name))')
+      .eq('id', id)
+      .single();
 
     if (error || !data) {
       toast({ title: tCommon('error'), description: 'Vehicle not found', variant: 'destructive' });
@@ -117,8 +138,11 @@ export default function CarFormPage() {
       return;
     }
 
+    const model = data.models;
+    const brandId = model?.brand_id || '';
+
     setFormData({
-      brand_id: data.brand_id || '',
+      brand_id: brandId, // For UI pre-selection only
       model_id: data.model_id || '',
       is_new: data.is_new,
       year: data.year,
@@ -135,8 +159,8 @@ export default function CarFormPage() {
       is_featured: data.is_featured,
     });
 
-    if (data.model_id) {
-      await loadModels(data.brand_id);
+    if (brandId) {
+      await loadModels(brandId);
     }
     setIsLoading(false);
   };
@@ -178,27 +202,43 @@ export default function CarFormPage() {
     const supabase = createClient();
 
     try {
-      const payload = {
+      // Exclude brand_id from payload - cars table only has model_id, not brand_id
+      const { brand_id, ...payload } = {
         ...formData,
         mileage: formData.mileage === 0 ? null : formData.mileage,
         features: formData.features || {},
       };
 
+      console.log('PAYLOAD createCar/updateCar:', payload);
+
       let error;
+      let newCarId: string | null = null;
       if (isEditing) {
         const { error: updateError } = await supabase.from('cars').update(payload).eq('id', carId);
         error = updateError;
       } else {
-        const { error: insertError } = await supabase.from('cars').insert(payload);
+        const { data: newCar, error: insertError } = await supabase.from('cars').insert(payload).select('id').single();
         error = insertError;
+        newCarId = newCar?.id || null;
       }
 
       if (error) throw error;
 
-      toast({ title: tCommon('success'), description: tCommon(isEditing ? 'updated' : 'created') });
-      router.push(`/${locale}/dashboard/cars`);
-      router.refresh();
+      if (isEditing) {
+        toast({ title: tCommon('success'), description: tCommon('updated') });
+        router.push(`/${locale}/dashboard/cars`);
+        router.refresh();
+      } else if (newCarId) {
+        toast({ title: tCommon('success'), description: 'Véhicule créé. Ajoutez maintenant les photos.' });
+        router.push(`/${locale}/dashboard/cars/${newCarId}`);
+        router.refresh();
+      } else {
+        toast({ title: tCommon('success'), description: tCommon('created') });
+        router.push(`/${locale}/dashboard/cars`);
+        router.refresh();
+      }
     } catch (err) {
+      console.error('Error saving car:', err);
       toast({ title: tCommon('error'), description: err instanceof Error ? err.message : tCommon('saveError'), variant: 'destructive' });
     } finally {
       setIsSaving(false);
@@ -379,6 +419,20 @@ export default function CarFormPage() {
               />
               <p className="text-xs text-neutral-500">{t('featuresHelp')}</p>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Section Photos */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('carImages')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CarImagesUploader
+              carId={isEditing ? carId : undefined}
+              images={images}
+              onImagesChange={setImages}
+            />
           </CardContent>
         </Card>
 

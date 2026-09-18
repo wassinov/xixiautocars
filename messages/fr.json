@@ -184,6 +184,7 @@
       "submitting": "Connexion...",
       "success": "Connexion réussie",
       "successDesc": "Redirection vers le tableau de bord...",
+      "error": "Erreur",
       "back": "Retour au site public"
     },
     "dashboard": {
@@ -208,7 +209,8 @@
       "status": {
         "new": "Nouveau",
         "read": "Lu",
-        "replied": "Répondu"
+        "replied": "Répondu",
+        "featured": "En vedette"
       }
     },
     "cars": {
@@ -280,6 +282,7 @@
       "features": "Équipements & Options (JSON)",
       "featuresHelp": "Format JSON. Clé = nom de l'équipement, valeur = true/false ou texte.",
       "statuses": "Statuts",
+      "carImages": "Photos du véhicule",
       "isNew": "Véhicule neuf",
       "isFeatured": "Mettre en vedette (page d'accueil)",
       "isAvailable": "Disponible à la vente",
@@ -289,6 +292,7 @@
       "saving": "Sauvegarde...",
       "selectBrand": "Sélectionner une marque",
       "selectModel": "Sélectionner un modèle",
+      "selectBrandFirst": "Sélectionnez d'abord une marque",
       "selectGearbox": "Sélectionner",
       "selectFuel": "Sélectionner",
       "selectCondition": "Sélectionner",
@@ -312,7 +316,25 @@
       "addFirst": "Ajoutez la première image ci-dessus",
       "primary": "Principale",
       "deleteConfirm": "Supprimer cette image ?",
-      "reorderHint": "Glissez pour réorganiser"
+      "reorderHint": "Glissez pour réorganiser",
+      "error": "Erreur",
+      "success": "Succès",
+      "imageAdded": "Image ajoutée",
+      "confirmDelete": "Confirmer la suppression ?",
+      "imageDeleted": "Image supprimée",
+      "imageSetPrimary": "Image principale définie",
+      "dropImagesHere": "Déposez les images ici",
+      "dragDropImagesHere": "Glissez-déposez vos images ici",
+      "orClickToSelect": "ou cliquez pour sélectionner",
+      "fileFormats": "PNG, JPG, WebP - Max 5MB par image",
+      "saveVehicleFirst": "Enregistrez d'abord le véhicule pour ajouter des photos.",
+      "imagesCount": "Images ({count})",
+      "image": "Image",
+      "alreadyPrimary": "Déjà principale",
+      "setAsPrimary": "Définir comme principale",
+      "deleteImage": "Supprimer l'image",
+      "noImages": "Aucune image pour ce véhicule",
+      "addFirstImage": "Ajoutez la première image ci-dessus"
     },
     "messages": {
       "title": "Messages clients",
@@ -416,13 +438,15 @@
     "noData": "Aucune donnée",
     "upToDate": "À jour",
     "needResponse": "Nécessitent une réponse",
-    "featuredOnHome": "Mises en avant sur l'accueil"
-  },
-  "admin": {
-    "dashboard": {
-      "status": {
-        "featured": "En vedette"
-      }
-    }
+    "featuredOnHome": "Mises en avant sur l'accueil",
+    "confirmDelete": "Confirmer la suppression ?",
+    "created": "Créé avec succès",
+    "updated": "Mis à jour avec succès",
+    "saveError": "Erreur lors de la sauvegarde",
+    "deleted": "Supprimé",
+    "imageDeleted": "Image supprimée",
+    "toProcess": "À traiter",
+    "messages": "messages",
+    "currency": "Devise"
   }
 }

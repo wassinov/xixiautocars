@@ -12,9 +12,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     <>
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
         <nav className="container-custom flex h-16 items-center justify-between" aria-label="Main navigation">
-          <Link href={`/${locale}`} className="flex items-center gap-2" aria-label="Mon Garage - Accueil">
+          <Link href={`/${locale}`} className="flex items-center gap-2" aria-label="Xixi Autocars - Accueil">
             <Truck className="h-8 w-8 text-primary-600" />
-            <span className="font-bold text-xl text-neutral-900 hidden sm:block">Mon Garage</span>
+            <span className="font-bold text-xl text-neutral-900 hidden sm:block">Xixi Autocars</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -48,16 +48,15 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div className="md:col-span-2">
               <Link href={`/${locale}`} className="flex items-center gap-2 mb-4">
                 <Truck className="h-8 w-8 text-primary-400" />
-                <span className="font-bold text-xl">Mon Garage</span>
+                <span className="font-bold text-xl">Xixi Autocars</span>
               </Link>
               <p className="text-neutral-400 max-w-xs">Votre garage de confiance depuis 1980. Véhicules neufs et d'occasion, révisés et garantis.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">{t('contact')}</h4>
               <address className="not-italic text-neutral-400 space-y-2">
-                <p>123 Rue de l'Automobile</p>
-                <p>75000 Paris</p>
-                <p><a href="tel:0123456789" className="hover:text-primary-400">01 23 45 67 89</a></p>
+                <p>2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing</p>
+                <p><a href="tel:+8619112816914" className="hover:text-primary-400">+86 191 1281 6914</a></p>
                 <p><a href="mailto:contact@mongarage.fr" className="hover:text-primary-400">contact@mongarage.fr</a></p>
               </address>
             </div>
@@ -71,7 +70,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-neutral-800 text-center text-neutral-500 text-sm">
-            © 2024 Mon Garage. Tous droits réservés.
+            © 2024 Xixi Autocars. Tous droits réservés.
           </div>
         </div>
       </footer>

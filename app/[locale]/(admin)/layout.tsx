@@ -84,7 +84,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex h-16 items-center px-6 border-b">
           <Link href={`/${locale}/dashboard`} className="flex items-center gap-2">
             <Truck className="h-8 w-8 text-primary-600" />
-            <span className="font-bold text-lg">Mon Garage Admin</span>
+            <span className="font-bold text-lg">Xixi Autocars Admin</span>
           </Link>
         </div>
         <nav className="flex-1 space-y-1 p-4 overflow-y-auto">

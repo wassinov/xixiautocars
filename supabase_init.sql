@@ -159,11 +159,11 @@ with check (auth.uid() is not null);
 insert into garage_infos (id, name, address, phone, email, google_maps_url, opening_hours, about_text, logo_url)
 values (
   '00000000-0000-0000-0000-000000000000',
-  'Mon Garage',
-  '123 Rue de l''Automobile',
-  '01 23 45 67 89',
+  'Xixi Autocars',
+  '2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing',
+  '+8619112816914',
   'contact@mongarage.fr',
-  'https://maps.google.com/?q=123+Rue+de+l''Automobile',
+  'https://maps.google.com/?q=2M-2+Zhongchuang+incubator,+Kangcheng+North+Road,+Xianglushan+Street,+Shapingba+District,+Chongqing',
   'Lundi-Vendredi: 9h-19h, Samedi: 9h-18h',
   'Nous sommes un garage familial passionné par les automobiles depuis 1980.',
   '/images/garage-logo.png'

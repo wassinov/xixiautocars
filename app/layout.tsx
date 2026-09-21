@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: { default: 'Mon Garage', template: '%s | Mon Garage' },
+  title: { default: 'Xixi Autocars', template: '%s | Xixi Autocars' },
   description: 'Vente de véhicules neufs et d\'occasion. Reprise, financement, garantie et entretien.',
 };
 

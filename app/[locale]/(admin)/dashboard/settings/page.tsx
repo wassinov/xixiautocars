@@ -12,7 +12,7 @@ import { toast } from '@/components/ui/use-toast';
 import { z } from 'zod';
 import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = { title: 'Settings - Mon Garage Admin', description: 'Garage configuration and general settings' };
+export const metadata: Metadata = { title: 'Settings - Xixi Autocars Admin', description: 'Garage configuration and general settings' };
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +38,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
   const tCommon = await getTranslations('common');
   const garage = await getGarage();
 
-  const defaultGarage = { name: 'Mon Garage', address: '123 Rue de l\'Automobile', phone: '01 23 45 67 89', email: 'contact@mongarage.fr', google_maps_url: 'https://maps.google.com/?q=123+Rue+de+l\'Automobile', opening_hours: 'Lundi-Vendredi: 9h-19h, Samedi: 9h-18h', about_text: 'Nous sommes un garage familial passionné par les automobiles depuis 1980.', logo_url: '/images/garage-logo.png' };
+  const defaultGarage = { name: 'Xixi Autocars', address: '2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing', phone: '+8619112816914', email: 'contact@mongarage.fr', google_maps_url: 'https://maps.google.com/?q=2M-2+Zhongchuang+incubator,+Kangcheng+North+Road,+Xianglushan+Street,+Shapingba+District,+Chongqing', opening_hours: 'Lundi-Vendredi: 9h-19h, Samedi: 9h-18h', about_text: 'Nous sommes un garage familial passionné par les automobiles depuis 1980.', logo_url: '/images/garage-logo.png' };
   const garageData = garage || defaultGarage;
 
   return (
@@ -67,7 +67,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
             </div>
             <div className="space-y-2">
               <Label htmlFor="address">{t('address')}</Label>
-              <Textarea id="address" name="address" value={garageData.address} rows={2} placeholder="123 Rue de l'Automobile, 75000 Paris" />
+              <Textarea id="address" name="address" value={garageData.address} rows={2} placeholder="2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing" />
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">

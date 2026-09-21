@@ -8,7 +8,7 @@ import { fr } from 'date-fns/locale';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
-export const metadata: Metadata = { title: 'Dashboard - Mon Garage Admin', description: 'Vue d\'ensemble de l\'activité du garage' };
+export const metadata: Metadata = { title: 'Dashboard - Xixi Autocars Admin', description: 'Vue d\'ensemble de l\'activité du garage' };
 
 export const dynamic = 'force-dynamic';
 

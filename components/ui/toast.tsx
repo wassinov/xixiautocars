@@ -29,10 +29,10 @@ type ToastProps = React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> & 
 const Toast = React.forwardRef<React.ElementRef<typeof ToastPrimitives.Root>, ToastProps>(
   ({ className, variant = 'default', ...props }, ref) => {
     const variants = {
-      default: 'border-ink-200 bg-white text-ink-900',
-      destructive: 'border-terracotta-200 bg-terracotta-50 text-terracotta-900',
-      success: 'border-sage-200 bg-sage-50 text-sage-900',
-      warning: 'border-terracotta-200 bg-terracotta-50 text-terracotta-900',
+      default: 'border-ink-200 bg-white text-ink-900 bg-opacity-100',
+      destructive: 'border-terracotta-200 bg-terracotta-50 text-terracotta-900 bg-opacity-100',
+      success: 'border-sage-200 bg-sage-50 text-sage-900 bg-opacity-100',
+      warning: 'border-terracotta-200 bg-terracotta-50 text-terracotta-900 bg-opacity-100',
     };
 
     return (

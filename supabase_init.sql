@@ -162,10 +162,10 @@ values (
   'Xixi Autocars',
   '2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing',
   '+8619112816914',
-  'contact@mongarage.fr',
+  'contact@xixiautocars.com',
   'https://maps.google.com/?q=2M-2+Zhongchuang+incubator,+Kangcheng+North+Road,+Xianglushan+Street,+Shapingba+District,+Chongqing',
   'Lundi-Vendredi: 9h-19h, Samedi: 9h-18h',
-  'Nous sommes un garage familial passionné par les automobiles depuis 1980.',
+  'Nous sommes un garage familial passionné par les automobiles depuis 1980.\nWeChat: XX827378447\nWhatsApp: +8619112816914',
   '/images/garage-logo.png'
 )
 on conflict (id) do nothing;

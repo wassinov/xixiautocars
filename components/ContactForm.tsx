@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { z } from 'zod';
+import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 const contactSchema = z.object({
   full_name: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
@@ -22,9 +24,11 @@ type ContactFormData = z.infer<typeof contactSchema>;
 interface ContactFormProps {
   initialCarId?: string;
   carName?: string;
+  className?: string;
 }
 
-export function ContactForm({ initialCarId, carName }: ContactFormProps) {
+export function ContactForm({ initialCarId, carName, className }: ContactFormProps) {
+  const t = useTranslations('contact.form');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [formData, setFormData] = useState<ContactFormData>({
@@ -32,7 +36,7 @@ export function ContactForm({ initialCarId, carName }: ContactFormProps) {
     email: '',
     phone: '',
     car_id: initialCarId || '',
-    message: carName ? `Bonjour, je suis intéressé par le véhicule : ${carName}.\n\n` : '',
+    message: carName ? `${t('messagePrefix', { vehicle: carName })}` : '',
   });
 
   const validateField = (name: keyof ContactFormData, value: string) => {
@@ -76,106 +80,92 @@ export function ContactForm({ initialCarId, carName }: ContactFormProps) {
 
       if (!res.ok) throw new Error(data.error || 'Erreur lors de l\'envoi');
 
-      toast({ title: 'Message envoyé', description: 'Nous vous répondrons dans les plus brefs délais.', variant: 'default' });
+      toast({ title: t('success'), description: t('successDesc'), variant: 'success' });
       setFormData({ full_name: '', email: '', phone: '', car_id: initialCarId || '', message: carName ? `Bonjour, je suis intéressé par le véhicule : ${carName}.\n\n` : '' });
     } catch (err) {
-      toast({ title: 'Erreur', description: err instanceof Error ? err.message : 'Impossible d\'envoyer le message', variant: 'destructive' });
+      toast({ title: t('error'), description: err instanceof Error ? err.message : t('errorDesc'), variant: 'destructive' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const FormField = ({ label, required, error, children, id }: { label: string; required?: boolean; error?: string; children: React.ReactNode; id: string }) => (
+    <div className="space-y-1.5">
+      <Label htmlFor={id} className="text-sm text-ink-700 font-body">
+        {label} {required && <span className="text-terracotta-600">*</span>}
+      </Label>
+      {children}
+      {error && <p id={`${id}-error`} className="text-sm text-terracotta-600" role="alert">{error}</p>}
+    </div>
+  );
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className={cn('space-y-6', className)} noValidate>
       <div className="grid gap-6 md:grid-cols-2">
-        <div>
-          <Label htmlFor="full_name" className="block text-sm font-medium text-neutral-700">
-            Nom complet <span className="text-red-500">*</span>
-          </Label>
+        <FormField label={t('name')} required error={errors.full_name} id="full_name">
           <Input
             id="full_name"
             value={formData.full_name}
             onChange={(e) => handleChange('full_name', e.target.value)}
-            className={errors.full_name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-            aria-invalid={!!errors.full_name}
-            aria-describedby={errors.full_name ? 'full_name-error' : undefined}
-            placeholder="Jean Dupont"
+            error={!!errors.full_name}
+            placeholder={t('placeholders.name')}
           />
-          {errors.full_name && <p id="full_name-error" className="mt-1 text-sm text-red-500" role="alert">{errors.full_name}</p>}
-        </div>
+        </FormField>
 
-        <div>
-          <Label htmlFor="email" className="block text-sm font-medium text-neutral-700">
-            Email <span className="text-red-500">*</span>
-          </Label>
+        <FormField label={t('email')} required error={errors.email} id="email">
           <Input
             id="email"
             type="email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            className={errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-            aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? 'email-error' : undefined}
-            placeholder="jean.dupont@email.fr"
+            error={!!errors.email}
+            placeholder={t('placeholders.email')}
           />
-          {errors.email && <p id="email-error" className="mt-1 text-sm text-red-500" role="alert">{errors.email}</p>}
-        </div>
+        </FormField>
 
-        <div>
-          <Label htmlFor="phone" className="block text-sm font-medium text-neutral-700">
-            Téléphone
-          </Label>
+        <FormField label={t('phone')} error={errors.phone} id="phone">
           <Input
             id="phone"
             type="tel"
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
-            className={errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-            aria-invalid={!!errors.phone}
-            aria-describedby={errors.phone ? 'phone-error' : undefined}
-            placeholder="06 12 34 56 78"
+            error={!!errors.phone}
+            placeholder={t('placeholders.phone')}
           />
-          {errors.phone && <p id="phone-error" className="mt-1 text-sm text-red-500" role="alert">{errors.phone}</p>}
-        </div>
+        </FormField>
       </div>
 
       {initialCarId && (
         <input type="hidden" name="car_id" value={initialCarId} />
       )}
 
-      <div>
-        <Label htmlFor="message" className="block text-sm font-medium text-neutral-700">
-          Message <span className="text-red-500">*</span>
-        </Label>
+      <FormField label={t('message')} required error={errors.message} id="message">
         <Textarea
           id="message"
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
+          error={!!errors.message}
           rows={5}
-          className={errors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-          aria-invalid={!!errors.message}
-          aria-describedby={errors.message ? 'message-error' : undefined}
-          placeholder="Décrivez votre demande..."
+          placeholder={t('placeholders.message')}
         />
-        {errors.message && <p id="message-error" className="mt-1 text-sm text-red-500" role="alert">{errors.message}</p>}
-      </div>
+      </FormField>
 
       <Button type="submit" className="w-full" disabled={isSubmitting} size="lg">
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Envoi en cours...
+            {t('submitting')}
           </>
         ) : (
           <>
             <CheckCircle className="mr-2 h-4 w-4" />
-            Envoyer le message
+            {t('submit')}
           </>
         )}
       </Button>
 
-      <p className="text-center text-sm text-neutral-500">
-        Les champs marqués d'un <span className="text-red-500">*</span> sont obligatoires.
+      <p className="text-center text-sm text-ink-500">
+        {t('required')}
       </p>
     </form>
   );

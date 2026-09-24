@@ -1,13 +1,13 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n'; // BUG-20 : pathname non préfixé + navigation gérée par next-intl
 import { Globe, ChevronDown, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { locales, localeNames, localeFlags, defaultLocale, type Locale } from '@/i18n';
+import { locales, localeNames, localeFlags, type Locale } from '@/i18n';
 
 export function LanguageSelector() {
   const locale = useLocale() as Locale;
@@ -17,24 +17,10 @@ export function LanguageSelector() {
   const t = useTranslations('common');
 
   const changeLocale = (newLocale: Locale) => {
-    // Replace locale in pathname
-    const segments = pathname.split('/').filter(Boolean);
-    const currentLocaleIndex = locales.findIndex(l => segments[0] === l);
-    
-    let newPathname: string;
-    if (currentLocaleIndex >= 0) {
-      segments[0] = newLocale;
-      newPathname = '/' + segments.join('/');
-    } else {
-      newPathname = `/${newLocale}${pathname}`;
-    }
-    
-    // Preserve search params
+    // BUG-20 : délègue le préfixage à next-intl (as-needed : fr sans préfixe, autres préfixées).
+    // pathname vient de @/i18n → chemin INTERNE non préfixé ; les query params sont préservés.
     const search = searchParams.toString();
-    const url = search ? `${newPathname}?${search}` : newPathname;
-    
-    router.push(url);
-    router.refresh();
+    router.replace(search ? `${pathname}?${search}` : pathname, { locale: newLocale });
   };
 
   const currentLocaleName = localeNames[locale];
@@ -43,22 +29,25 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-1 h-9 px-3">
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">{currentFlag} {currentLocaleName}</span>
-          <ChevronDown className="h-4 w-4" />
-        </Button>
+        <button className="gap-2 h-10 px-3 text-ink-700 hover:bg-ink-100 rounded-lg transition-colors flex items-center" aria-label="Changer de langue">
+          <Globe className="h-4 w-4 text-ink-500" />
+          <span className="hidden sm:inline text-sm font-medium">{currentFlag} {currentLocaleName}</span>
+          <ChevronDown className="h-4 w-4 text-ink-500" />
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
+      <DropdownMenuContent align="end" className="w-44 p-1 bg-white border-ink-200">
         {locales.map((loc) => (
           <DropdownMenuItem
             key={loc}
             onClick={() => changeLocale(loc)}
-            className={cn('flex items-center gap-2', loc === locale && 'bg-primary-50 text-primary-700')}
+            className={cn(
+              'flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors',
+              loc === locale ? 'bg-accent-50 text-accent-700' : 'text-ink-700 hover:bg-ink-50'
+            )}
           >
-            <span>{localeFlags[loc]}</span>
-            <span>{localeNames[loc]}</span>
-            {loc === locale && <Check className="h-4 w-4 text-primary-600 ml-auto" />}
+            <span className="text-base">{localeFlags[loc]}</span>
+            <span className="flex-1">{localeNames[loc]}</span>
+            {loc === locale && <Check className="h-4 w-4 text-accent-600" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

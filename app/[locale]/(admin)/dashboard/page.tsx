@@ -1,14 +1,15 @@
 import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
-import { Car, Mail, Users, Clock, TrendingUp, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
+import { Car, Mail, Users, Clock, TrendingUp, ArrowUpRight, ArrowDownRight, Minus, Shield, CheckCircle, CreditCard as CreditCardIcon, Star } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
+import { cn } from '@/lib/utils';
+import { formatPrice, dateFnsLocale } from '@/lib/utils';
 
-export const metadata: Metadata = { title: 'Dashboard - Xixi Autocars Admin', description: 'Vue d\'ensemble de l\'activité du garage' };
+export const metadata: Metadata = { title: 'Dashboard - Xixi Autocars Admin', description: "Vue d'ensemble de l'activité du garage" };
 
 export const dynamic = 'force-dynamic';
 
@@ -34,115 +35,97 @@ async function getKPIs() {
   return { totalCars: totalCars || 0, newCars: newCars || 0, unreadMessages: unreadMessages || 0, featuredCars: featuredCars || 0, recentCars: recentCars || [], recentMessages: recentMessages || [] };
 }
 
-function formatPrice(price: number, currency: string) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(price);
-}
+const KPI_CARDS = [
+  { key: 'totalCars', label: 'Véhicules totaux', icon: Car, color: 'ink', trend: null },
+  { key: 'newCars', label: 'Véhicules neufs', icon: Car, color: 'sage', trend: 'vehiclesAvailable' },
+  { key: 'unreadMessages', label: 'Messages non lus', icon: Mail, color: 'accent', trend: 'needResponse' },
+  { key: 'featuredCars', label: 'Védettes', icon: Star, color: 'accent', trend: 'featuredOnHome' },
+] as const;
 
-export default async function DashboardPage() {
+export default async function DashboardPage() { // BUG-10 : params retiré (inutilisé depuis l'Étape 17)
   const t = await getTranslations('admin.dashboard');
   const tCommon = await getTranslations('common');
+  const locale = await getLocale(); // BUG-22 : formats localisés (sans toucher aux params — BUG-10)
   const { totalCars, newCars, unreadMessages, featuredCars, recentCars, recentMessages } = await getKPIs();
 
+  const kpiValues = { totalCars, newCars, unreadMessages, featuredCars };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-2">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900">{t('title')}</h1>
-          <p className="mt-1 text-neutral-600">{t('subtitle')}</p>
+          <h1 className="text-3xl font-display font-bold text-ink-900">{t('title')}</h1>
+          <p className="mt-1 text-base text-ink-600">{t('subtitle')}</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-neutral-500">
+        <div className="flex items-center gap-2 text-sm text-ink-500">
           <Clock className="h-4 w-4" />
-          <span>{format(new Date(), 'EEEE d MMMM yyyy', { locale: fr })}</span>
+          <span>{format(new Date(), 'EEEE d MMMM yyyy', { locale: dateFnsLocale(locale) })}</span>
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-600">{t('kpis.totalCars')}</CardTitle>
-            <Car className="h-4 w-4 text-neutral-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-neutral-900">{totalCars}</span>
-              <span className="h-4 w-4 text-neutral-400" />
-            </div>
-            <p className="text-xs text-neutral-500 mt-1">{tCommon('available')}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-600">{t('kpis.newCars')}</CardTitle>
-            <Car className="h-4 w-4 text-neutral-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-neutral-900">{newCars}</span>
-              <span className="h-4 w-4 text-neutral-400" />
-            </div>
-            <p className="text-xs text-neutral-500 mt-1">{tCommon('of')} {totalCars} {tCommon('vehicles')}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-600">{t('kpis.unreadMessages')}</CardTitle>
-            <Mail className="h-4 w-4 text-neutral-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-neutral-900">{unreadMessages}</span>
-              <Badge variant={unreadMessages > 0 ? 'destructive' : 'success'} className="text-xs">
-                {unreadMessages > 0 ? tCommon('toProcess') : tCommon('upToDate')}
-              </Badge>
-            </div>
-            <p className="text-xs text-neutral-500 mt-1">{tCommon('needResponse')}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-600">{t('kpis.featuredCars')}</CardTitle>
-            <Car className="h-4 w-4 text-neutral-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-bold text-neutral-900">{featuredCars}</span>
-              <span className="h-4 w-4 text-neutral-400" />
-            </div>
-            <p className="text-xs text-neutral-500 mt-1">{tCommon('featuredOnHome')}</p>
-          </CardContent>
-        </Card>
+        {KPI_CARDS.map((kpi, i) => {
+          const value = kpiValues[kpi.key as keyof typeof kpiValues];
+          const Icon = kpi.icon;
+          const colorClasses = {
+            ink: 'bg-ink-100 text-ink-600',
+            sage: 'bg-sage-100 text-sage-600',
+            accent: 'bg-accent-100 text-accent-600',
+            terracotta: 'bg-terracotta-100 text-terracotta-600',
+          };
+          return (
+            <Card key={kpi.key} className="hover:border-accent-300 transition-all duration-300 ">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-sm font-medium text-ink-600">{t(`kpis.${kpi.key}`)}</CardTitle>
+                <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center', colorClasses[kpi.color as keyof typeof colorClasses])}>
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-2xl font-display font-bold text-ink-900">{value}</span>
+                  {kpi.key === 'unreadMessages' && (
+                    <Badge variant={value > 0 ? 'highlight' : 'sage'} className="text-xs">
+                      {value > 0 ? tCommon('toProcess') : tCommon('upToDate')}
+                    </Badge>
+                  )}
+                </div>
+                <p className="mt-1 text-sm text-ink-500">
+                  {kpi.trend ? tCommon(kpi.trend, { total: totalCars }) : tCommon('available')}
+                </p>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
+        <Card className="hover:border-accent-300 transition-all duration-300 ">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              {t('recentCars')}
-              <Link href={`/dashboard/cars`} className="text-sm font-normal text-primary-600 hover:text-primary-700">{tCommon('viewAll')}</Link>
+              <span className="font-display font-semibold text-ink-900">{t('recentCars')}</span>
+              <Link href="/dashboard/cars" className="text-sm font-medium text-accent-600 hover:border-accent-300 hover:text-accent-700 transition-colors">{tCommon('viewAll')}</Link>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {recentCars.length === 0 ? (
-              <p className="text-center text-neutral-500 py-8">{tCommon('noData')}</p>
+              <p className="text-center text-ink-500 py-8">{tCommon('noData')}</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recentCars.map((car) => (
-                  <div key={car.id} className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
+                  <div key={car.id} className="flex items-center justify-between p-3 bg-ink-50 rounded-lg hover:bg-ink-100 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                        <Car className="h-6 w-6 text-primary-600" />
+                      <div className="w-12 h-12 rounded-lg bg-accent-100 flex items-center justify-center">
+                        <Car className="h-6 w-6 text-accent-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-neutral-900">{car.models?.[0]?.brands?.[0]?.name} {car.models?.[0]?.name}</p>
-                        <p className="text-sm text-neutral-500">{formatPrice(car.price, car.currency)}</p>
+                        <p className="font-medium text-ink-900">{(car.models as any)?.brands?.name} {(car.models as any)?.name}</p>
+                        <p className="text-terracotta-600 font-mono">{formatPrice(car.price, car.currency, locale)}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {car.is_new && <Badge variant="success" className="text-xs">{t('status.new')}</Badge>}
-                      {car.is_featured && <Badge variant="default" className="text-xs">{t('status.featured')}</Badge>}
+                      {car.is_new && <Badge variant="sage" className="text-xs">{t('status.new')}</Badge>}
+                      {car.is_featured && <Badge variant="accent" className="text-xs">{t('status.featured')}</Badge>}
                     </div>
                   </div>
                 ))}
@@ -151,41 +134,39 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover:border-accent-300 transition-all duration-300 ">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              {t('recentMessages')}
-              <Link href={`/dashboard/messages`} className="text-sm font-normal text-primary-600 hover:text-primary-700">{tCommon('viewAll')}</Link>
+              <span className="font-display font-semibold text-ink-900">{t('recentMessages')}</span>
+              <Link href="/dashboard/messages" className="text-sm font-medium text-accent-600 hover:border-accent-300 hover:text-accent-700 transition-colors">{tCommon('viewAll')}</Link>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {recentMessages.length === 0 ? (
-              <p className="text-center text-neutral-500 py-8">{tCommon('noData')}</p>
+              <p className="text-center text-ink-500 py-8">{tCommon('noData')}</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recentMessages.map((msg) => {
                   const car = msg.car as { models?: { brands?: { name: string }; name: string } } | null;
+                  const statusVariants = { new: 'highlight' as const, read: 'default' as const, replied: 'sage' as const };
                   return (
-                    <div key={msg.id} className="flex items-start justify-between p-3 bg-neutral-50 rounded-lg">
+                    <div key={msg.id} className="flex items-start justify-between p-3 bg-ink-50 rounded-lg hover:bg-ink-100 transition-colors">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-neutral-900 truncate">{msg.full_name}</p>
-                          <Badge
-                            variant={msg.status === 'new' ? 'destructive' : msg.status === 'read' ? 'default' : 'success'}
-                            className="text-xs"
-                          >
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-medium text-ink-900 truncate">{msg.full_name}</p>
+                          <Badge variant={statusVariants[msg.status as keyof typeof statusVariants] || 'default'} className="text-xs">
                             {msg.status === 'new' ? t('status.new') : msg.status === 'read' ? t('status.read') : t('status.replied')}
                           </Badge>
                         </div>
-                        <p className="text-sm text-neutral-500">{msg.email}</p>
+                        <p className="text-sm text-ink-500">{msg.email}</p>
                         {car?.models && (
-                          <p className="text-xs text-neutral-400 mt-1">
+                          <p className="text-sm text-ink-400 mt-1">
                             {tCommon('about')} : {car.models.brands?.name} {car.models.name}
                           </p>
                         )}
                       </div>
-                      <p className="text-xs text-neutral-400 whitespace-nowrap ml-4">
-                        {format(new Date(msg.created_at), 'dd/MM HH:mm', { locale: fr })}
+                      <p className="text-sm text-ink-400 whitespace-nowrap ms-4">
+                        {format(new Date(msg.created_at), 'dd/MM HH:mm', { locale: dateFnsLocale(locale) })}
                       </p>
                     </div>
                   );
@@ -196,29 +177,51 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader><CardTitle>{t('quickActions')}</CardTitle></CardHeader>
+      <Card className="hover:border-accent-300 transition-all duration-300 ">
+        <CardHeader>
+          <CardTitle className="font-display font-semibold text-ink-900">{t('quickActions')}</CardTitle>
+        </CardHeader>
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Link href={`/dashboard/cars/new`} className="p-4 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-colors text-center">
-              <Car className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-              <p className="font-medium text-neutral-900">{t('actions.addCar.title')}</p>
-              <p className="text-sm text-neutral-500">{t('actions.addCar.desc')}</p>
+            <Link href="/dashboard/cars/new" className={cn(
+              'p-5 border border-ink-200 rounded-2xl text-center',
+              'hover:border-accent-300 hover:bg-accent-50 transition-all duration-200'
+            )}>
+              <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-accent-100 flex items-center justify-center text-accent-600">
+                <Car className="h-7 w-7" />
+              </div>
+              <p className="font-medium text-ink-900">{t('actions.addCar.title')}</p>
+              <p className="text-sm text-ink-500">{t('actions.addCar.desc')}</p>
             </Link>
-            <Link href={`/dashboard/cars`} className="p-4 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-colors text-center">
-              <Car className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-              <p className="font-medium text-neutral-900">{t('actions.manageCars.title')}</p>
-              <p className="text-sm text-neutral-500">{t('actions.manageCars.desc')}</p>
+            <Link href="/dashboard/cars" className={cn(
+              'p-5 border border-ink-200 rounded-2xl text-center',
+              'hover:border-accent-300 hover:bg-accent-50 transition-all duration-200'
+            )}>
+              <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
+                <Car className="h-7 w-7" />
+              </div>
+              <p className="font-medium text-ink-900">{t('actions.manageCars.title')}</p>
+              <p className="text-sm text-ink-500">{t('actions.manageCars.desc')}</p>
             </Link>
-            <Link href={`/dashboard/messages`} className="p-4 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-colors text-center">
-              <Mail className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-              <p className="font-medium text-neutral-900">{t('actions.messages.title')}</p>
-              <p className="text-sm text-neutral-500">{t('actions.messages.desc', { count: unreadMessages })}</p>
+            <Link href="/dashboard/messages" className={cn(
+              'p-5 border border-ink-200 rounded-2xl text-center',
+              'hover:border-accent-300 hover:bg-accent-50 transition-all duration-200'
+            )}>
+              <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-terracotta-100 flex items-center justify-center text-terracotta-600">
+                <Mail className="h-7 w-7" />
+              </div>
+              <p className="font-medium text-ink-900">{t('actions.messages.title')}</p>
+              <p className="text-sm text-ink-500">{t('actions.messages.desc', { count: unreadMessages })}</p>
             </Link>
-            <Link href={`/dashboard/settings`} className="p-4 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-colors text-center">
-              <Users className="h-8 w-8 text-primary-600 mx-auto mb-2" />
-              <p className="font-medium text-neutral-900">{t('actions.settings.title')}</p>
-              <p className="text-sm text-neutral-500">{t('actions.settings.desc')}</p>
+            <Link href="/dashboard/settings" className={cn(
+              'p-5 border border-ink-200 rounded-2xl text-center',
+              'hover:border-accent-300 hover:bg-accent-50 transition-all duration-200'
+            )}>
+              <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-ink-100 flex items-center justify-center text-ink-600">
+                <Users className="h-7 w-7" />
+              </div>
+              <p className="font-medium text-ink-900">{t('actions.settings.title')}</p>
+              <p className="text-sm text-ink-500">{t('actions.settings.desc')}</p>
             </Link>
           </div>
         </CardContent>

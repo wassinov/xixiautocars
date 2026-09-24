@@ -1,26 +1,50 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
 import { CarCard } from '@/components/CarCard';
 import { ContactForm } from '@/components/ContactForm';
-import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon } from 'lucide-react';
+import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
 import type { CarWithRelations } from '@/types/car';
+import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
+import { languagesAlternates } from '@/lib/seo';
+import { GARAGE_INFO_ID } from '@/lib/constants'; // BUG-27 : singleton garage_infos
+import { getLocale, getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Xixi Autocars - Vente de véhicules neufs et d\'occasion',
-  description: 'Découvrez notre sélection de véhicules neufs et d\'occasion. Reprise, financement, garantie et entretien. Votre garage de confiance.',
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('home'); // BUG-23 (Étape 31) : metadata home traduite (ex titre FR figé sur les 4 locales)
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: { languages: languagesAlternates('/') }, // BUG-24 : hreflang × 4 locales
+  };
 };
 
-const SERVICES = [
-  { icon: Truck, title: 'Livraison à domicile', description: 'Nous livrons votre véhicule partout en France métropolitaine.' },
-  { icon: Shield, title: 'Garantie 12 mois', description: 'Tous nos véhicules d\'occasion sont garantis 12 mois minimum.' },
-  { icon: Wrench, title: 'Entretien & Réparation', description: 'Notre atelier assure l\'entretien et la réparation de votre voiture.' },
-  { icon: CreditCard, title: 'Financement sur mesure', description: 'Solutions de financement adaptées à votre budget, avec ou sans apport.' },
-  { icon: MapPin, title: 'Reprise de votre ancien véhicule', description: 'Estimation gratuite et reprise cash de votre véhicule actuel.' },
-  { icon: ArrowRight, title: 'Démarches administratives', description: 'Nous gérons l\'immatriculation et toutes les formalités pour vous.' },
+// BUG-23 : libellés externalisés dans messages/*.json (home.process / home.trust)
+const PROCESS_STEPS = [
+  { number: '01', icon: Globe, key: 'search' },
+  { number: '02', icon: Shield, key: 'inspection' },
+  { number: '03', icon: CreditCardIcon, key: 'payment' },
+  { number: '04', icon: Ship, key: 'shipping' },
+  { number: '05', icon: Truck, key: 'delivery' },
+];
+
+const TRUST_REASONS = [
+  { icon: CheckCircle, key: 'inspection' },
+  { icon: Globe, key: 'network' },
+  { icon: FileText, key: 'documents' },
+  { icon: CreditCardIcon, key: 'payment' },
+];
+
+const TESTIMONIALS = [
+  { name: 'Marie D.', location: 'Lyon', vehicle: 'Peugeot 3008', rating: 5, text: 'Processus transparent de A à Z. Livraison à domicile en 2 semaines, véhicule impeccable.' },
+  { name: 'Thomas R.', location: 'Marseille', vehicle: 'BMW X1', rating: 5, text: 'Reprise de mon ancienne voiture au juste prix. Financement clair, pas de mauvaise surprise.' },
+  { name: 'Sophie L.', location: 'Bordeaux', vehicle: 'Toyota Yaris', rating: 5, text: 'Équipe réactive et professionnelle. Documents reçus avant la livraison, top !' },
 ];
 
 export default async function HomePage() {
+  const locale = await getLocale(); // BUG-22 : formats prix localisés
+  const t = await getTranslations('home'); // BUG-23 : contenus traduits
   const supabase = await createClient();
 
   const result = await Promise.all([
@@ -41,17 +65,25 @@ export default async function HomePage() {
       supabase
         .from('garage_infos')
         .select('*')
-        .eq('id', '00000000-0000-0000-0000-000000000000')
+        .eq('id', GARAGE_INFO_ID)
         .single(),
     ]);
 
     const featuredCars = result[0].data;
     const garage = result[1].data;
 
-    // `models` est une relation plusieurs-vers-un : Supabase retourne un OBJET unique
-    // (models.brands est lui-même un objet unique). La ligne est passée telle quelle
-    // à CarCard, qui lit car.models?.name / car.models?.brands?.name / car.car_images (tableau).
-    const transformedFeaturedCars = (featuredCars || []) as CarWithRelations[];
+    const transformedFeaturedCars = (featuredCars || []) as unknown as CarWithRelations[]; // BUG-07 : to-one = objet au runtime
+
+    // Demande utilisateur (2026-09-24) : le bandeau « Reportage · Logistique » affiche la photo
+    // du véhicule vedette (données réelles) ; repli sur l'ancienne photo générique si stock vide.
+    const logisticsCar = transformedFeaturedCars[0];
+    const logisticsImage =
+      logisticsCar?.car_images?.find((img) => img.is_primary)?.image_url ??
+      logisticsCar?.car_images?.[0]?.image_url ??
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80';
+    const logisticsAlt = logisticsCar
+      ? `${logisticsCar.models?.brands?.name ?? ''} ${logisticsCar.models?.name ?? ''}`.trim() || t('logistics.imageAlt')
+      : t('logistics.imageAlt'); // alt = nom réel du véhicule affiché
 
     const garageInfo = garage ?? {
     name: 'Xixi Autocars',
@@ -64,45 +96,86 @@ export default async function HomePage() {
   };
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary-50 via-white to-white">
-        <div className="container-custom py-20 lg:py-32">
-          <div className="max-w-3xl">
-            <span className="inline-block px-3 py-1 text-sm font-medium text-primary-700 bg-primary-50 rounded-full mb-4">
-              Garage familial depuis 1980
-            </span>
-            <h1 className="text-4xl lg:text-5xl font-bold text-neutral-900 tracking-tight leading-tight">
-              Votre prochain véhicule <span className="text-primary-600">vous attend</span>
-            </h1>
-            <p className="mt-6 text-lg text-neutral-600 max-w-2xl">
-              Large choix de véhicules neufs et d'occasion, révisés et garantis. Reprise, financement et livraison à domicile.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">
-                Voir le catalogue
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-primary-700 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors">
-                Nous contacter
-              </Link>
+    <main className="bg-ink-50">
+      {/* Hero Asymétrique */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-accent-50 via-white to-white py-12 lg:py-24" aria-labelledby="hero-title">
+        <div className={magazineContainer()}>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-stretch">
+            {/* Contenu gauche - 7 colonnes */}
+            <div className={cn(revealDelay(0), 'lg:col-span-7', 'lg:flex lg:flex-col lg:justify-center')}>
+              <div className="">
+                <span className="inline-block px-4 py-1.5 text-sm font-medium text-accent-700 bg-accent-100 rounded-full mb-6 animate-reveal">
+                  {t('hero.badge')}
+                </span>
+                <h1 id="hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-ink-900 leading-tight tracking-tight animate-reveal delay-100">
+                  {t.rich('hero.title', { span: (chunks) => <span className="text-accent-600">{chunks}</span> })}
+                </h1>
+                <p className="mt-6 text-base text-ink-600 max-w-xl animate-reveal delay-200">
+                  {t('hero.description')}
+                </p>
+                <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-reveal delay-300">
+                  <Link href="/catalogue" className={cn(
+                    'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-white',
+                    'bg-ink-900 rounded-lg hover:bg-ink-800 active:bg-ink-950',
+                    ' hover:border-accent-300 transition-all duration-300 ease-in-out'
+                  )}>
+                    {t('hero.ctaCatalog')}
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
+                  <Link href="/contact" className={cn(
+                    'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium',
+                    'bg-accent-600 text-white rounded-lg hover:bg-accent-700 active:bg-accent-800',
+                    ' hover:border-accent-300 transition-all duration-300 ease-in-out'
+                  )}>
+                    {t('hero.ctaContact')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Image droite - 5 colonnes */}
+            <div className={cn(revealDelay(1), 'lg:col-span-5')}>
+              <div className="relative aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden rounded-2xl lg:rounded-none lg:rounded-tr-2xl lg:rounded-br-2xl bg-ink-100">
+                {transformedFeaturedCars[0]?.car_images?.[0] ? (
+                  <Image
+                    src={transformedFeaturedCars[0].car_images[0].image_url}
+                    alt={`${transformedFeaturedCars[0].models?.brands?.name} ${transformedFeaturedCars[0].models?.name}`}
+                    fill
+                    className="object-contain scale-105 bg-ink-100"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-ink-400">
+                    <Truck className="h-24 w-24" aria-hidden="true" />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-transparent" aria-hidden="true" />
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <p className="text-sm font-medium uppercase tracking-wider">{t('heroSpotlight')}</p>
+                  <p className="mt-1 text-xl font-display font-bold">
+                    {transformedFeaturedCars[0]?.models?.brands?.name} {transformedFeaturedCars[0]?.models?.name}
+                  </p>
+                  <p className="mt-1 text-base font-mono">
+                    {transformedFeaturedCars[0] ? formatPrice(transformedFeaturedCars[0].price, transformedFeaturedCars[0].currency, locale) : '—'}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" aria-hidden="true" />
       </section>
 
-      {/* Védettes */}
-      <section className="py-16 lg:py-24">
-        <div className="container-custom">
+      {/* Sélection du moment */}
+      <section className="py-section lg:py-section-lg" aria-labelledby="featured-title">
+        <div className={magazineContainer()}>
           <div className="flex items-center justify-between mb-10">
-            <div>
-              <h2 className="text-3xl font-bold text-neutral-900">Nos véhicules vedettes</h2>
-              <p className="mt-2 text-neutral-600">Sélectionnés pour vous, disponibles immédiatement</p>
+            <div className={revealDelay(0)}>
+              <h2 id="featured-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900">{t('featured.title')}</h2>
+              <p className="mt-2 text-base text-ink-600">{t('featured.subtitle')}</p>
             </div>
-            <Link href="/catalogue" className="hidden sm:inline-flex items-center gap-2 text-primary-600 font-medium hover:text-primary-700">
-              Voir tout le catalogue
+            <Link href="/catalogue" className="hidden sm:inline-flex items-center gap-2 text-accent-600 font-medium hover:text-accent-700 transition-colors hover:border-accent-300">
+              {t('featured.viewAll')}
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
@@ -110,116 +183,234 @@ export default async function HomePage() {
           {transformedFeaturedCars && transformedFeaturedCars.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {transformedFeaturedCars.map((car, i) => (
-                <CarCard key={car.id} car={car} priority={i < 2} />
+                <CarCard key={car.id} car={car} priority={i < 3} className={cn(revealDelay(i), 'hover:border-accent-300')} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-neutral-50 rounded-xl">
-              <p className="text-neutral-600">Aucun véhicule vedette pour le moment.</p>
+            <div className="text-center py-16 bg-ink-100 rounded-2xl">
+              <p className="text-ink-600">{t('featuredEmpty')}</p>
             </div>
           )}
 
           <div className="mt-10 text-center sm:hidden">
-            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors">
-              Voir tout le catalogue
+            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-accent-600 bg-accent-50 rounded-lg hover:bg-accent-100 transition-colors hover:border-accent-300">
+              {t('featured.viewAll')}
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Services */}
-      <section className="py-16 lg:py-24 bg-neutral-50">
-        <div className="container-custom">
+      {/* Processus 5 étapes */}
+      <section className="py-section lg:py-section-lg bg-white" aria-labelledby="process-title">
+        <div className={magazineContainer()}>
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-neutral-900">Nos services</h2>
-            <p className="mt-3 text-neutral-600">Tout pour simplifier votre achat et l'entretien de votre véhicule</p>
+            <h2 id="process-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900 animate-reveal">{t('process.title')}</h2>
+            <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('process.subtitle')}</p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((service, i) => (
-              <article key={i} className="p-6 bg-white rounded-xl border border-neutral-200 hover:shadow-lg transition-shadow">
-                <div className="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center text-primary-600 mb-4">
-                  <service.icon className="h-6 w-6" aria-hidden="true" />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {PROCESS_STEPS.map((step, i) => (
+              <article key={step.number} className={cn(
+                'relative p-6 bg-ink-50 rounded-2xl border border-ink-200 text-center',
+                'hover:border-accent-300 transition-all duration-300 ease-in-out',
+                revealDelay(i)
+              )}>
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-accent-600 text-white text-sm font-bold flex items-center justify-center">
+                  {step.number}
+                </span>
+                <div className="w-14 h-14 mx-auto mt-6 rounded-xl bg-accent-100 flex items-center justify-center text-accent-600">
+                  <step.icon className="h-7 w-7" aria-hidden="true" />
                 </div>
-                <h3 className="text-lg font-semibold text-neutral-900">{service.title}</h3>
-                <p className="mt-2 text-neutral-600">{service.description}</p>
+                <h3 className="mt-5 text-xl font-display font-semibold text-ink-900">{t(`process.steps.${step.key}.title`)}</h3>
+                <p className="mt-2 text-base text-ink-600">{t(`process.steps.${step.key}.desc`)}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Contact */}
-      <section className="py-16 lg:py-24">
-        <div className="container-custom">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-primary-600 rounded-2xl p-8 lg:p-12 text-center text-white">
-              <h2 className="text-2xl lg:text-3xl font-bold">Prêt à trouver votre véhicule ?</h2>
-              <p className="mt-3 text-primary-100">Contactez-nous pour un essai, une reprise ou simplement pour un conseil.</p>
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/contact" className="w-full sm:w-auto px-6 py-3 text-base font-medium text-primary-600 bg-white rounded-lg hover:bg-primary-50 transition-colors">
-                  Nous contacter
-                </Link>
-                <Link href="/catalogue" className="w-full sm:w-auto px-6 py-3 text-base font-medium text-white bg-primary-700 rounded-lg hover:bg-primary-800 transition-colors">
-                  Parcourir le catalogue
-                </Link>
+      {/* Bandeau reportage logistique */}
+      <section className="relative py-section-lg lg:py-[120px] overflow-hidden" aria-labelledby="logistics-title">
+        <div className="absolute inset-0 bg-ink-950" aria-hidden="true" />
+        <div className="relative">
+          <div className="grid gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-7 lg:col-start-6">
+              <div className="relative aspect-[16/9] lg:aspect-[21/9] rounded-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-900/80 to-transparent" aria-hidden="true" />
+                <Image
+                  src={logisticsImage} // photo du véhicule vedette (DB) — ex photo générique Unsplash en repli
+                  alt={logisticsAlt}
+                  fill
+                  className="object-cover opacity-40"
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                />
+                <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end">
+                  <span className="inline-block px-3 py-1 text-sm font-medium text-accent-400 bg-accent-900/30 rounded-full mb-4 backdrop-blur">
+                    {t('logistics.badge')}
+                  </span>
+                  <h2 id="logistics-title" className="text-3xl sm:text-4xl font-display font-bold text-white leading-tight max-w-2xl">
+                    {t.rich('logistics.title', { span: (chunks) => <span className="text-accent-400">{chunks}</span> })}
+                  </h2>
+                  <p className="mt-4 text-body-lg text-ink-300 max-w-xl">
+                    {t('logistics.description')}
+                  </p>
+                  <Link href="/contact" className="mt-6 inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink-900 bg-white rounded-lg hover:bg-ink-100 transition-colors w-fit hover:border-accent-300">
+                    {t('logistics.cta')}
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Infos Garage */}
-      <section className="py-16 lg:py-24 bg-neutral-50">
-        <div className="container-custom">
-          <div className="grid gap-12 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-neutral-900">{garageInfo.name}</h2>
-              <p className="mt-4 text-neutral-600 whitespace-pre-line">{garageInfo.about_text}</p>
+      {/* Raisons de choisir Xixi */}
+      <section className="py-section lg:py-section-lg bg-ink-50" aria-labelledby="trust-title">
+        <div className={magazineContainer()}>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 id="trust-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900 animate-reveal">{t('trust.title')}</h2>
+            <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('trust.subtitle')}</p>
+          </div>
 
-              <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-primary-600 mt-0.5 shrink-0" aria-hidden="true" />
-                  <div>
-                    <h3 className="font-medium text-neutral-900">Adresse</h3>
-                    <p className="text-neutral-600">{garageInfo.address}</p>
-                    {garageInfo.google_maps_url && (
-                      <a href={garageInfo.google_maps_url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700">
-                        Voir sur Google Maps
-                        <ArrowRight className="h-4 w-4" />
-                      </a>
-                    )}
-                  </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {TRUST_REASONS.map((reason, i) => (
+              <article key={reason.key} className={cn(
+                'p-6 bg-white rounded-2xl border border-ink-200',
+                'hover:border-accent-300 transition-all duration-300 ease-in-out',
+                revealDelay(i)
+              )}>
+                <div className="w-12 h-12 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
+                  <reason.icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <div className="flex items-start gap-3">
-                  <Clock className="h-5 w-5 text-primary-600 mt-0.5 shrink-0" aria-hidden="true" />
-                  <div>
-                    <h3 className="font-medium text-neutral-900">Horaires</h3>
-                    <p className="text-neutral-600 whitespace-pre-line">{garageInfo.opening_hours}</p>
-                  </div>
+                <h3 className="mt-4 text-xl font-display font-semibold text-ink-900">{t(`trust.items.${reason.key}.title`)}</h3>
+                <p className="mt-2 text-base text-ink-600">{t(`trust.items.${reason.key}.desc`)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Témoignages */}
+      <section className="py-section lg:py-section-lg bg-white" aria-labelledby="testimonials-title">
+        <div className={magazineContainer()}>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 id="testimonials-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900 animate-reveal">{t('testimonials.title')}</h2>
+            <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('testimonials.subtitle')}</p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {TESTIMONIALS.map((testimonial, i) => (
+              <article key={testimonial.name} className={cn(
+                'p-6 bg-ink-50 rounded-2xl border border-ink-200',
+                'hover:border-accent-300',
+                revealDelay(i)
+              )}>
+                <div className="flex items-center gap-1" aria-label={t('testimonials.ratingLabel', { rating: testimonial.rating })}>
+                  {[...Array(testimonial.rating)].map((_, idx) => (
+                    <CheckCircle key={idx} className="h-5 w-5 text-terracotta-500 fill-terracotta-500" aria-hidden="true" />
+                  ))}
                 </div>
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-primary-600 mt-0.5 shrink-0" aria-hidden="true" />
-                  <div>
-                    <h3 className="font-medium text-neutral-900">Téléphone</h3>
-                    <a href={`tel:${garageInfo.phone.replace(/\s/g, '')}`} className="text-neutral-600 hover:text-primary-600">{garageInfo.phone}</a>
+                <blockquote className="mt-4 text-base text-ink-700 italic leading-relaxed">
+                  "{testimonial.text}"
+                </blockquote>
+                <footer className="mt-4 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center text-accent-600 font-bold text-sm">
+                    {testimonial.name.charAt(0)}
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-primary-600 mt-0.5 shrink-0" aria-hidden="true" />
                   <div>
-                    <h3 className="font-medium text-neutral-900">Email</h3>
-                    <a href={`mailto:${garageInfo.email}`} className="text-neutral-600 hover:text-primary-600">{garageInfo.email}</a>
+                    <p className="font-medium text-ink-900">{testimonial.name}</p>
+                    <p className="text-sm text-ink-500">{testimonial.vehicle} · {testimonial.location}</p>
+                  </div>
+                </footer>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-section-lg lg:py-[100px] bg-ink-950" aria-labelledby="cta-title">
+        <div className={magazineContainer()}>
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 id="cta-title" className="text-3xl sm:text-4xl font-display font-bold text-white animate-reveal">{t('cta.title')}</h2>
+            <p className="mt-4 text-body-lg text-ink-400 animate-reveal delay-100">{t('cta.description')}</p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-reveal delay-200">
+              <Link href="/contact" className={cn(
+                'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-ink-900',
+                'bg-white rounded-lg hover:bg-ink-100 active:bg-ink-200',
+                ' hover:border-accent-300 transition-all duration-300 ease-in-out'
+              )}>
+                {t('cta.contact')}
+              </Link>
+              <Link href="/catalogue" className={cn(
+                'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-white',
+                'bg-accent-600 rounded-lg hover:bg-accent-700 active:bg-accent-800',
+                ' hover:border-accent-300 transition-all duration-300 ease-in-out'
+              )}>
+                {t('cta.catalog')}
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Infos Garage + Contact Form */}
+      <section className="py-section lg:py-section-lg bg-ink-50" aria-labelledby="garage-title">
+        <div className={magazineContainer()}>
+          <div className="grid gap-12 lg:grid-cols-3">
+            <div className="lg:col-span-2 space-y-8">
+              <div className={revealDelay(0)}>
+                <h2 className="text-2xl font-display font-bold text-ink-900">{garageInfo.name}</h2>
+                <p className="mt-4 text-base text-ink-600 whitespace-pre-line">{garageInfo.about_text}</p>
+
+                <div className="mt-8 grid gap-6 sm:grid-cols-2">
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
+                    <MapPin className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-medium text-ink-900">{t('garage.address')}</h3>
+                      <p className="mt-1 text-ink-600">{garageInfo.address}</p>
+                      {garageInfo.google_maps_url && (
+                        <a href={garageInfo.google_maps_url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm text-accent-600 hover:text-accent-700 transition-colors">
+                          <MapPin className="h-3.5 w-3.5" />
+                          {t('garage.map')}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
+                    <Clock className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-medium text-ink-900">{t('garage.hours')}</h3>
+                      <p className="mt-1 text-ink-600 whitespace-pre-line">{garageInfo.opening_hours}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
+                    <Phone className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-medium text-ink-900">{t('garage.phone')}</h3>
+                      <a href={`tel:${garageInfo.phone.replace(/\s/g, '')}`} className="mt-1 text-ink-600 hover:text-accent-600 transition-colors">{garageInfo.phone}</a>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
+                    <Mail className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-medium text-ink-900">{t('garage.email')}</h3>
+                      <a href={`mailto:${garageInfo.email}`} className="mt-1 text-ink-600 hover:text-accent-600 transition-colors">{garageInfo.email}</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h3 className="text-xl font-bold text-neutral-900">Nous contacter</h3>
-              <p className="mt-2 text-neutral-600">Une question ? Un projet ? Nous vous répondrons sous 24h.</p>
-              <ContactForm carName="véhicule" />
+            <div className={revealDelay(1)}>
+              <div className="p-6 bg-white rounded-2xl border border-ink-200 sticky top-24 hover:border-accent-300">
+                <h3 className="text-xl font-display font-bold text-ink-900">{t('garage.contactTitle')}</h3>
+                <p className="mt-2 text-base text-ink-600">{t('garage.contactDesc')}</p>
+                <ContactForm carName="véhicule" />
+              </div>
             </div>
           </div>
         </div>

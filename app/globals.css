@@ -4,39 +4,171 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 46%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 220 14% 96%;
-    --accent-foreground: 220 9% 46%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 60 9% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
+    /* Ink (neutres) */
+    --ink-50: 250 250 250;
+    --ink-100: 245 245 245;
+    --ink-200: 229 229 229;
+    --ink-300: 212 212 212;
+    --ink-400: 163 163 163;
+    --ink-500: 115 115 115;
+    --ink-600: 82 82 82;
+    --ink-700: 64 64 64;
+    --ink-800: 38 38 38;
+    --ink-900: 23 23 23;
+    --ink-950: 10 10 10;
+
+    /* Accent (magenta) */
+    --accent-50: 253 244 255;
+    --accent-100: 250 232 255;
+    --accent-200: 245 208 254;
+    --accent-300: 240 171 252;
+    --accent-400: 232 121 249;
+    --accent-500: 217 70 239;
+    --accent-600: 192 38 211;
+    --accent-700: 162 28 175;
+
+    /* Terracotta */
+    --terracotta-50: 254 247 238;
+    --terracotta-100: 253 236 217;
+    --terracotta-200: 250 216 179;
+    --terracotta-300: 248 190 124;
+    --terracotta-400: 245 160 69;
+    --terracotta-500: 242 132 26;
+    --terracotta-600: 224 108 16;
+    --terracotta-700: 184 77 13;
+    --terracotta-800: 143 55 12;
+    --terracotta-900: 119 42 16;
+
+    /* Sage */
+    --sage-50: 246 247 244;
+    --sage-100: 236 237 230;
+    --sage-200: 217 219 205;
+    --sage-300: 192 195 168;
+    --sage-400: 160 166 122;
+    --sage-500: 133 138 88;
+    --sage-600: 107 111 68;
+    --sage-700: 82 84 54;
+    --sage-800: 65 67 46;
+    --sage-900: 56 59 44;
+
+    /* Font stacks via next/font variables */
+    --font-display: var(--font-syne), system-ui, sans-serif;
+    --font-body: var(--font-outfit), system-ui, sans-serif;
+    --font-mono: var(--font-geist-mono), monospace;
+
+    /* Legacy shadcn/ui compat */
+    --background: 250 250 250;
+    --foreground: 23 23 23;
+    --primary: 192 38 211;
+    --primary-foreground: 255 255 255;
+    --secondary: 245 245 245;
+    --secondary-foreground: 23 23 23;
+    --muted: 245 245 245;
+    --muted-foreground: 115 115 115;
+    --accent: 250 232 255;
+    --accent-foreground: 162 28 175;
+    --destructive: 224 108 16;
+    --destructive-foreground: 255 255 255;
+    --border: 229 229 229;
+    --input: 229 229 229;
+    --ring: 192 38 211;
     --radius: 0.5rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-neutral-200;
-  }
-  body {
-    @apply bg-white text-neutral-900 font-sans antialiased;
+    @apply border-ink-200;
   }
   html {
     scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink-50 text-ink-900 font-body antialiased;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-600 ring-offset-2 ring-offset-white;
+  }
+  ::selection {
+    @apply bg-accent-200 text-accent-700;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 @layer utilities {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  /* Magazine grid helpers */
+  .magazine-grid {
+    @apply grid gap-6 lg:gap-8;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  @media (max-width: 1024px) {
+    .magazine-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+  @media (max-width: 640px) {
+    .magazine-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+  }
+
+  /* Asymmetric column spans */
+  .col-span-asym-7 { @apply lg:col-span-7; }
+  .col-span-asym-5 { @apply lg:col-span-5; }
+  .col-span-asym-4 { @apply lg:col-span-4; }
+  .col-span-asym-8 { @apply lg:col-span-8; }
+
+  /* RTL logical property helpers */
+  .ms-auto { margin-inline-start: auto; }
+  .me-auto { margin-inline-end: auto; }
+  .ps-0 { padding-inline-start: 0; }
+  .pe-0 { padding-inline-end: 0; }
+
+  /* Reveal animation */
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-reveal {
+    animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+
+  /* Text gradient utility */
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent-600 to-accent-700 bg-clip-text text-transparent;
+  }
+
+  /* Vehicle image aspect ratios */
+  .aspect-vehicle { aspect-ratio: 4 / 3; }
+  .aspect-vehicle-portrait { aspect-ratio: 4 / 5; }
+  .aspect-vehicle-wide { aspect-ratio: 16 / 9; }
 }

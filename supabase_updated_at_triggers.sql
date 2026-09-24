@@ -9,6 +9,13 @@ alter table garage_infos add column if not exists updated_at timestamp with time
 alter table contact_messages add column if not exists updated_at timestamp with time zone not null default now();
 
 -- Add triggers to remaining tables
+-- (Rendu idempotent : ré-exécutable sans erreur — drop avant create)
+drop trigger if exists update_brands_updated_at on brands;
+drop trigger if exists update_models_updated_at on models;
+drop trigger if exists update_car_images_updated_at on car_images;
+drop trigger if exists update_garage_infos_updated_at on garage_infos;
+drop trigger if exists update_contact_messages_updated_at on contact_messages;
+
 create trigger update_brands_updated_at
 before update on brands
 for each row

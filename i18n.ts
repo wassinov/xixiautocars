@@ -10,10 +10,12 @@ export const localeNames: Record<string, string> = {
   fr: 'Français',
   en: 'English',
   ar: 'العربية',
+  zh: '中文',
 };
 
 export const localeFlags: Record<string, string> = {
   fr: '🇫🇷',
   en: '🇬🇧',
   ar: '🇸🇦',
+  zh: '🇨🇳',
 };

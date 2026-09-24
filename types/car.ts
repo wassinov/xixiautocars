@@ -1,10 +1,9 @@
 /**
  * Types des données retournées par Supabase pour la table `cars` et ses relations.
  *
- * Important : `models` et `brands` sont des relations plusieurs-vers-un
- * (une voiture appartient à UN modèle, un modèle à UNE marque).
- * Supabase/PostgREST les retourne donc comme des OBJETS UNIQUES, pas des tableaux.
- * `car_images` est une relation un-à-plusieurs : elle est bien un TABLEAU.
+ * Convention PostgREST pour les embeds imbriqués (BUG-07) :
+ * - relation TO-ONE (FK sur la table interrogée, ex. cars.model_id → models) : OBJET
+ * - relation TO-MANY (FK inverse, ex. car_images.car_id → cars) : TABLEAU
  */
 
 export type Brand = {
@@ -17,6 +16,7 @@ export type Model = {
   name: string;
   body_type: string | null;
   brand_id: string;
+  brands: Brand; // to-one : models.brand_id → brands
 };
 
 export type CarImage = {
@@ -41,8 +41,6 @@ export type CarWithRelations = {
   description?: string | null;
   features?: Record<string, unknown> | null;
   created_at?: string;
-  /** Objet unique — ne JAMAIS appeler .map() dessus. */
-  models: (Model & { brands: Brand }) | null;
-  /** Tableau — .map() est valide ici. */
-  car_images: CarImage[];
+  models: Model | null; // to-one : cars.model_id → models
+  car_images: CarImage[]; // to-many : car_images.car_id → cars
 };

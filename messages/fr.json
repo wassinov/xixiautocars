@@ -11,6 +11,48 @@
     "logout": "Déconnexion"
   },
   "home": {
+    "metaTitle": "Xixi Autocars - Vente de véhicules neufs et d'occasion",
+    "metaDescription": "Découvrez notre sélection de véhicules neufs et d'occasion. Reprise, financement, garantie et entretien. Votre garage de confiance.",
+    "heroSpotlight": "Sélection du moment",
+    "featuredEmpty": "Aucun véhicule vedette pour le moment.",
+    "process": {
+      "title": "Notre processus en 5 étapes",
+      "subtitle": "De la recherche à la livraison, nous gérons tout pour vous.",
+      "steps": {
+        "search": { "title": "Recherche", "desc": "Nous identifions le véhicule idéal selon vos critères et budget." },
+        "inspection": { "title": "Inspection", "desc": "Chaque véhicule passe un contrôle technique rigoureux de 150 points." },
+        "payment": { "title": "Paiement sécurisé", "desc": "Transaction protégée via nos partenaires bancaires certifiés." },
+        "shipping": { "title": "Expédition", "desc": "Transport assuré depuis l'usine ou le stock jusqu'à votre porte." },
+        "delivery": { "title": "Livraison", "desc": "Remise des clés à domicile, documents en règle, prêt à rouler." }
+      }
+    },
+    "logistics": {
+      "badge": "Reportage · Logistique internationale",
+      "title": "De l'usine à votre porte : <span>la maîtrise totale</span>",
+      "description": "Notre réseau logistique couvre 12 pays européens. Chaque véhicule est suivi en temps réel, transporté en camion fermé, livré avec un dossier complet.",
+      "cta": "En savoir plus",
+      "imageAlt": "Logistique internationale - Transport de véhicules"
+    },
+    "trust": {
+      "title": "Pourquoi choisir Xixi Autocars ?",
+      "subtitle": "Quatre piliers de confiance pour votre achat en toute sérénité.",
+      "items": {
+        "inspection": { "title": "Inspection 150 points", "desc": "Chaque véhicule est contrôlé, révisé et certifié avant la vente." },
+        "network": { "title": "Réseau international", "desc": "Accès aux stocks constructeurs et partenaires dans 12 pays européens." },
+        "documents": { "title": "Documents en règle", "desc": "Carte grise, certificat de conformité, historique complet fournis." },
+        "payment": { "title": "Paiement protégé", "desc": "Fonds séquestrés jusqu'à la livraison effective du véhicule." }
+      }
+    },
+    "testimonials": {
+      "title": "Ils nous font confiance",
+      "subtitle": "Des centaines de clients satisfaits à travers l'Europe.",
+      "ratingLabel": "Note : {rating} sur 5"
+    },
+    "footer": {
+      "pitch": "Votre garage de confiance depuis 1980. Véhicules neufs et d'occasion, révisés et garantis.",
+      "hours": "Lun-Ven : 9h-19h\nSam : 9h-18h\nDim : fermé",
+      "rights": "© 2024 Xixi Autocars. Tous droits réservés."
+    },
     "hero": {
       "badge": "Garage familial depuis 1980",
       "title": "Votre prochain véhicule <span>vous attend</span>",
@@ -81,6 +123,8 @@
     "page": "Page {current} sur {total}",
     "noResults": "Aucun véhicule ne correspond à vos critères.",
     "clearFilters": "Réinitialiser les filtres",
+    "options": "Options",
+    "selectBrandFirst": "Sélectionnez une marque",
     "bodyTypes": {
       "sedan": "Berline",
       "suv": "SUV",
@@ -128,7 +172,22 @@
       "tradein": "Reprise de votre ancien véhicule",
       "financing": "Solutions de financement"
     },
-    "viewDetails": "Voir les détails"
+    "viewDetails": "Voir les détails",
+    "gallery": {
+      "noImages": "Aucune image disponible",
+      "imageOf": "Image {current} sur {total}",
+      "previous": "Image précédente",
+      "next": "Image suivante",
+      "closeFullscreen": "Fermer le plein écran",
+      "goToImage": "Aller à l'image {index}",
+      "viewImage": "Voir l'image {index}",
+      "thumbnails": "Miniatures",
+      "primary": "Principale",
+      "fullscreen": "Voir en plein écran ({count} photos)",
+      "close": "Fermer",
+      "galleryOf": "Galerie {name}"
+    },
+    "availableAtGarage": "Véhicule disponible chez Xixi Autocars."
   },
   "contact": {
     "title": "Contactez-nous",
@@ -158,7 +217,8 @@
         "testDrive": "Demande d'essai",
         "financing": "Financement / Reprise",
         "other": "Autre"
-      }
+      },
+      "messagePrefix": "Vous souhaitez être contacté concernant le véhicule {vehicle}"
     },
     "info": {
       "title": "Informations pratiques",
@@ -170,7 +230,19 @@
       "quickCall": "Besoin d'une réponse rapide ?",
       "quickCallDesc": "Appelez-nous directement aux horaires d'ouverture, nous serons ravis de vous renseigner.",
       "callNow": "Appeler maintenant"
-    }
+    },
+    "description": "Contactez Xixi Autocars pour toute demande d'information, essai véhicule, financement ou reprise. Réponse sous 24h.",
+    "engagements": {
+      "title": "Nos engagements",
+      "responseTime": "Réponse garantie sous 24h ouvrées",
+      "personalizedSupport": "Accompagnement personnalisé pour votre projet",
+      "freeQuote": "Devis gratuit et sans engagement"
+    },
+    "visitUs": {
+      "title": "Ou rendez-nous visite",
+      "description": "Notre showroom est ouvert du lundi au samedi. Venez découvrir nos véhicules en personne."
+    },
+    "viewCatalog": "Voir le catalogue"
   },
   "admin": {
     "login": {
@@ -310,7 +382,7 @@
       "uploadTitle": "Ajouter des images",
       "dragDrop": "Glissez-déposez vos images ici",
       "orClick": "ou cliquez pour sélectionner",
-      "formats": "PNG, JPG, WebP - Max 5MB par image",
+      "formats": "PNG, JPG, WebP - Max 4MB par image",
       "uploading": "Upload en cours...",
       "noImages": "Aucune image pour ce véhicule",
       "addFirst": "Ajoutez la première image ci-dessus",
@@ -326,7 +398,9 @@
       "dropImagesHere": "Déposez les images ici",
       "dragDropImagesHere": "Glissez-déposez vos images ici",
       "orClickToSelect": "ou cliquez pour sélectionner",
-      "fileFormats": "PNG, JPG, WebP - Max 5MB par image",
+      "fileFormats": "PNG, JPG, WebP - Max 4MB par image",
+      "fileTooLarge": "Fichier trop volumineux (maximum 4 Mo)",
+      "fileInvalidType": "Format non supporté (PNG, JPG ou WebP)",
       "saveVehicleFirst": "Enregistrez d'abord le véhicule pour ajouter des photos.",
       "imagesCount": "Images ({count})",
       "image": "Image",
@@ -391,6 +465,7 @@
         "Politiques RLS : lecture publique, écriture authentifiée"
       ],
       "rlsTitle": "Politiques RLS recommandées",
+      "rlsDesc": "Copiez ces politiques dans l'éditeur SQL Supabase : lecture publique pour l'affichage du site, écriture réservée aux comptes authentifiés.",
       "users": "Utilisateurs administrateurs",
       "usersDesc": "L'authentification est gérée par Supabase Auth. Pour ajouter un admin :",
       "usersSteps": [
@@ -447,6 +522,13 @@
     "imageDeleted": "Image supprimée",
     "toProcess": "À traiter",
     "messages": "messages",
-    "currency": "Devise"
+    "currency": "Devise",
+    "vehiclesAvailable": "{total} véhicules disponibles",
+    "about": "À propos",
+    "success": "Succès",
+    "saving": "Enregistrement…",
+    "colorPlaceholder": "Ex. Bleu",
+    "notSpecified": "Non renseigné",
+    "descriptionPlaceholder": "Décrivez le véhicule, son historique, ses équipements…"
   }
 }

@@ -3,9 +3,13 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { ImageGallery } from '@/components/ImageGallery';
 import { ContactForm } from '@/components/ContactForm';
-import { Calendar, MapPin, Fuel, Settings, Tag, Truck, Shield, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
+import { Calendar, MapPin, Fuel, Settings, Tag, Truck, Shield, CheckCircle } from 'lucide-react';
+import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés par locale (fr = canonique nue)
+import { GARAGE_INFO_ID } from '@/lib/constants'; // BUG-27 : singleton garage_infos
+import { getTranslations, getLocale } from 'next-intl/server'; // BUG-02 : getTranslations/getLocale sont async en next-intl v4
 import type { CarWithRelations } from '@/types/car';
+import { cn, magazineContainer, revealDelay, formatPrice, formatMileage } from '@/lib/utils';
+import { languagesAlternates } from '@/lib/seo'; // BUG-24 : hreflang
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -13,6 +17,8 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
+  const locale = await getLocale();
+  const tCommon = await getTranslations('common'); // BUG-02 : déclaré AVANT usage, et awaité
   const supabase = await createClient();
   const { data: car } = await supabase
     .from('cars')
@@ -20,18 +26,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .eq('id', id)
     .single();
 
-  if (!car) return { title: 'Véhicule introuvable' };
+  if (!car) return { title: tCommon('notFound') };
 
-  // `models` est une relation plusieurs-vers-un : objet unique, jamais un tableau.
-  const brandName = car.models?.brands?.name;
-  const modelName = car.models?.name;
+  // BUG-07 : models est un embed to-one → PostgREST renvoie un OBJET au runtime
+  // (l'inférence postgrest sans schéma typé devine « tableau » : passage par unknown)
+  const model = car.models as unknown as { name: string; brands: { name: string } } | null;
+  const brandName = model?.brands?.name;
+  const modelName = model?.name;
+  const t = await getTranslations('car');
 
   return {
-    title: `${brandName} ${modelName} (${car.year}) - ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: car.currency, maximumFractionDigits: 0 }).format(car.price)}`,
-    description: `${brandName} ${modelName} ${car.year} - ${car.price.toLocaleString('fr-FR')} ${car.currency}. Véhicule disponible chez Xixi Autocars.`,
+    title: `${brandName} ${modelName} (${car.year}) - ${formatPrice(car.price, car.currency, locale)}`,
+    description: `${brandName} ${modelName} ${car.year} - ${formatPrice(car.price, car.currency, locale)}. ${t('availableAtGarage')}`,
+    alternates: { languages: languagesAlternates(`/catalogue/${id}`) }, // BUG-24 : hreflang × 4 locales + x-default
     openGraph: {
       title: `${brandName} ${modelName} (${car.year})`,
-      description: `Prix: ${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: car.currency, maximumFractionDigits: 0 }).format(car.price)}`,
+      description: `${t('price')}: ${formatPrice(car.price, car.currency, locale)}`,
       type: 'website',
     },
   };
@@ -54,7 +64,7 @@ async function getCar(id: string) {
     .single();
 
   if (error || !data) return null;
-  return data as CarWithRelations;
+  return data as unknown as CarWithRelations; // BUG-07 : to-one = objet au runtime
 }
 
 async function getGarage() {
@@ -62,7 +72,7 @@ async function getGarage() {
   const { data } = await supabase
     .from('garage_infos')
     .select('*')
-    .eq('id', '00000000-0000-0000-0000-000000000000')
+    .eq('id', GARAGE_INFO_ID) // BUG-27 : singleton
     .single();
   return data;
 }
@@ -84,55 +94,75 @@ type CarData = {
   models: { body_type: string | null } | null;
 };
 
-const SPECS: SpecConfig[] = [
-  { key: 'year', label: 'Année', icon: Calendar },
-  { key: 'mileage', label: 'Kilométrage', icon: MapPin, format: (v: number) => v.toLocaleString('fr-FR') + ' km' },
-  { key: 'fuel_type', label: 'Carburant', icon: Fuel },
-  { key: 'gearbox', label: 'Boîte', icon: Settings },
-  { key: 'color', label: 'Couleur', icon: Tag },
-  { key: 'body_type', label: 'Carrosserie', icon: Truck, nested: 'models' },
-];
-
 export default async function CarDetailPage({ params }: PageProps) {
   const { id } = await params;
+  const locale = await getLocale();
+  const t = await getTranslations('car'); // BUG-02 : await + configs internalisées (t n'existe pas au scope module)
+  const tNav = await getTranslations('nav');
+  const tContact = await getTranslations('contact');
   const [car, garage] = await Promise.all([getCar(id), getGarage()]);
 
   if (!car) notFound();
 
-  const formatPrice = (price: number) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: car.currency, maximumFractionDigits: 0 }).format(price);
+  // BUG-02 : SPECS était un const de module référençant t() hors scope — internalisé dans le rendu
+  const SPECS: SpecConfig[] = [
+    { key: 'year', label: t('year'), icon: Calendar },
+    { key: 'mileage', label: t('mileage'), icon: MapPin, format: (v: number) => formatMileage(v, locale) }, // BUG-22 : format localisé
+    { key: 'fuel_type', label: t('fuel'), icon: Fuel },
+    { key: 'gearbox', label: t('gearbox'), icon: Settings },
+    { key: 'color', label: t('color'), icon: Tag },
+    { key: 'body_type', label: t('bodyType'), icon: Truck, nested: 'models' },
+  ];
+
+  const INCLUDED_SERVICES = [
+    { icon: Shield, label: t('services.warranty') },
+    { icon: CheckCircle, label: t('services.inspected') },
+    { icon: CheckCircle, label: t('services.admin') },
+    { icon: CheckCircle, label: t('services.delivery') },
+    { icon: CheckCircle, label: t('services.tradein') },
+    { icon: CheckCircle, label: t('services.financing') },
+  ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="border-b bg-white/80 backdrop-blur sticky top-0 z-40" aria-label="Fil d'Ariane">
-        <div className="container-custom py-3">
-          <ol className="flex items-center gap-2 text-sm text-neutral-500">
-            <li><Link href="/" className="hover:text-primary-600">Accueil</Link></li>
-            <li className="text-neutral-300">/</li>
-            <li><Link href="/catalogue" className="hover:text-primary-600">Catalogue</Link></li>
-            <li className="text-neutral-300">/</li>
-            <li className="text-neutral-900 font-medium truncate max-w-[200px]">{car.models?.brands?.name} {car.models?.name}</li>
+    <div className="min-h-screen bg-ink-50">
+      <nav className="border-b border-ink-200 bg-white/80 backdrop-blur sticky top-0 z-40" aria-label="Fil d'Ariane">
+        <div className={magazineContainer('py-3')}>
+          <ol className="flex items-center gap-2 text-sm text-ink-500">
+            <li><Link href="/" className="hover:text-accent-600 hover:border-accent-300 transition-colors">{tNav('home')}</Link></li>
+            <li className="text-ink-300">/</li>
+            <li><Link href="/catalogue" className="hover:text-accent-600 hover:border-accent-300 transition-colors">{tNav('catalog')}</Link></li>
+            <li className="text-ink-300">/</li>
+            <li className="text-ink-900 font-medium truncate max-w-[200px]">{car.models?.brands?.name} {car.models?.name}</li>
           </ol>
         </div>
       </nav>
 
-      <main className="container-custom py-10 lg:py-16">
-        <header className="mb-8">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            {car.is_new && <span className="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-full">Neuf</span>}
-            {car.is_featured && <span className="px-3 py-1 text-sm font-medium text-white bg-primary-600 rounded-full">Vedette</span>}
+      <main className={magazineContainer('py-section lg:py-section-lg')}>
+        <header className="mb-10">
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            {car.is_new && (
+              <span className="px-3 py-1 text-sm font-medium text-white bg-sage-600 rounded-full">
+                {t('new')}
+              </span>
+            )}
+            {car.is_featured && (
+              <span className="px-3 py-1 text-sm font-medium text-white bg-accent-600 rounded-full">
+                {t('featured')}
+              </span>
+            )}
           </div>
-          <h1 className="text-3xl lg:text-4xl font-bold text-neutral-900">{car.models?.brands?.name} {car.models?.name}</h1>
-          <p className="mt-2 text-2xl lg:text-3xl font-bold text-primary-700">{formatPrice(car.price)}</p>
+          <h1 className="text-3xl lg:text-display-xl font-display font-bold text-ink-900">{car.models?.brands?.name} {car.models?.name}</h1>
+          <p className="mt-3 text-2xl lg:text-3xl font-display font-bold text-accent-600">{formatPrice(car.price, car.currency, locale)}</p>
         </header>
 
         <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-8">
-            <section aria-labelledby="gallery-title">
+          <div className="lg:col-span-2 space-y-10">
+            <section aria-labelledby="gallery-title" className={revealDelay(0)}>
               <ImageGallery images={car.car_images} carName={`${car.models?.brands?.name} ${car.models?.name}`} />
             </section>
 
-            <section aria-labelledby="specs-title">
-              <h2 id="specs-title" className="text-xl font-bold text-neutral-900 mb-4">Caractéristiques techniques</h2>
+            <section aria-labelledby="specs-title" className={revealDelay(1)}>
+              <h2 id="specs-title" className="text-xl font-display font-semibold text-ink-900 mb-6">{t('specs')}</h2>
               <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {SPECS.map((spec) => {
                   const source = spec.nested ? car[spec.nested as keyof typeof car] : car;
@@ -140,11 +170,11 @@ export default async function CarDetailPage({ params }: PageProps) {
                   if (value === null || value === undefined || value === '') return null;
                   const Icon = spec.icon;
                   return (
-                    <div key={spec.key} className="flex items-center gap-3 p-4 bg-neutral-50 rounded-lg">
-                      <Icon className="h-5 w-5 text-primary-600 shrink-0" aria-hidden="true" />
+                    <div key={spec.key} className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors">
+                      <Icon className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />
                       <div>
-                        <dt className="text-sm text-neutral-500">{spec.label}</dt>
-                        <dd className="text-base font-medium text-neutral-900">
+                        <dt className="text-sm text-ink-500">{spec.label}</dt>
+                        <dd className="text-base font-medium text-ink-900 font-mono">
                           {spec.format ? spec.format(value as number) : String(value)}
                         </dd>
                       </div>
@@ -155,47 +185,47 @@ export default async function CarDetailPage({ params }: PageProps) {
             </section>
 
             {car.description && (
-              <section aria-labelledby="desc-title">
-                <h2 id="desc-title" className="text-xl font-bold text-neutral-900 mb-4">Description</h2>
-                <div className="prose prose-neutral max-w-none whitespace-pre-line text-neutral-700">
+              <section aria-labelledby="desc-title" className={revealDelay(2)}>
+                <h2 id="desc-title" className="text-xl font-display font-semibold text-ink-900 mb-4">{t('description')}</h2>
+                <div className="prose prose-ink max-w-none whitespace-pre-line text-ink-700">
                   {car.description}
                 </div>
               </section>
             )}
 
             {car.features && Object.keys(car.features).length > 0 && (
-              <section aria-labelledby="features-title">
-                <h2 id="features-title" className="text-xl font-bold text-neutral-900 mb-4">Équipements & Options</h2>
+              <section aria-labelledby="features-title" className={revealDelay(3)}>
+                <h2 id="features-title" className="text-xl font-display font-semibold text-ink-900 mb-4">{t('features')}</h2>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {Object.entries(car.features).map(([key, value]) => (
-                    <li key={key} className="flex items-center gap-2 text-neutral-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 shrink-0" aria-hidden="true" />
-                      <span>{key.replace(/_/g, ' ')}</span>
-                      {value !== true && <span className="text-neutral-500">: {String(value)}</span>}
+                    <li key={key} className="flex items-center gap-2 text-ink-700 p-3 bg-white rounded-2xl border border-ink-200">
+                      <CheckCircle className="h-5 w-5 text-sage-600 shrink-0" aria-hidden="true" />
+                      <span className="font-mono text-xs">{key.replace(/_/g, ' ')}</span>
+                      {value !== true && <span className="text-ink-500 ml-auto">: {String(value)}</span>}
                     </li>
                   ))}
                 </ul>
               </section>
             )}
 
-            <section aria-labelledby="garage-title">
-              <h2 id="garage-title" className="text-xl font-bold text-neutral-900 mb-4">{garage?.name || 'Xixi Autocars'}</h2>
+            <section aria-labelledby="garage-title" className={revealDelay(4)}>
+              <h2 id="garage-title" className="text-xl font-display font-semibold text-ink-900 mb-4">{garage?.name || 'Xixi Autocars'}</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="p-4 bg-neutral-50 rounded-lg">
-                  <h3 className="font-medium text-neutral-900">Adresse</h3>
-                  <p className="mt-1 text-neutral-600">{garage?.address}</p>
+                <div className="p-4 bg-white rounded-2xl border border-ink-200">
+                  <h3 className="font-medium text-ink-900">{tContact('info.address')}</h3>
+                  <p className="mt-1 text-ink-600">{garage?.address}</p>
                 </div>
-                <div className="p-4 bg-neutral-50 rounded-lg">
-                  <h3 className="font-medium text-neutral-900">Horaires</h3>
-                  <p className="mt-1 text-neutral-600 whitespace-pre-line">{garage?.opening_hours}</p>
+                <div className="p-4 bg-white rounded-2xl border border-ink-200">
+                  <h3 className="font-medium text-ink-900">{tContact('info.hours')}</h3>
+                  <p className="mt-1 text-ink-600 whitespace-pre-line">{garage?.opening_hours}</p>
                 </div>
-                <div className="p-4 bg-neutral-50 rounded-lg">
-                  <h3 className="font-medium text-neutral-900">Téléphone</h3>
-                  <a href={`tel:${garage?.phone?.replace(/\s/g, '')}`} className="mt-1 text-neutral-600 hover:text-primary-600">{garage?.phone}</a>
+                <div className="p-4 bg-white rounded-2xl border border-ink-200">
+                  <h3 className="font-medium text-ink-900">{tContact('info.phone')}</h3>
+                  <a href={`tel:${garage?.phone?.replace(/\s/g, '')}`} className="mt-1 text-ink-600 hover:text-accent-600 hover:border-accent-300 transition-colors">{garage?.phone}</a>
                 </div>
-                <div className="p-4 bg-neutral-50 rounded-lg">
-                  <h3 className="font-medium text-neutral-900">Email</h3>
-                  <a href={`mailto:${garage?.email}`} className="mt-1 text-neutral-600 hover:text-primary-600">{garage?.email}</a>
+                <div className="p-4 bg-white rounded-2xl border border-ink-200">
+                  <h3 className="font-medium text-ink-900">{tContact('info.email')}</h3>
+                  <a href={`mailto:${garage?.email}`} className="mt-1 text-ink-600 hover:text-accent-600 hover:border-accent-300 transition-colors">{garage?.email}</a>
                 </div>
               </div>
             </section>
@@ -203,20 +233,22 @@ export default async function CarDetailPage({ params }: PageProps) {
 
           <aside className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              <div className="bg-white border border-neutral-200 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-neutral-900 mb-4">Contactez-nous pour ce véhicule</h3>
+              <div className={cn(revealDelay(0), 'bg-white border border-ink-200 rounded-2xl p-6')}>
+                <h3 className="text-xl font-display font-bold text-ink-900 mb-4">{t('contactTitle')}</h3>
                 <ContactForm initialCarId={car.id} carName={`${car.models?.brands?.name} ${car.models?.name}`} />
               </div>
 
-              <div className="bg-primary-50 border border-primary-100 rounded-xl p-6">
-                <h3 className="font-bold text-neutral-900 mb-3">Services inclus</h3>
-                <ul className="space-y-3 text-sm text-neutral-700">
-                  <li className="flex items-center gap-2"><Shield className="h-4 w-4 text-primary-600" /><span>Garantie 12 mois minimum</span></li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary-600" /><span>Véhicule révisé et contrôlé</span></li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary-600" /><span>Démarches administratives offertes</span></li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary-600" /><span>Livraison possible à domicile</span></li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary-600" /><span>Reprise de votre ancien véhicule</span></li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-primary-600" /><span>Solutions de financement</span></li>
+              <div className={cn(revealDelay(1), 'bg-accent-50 border border-accent-100 rounded-2xl p-6')}>
+                <h3 className="font-display font-semibold text-ink-900 mb-4">{t('includedServices')}</h3>
+                <ul className="space-y-3 text-sm text-ink-700">
+                  {INCLUDED_SERVICES.map((service, i) => (
+                    <li key={service.label} className="flex items-center gap-3">
+                      <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-accent-600 shrink-0">
+                        <service.icon className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                      <span>{service.label}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

@@ -38,3 +38,11 @@ next-env.d.ts
 
 # Windows reserved-name junk file
 nul
+
+# Local analysis & correction tracking (session artifacts, not for git)
+ANALYSE.md
+UPDATE-STATE.md
+
+# Dev server artifacts
+npm.log
+npm.pid

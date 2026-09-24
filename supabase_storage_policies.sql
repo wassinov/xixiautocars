@@ -1,35 +1,51 @@
--- Storage Bucket Policies for car-images
--- Execute these in Supabase SQL Editor after creating the bucket
+-- Storage Bucket Policies — bucket `car-images`
+-- ═══════════════════════════════════════════════════════════════════════════
+-- ⚠️ NON EXÉCUTABLE TEL QUEL DEPUIS L'ÉDITEUR SQL DU DASHBOARD (constaté en session, 2026-09-24)
+--
+-- Sur Supabase hébergé, la table système `storage.objects` appartient au rôle
+-- `supabase_storage_admin`. L'éditeur SQL (connecté en `postgres`) renvoie :
+--     « ERROR 42501: must be owner of table objects »
+-- pour tout ALTER TABLE / CREATE POLICY sur cette table.
+--
+-- CE FICHIER SERT DE RÉFÉRENCE de l'état cible des policies.
+-- Pour les appliquer ou les vérifier, utiliser le DASHBOARD :
+--     Storage → bucket « car-images » → Policies (ou Configuration → Policies)
+-- L'interface crée les policies avec les privilèges de la plateforme.
+--
+-- Note : RLS sur `storage.objects` est déjà activé par défaut sur tout projet
+-- Supabase — l'ancien `alter table … enable row level security` était inutile
+-- (c'est d'ailleurs la ligne qui déclenchait l'erreur).
+--
+-- Les 4 policies cibles (expressions à saisir dans l'UI, identiques) :
+-- ═══════════════════════════════════════════════════════════════════════════
 
--- Enable RLS on storage.objects (usually enabled by default)
-alter table storage.objects enable row level security;
+-- Policy 1 : lecture publique des images (le site affiche les photos sans session)
+--   UI : Allow SELECT to everyone → using (bucket_id = 'car-images')
+-- create policy "Public read car-images"
+--   on storage.objects for select
+--   using (bucket_id = 'car-images');
 
--- Policy: Public read access to car-images bucket
-create policy "Public read car-images"
-on storage.objects for select
-using (bucket_id = 'car-images');
+-- Policy 2 : upload pour les utilisateurs authentifiés (admin)
+--   UI : Allow INSERT for authenticated → with check (bucket_id = 'car-images')
+-- create policy "Auth upload car-images"
+--   on storage.objects for insert
+--   with check (bucket_id = 'car-images' and auth.uid() is not null);
 
--- Policy: Authenticated users can upload to car-images bucket
-create policy "Auth upload car-images"
-on storage.objects for insert
-with check (bucket_id = 'car-images' and auth.uid() is not null);
+-- Policy 3 : mise à jour pour les utilisateurs authentifiés (admin)
+--   UI : Allow UPDATE for authenticated → using/with check (bucket_id = 'car-images')
+-- create policy "Auth update car-images"
+--   on storage.objects for update
+--   using (bucket_id = 'car-images' and auth.uid() is not null)
+--   with check (bucket_id = 'car-images' and auth.uid() is not null);
 
--- Policy: Authenticated users can update their uploads in car-images bucket
-create policy "Auth update car-images"
-on storage.objects for update
-using (bucket_id = 'car-images' and auth.uid() is not null)
-with check (bucket_id = 'car-images' and auth.uid() is not null);
+-- Policy 4 : suppression pour les utilisateurs authentifiés (admin)
+--   UI : Allow DELETE for authenticated → using (bucket_id = 'car-images')
+-- create policy "Auth delete car-images"
+--   on storage.objects for delete
+--   using (bucket_id = 'car-images' and auth.uid() is not null);
 
--- Policy: Authenticated users can delete from car-images bucket
-create policy "Auth delete car-images"
-on storage.objects for delete
-using (bucket_id = 'car-images' and auth.uid() is not null);
-
--- Optional: Restrict file types and size (if needed)
+-- Rappel taille/types (optionnel, géré aussi côté app par la dropzone 4 Mo) :
 -- create policy "Car images only" on storage.objects for insert
--- with check (
---   bucket_id = 'car-images' and
---   auth.uid() is not null and
---   (storage.mimetype = 'image/jpeg' or storage.mimetype = 'image/png' or storage.mimetype = 'image/webp') and
---   octet_length(storage.object) < 5242880 -- 5MB
--- );
+--   with check (bucket_id = 'car-images' and auth.uid() is not null
+--     and storage.mimetype in ('image/jpeg','image/png','image/webp')
+--     and octet_length(storage.object) < 5242880);

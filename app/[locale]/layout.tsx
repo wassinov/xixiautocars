@@ -1,35 +1,44 @@
-import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
-import { HTMLLangUpdater } from './HTMLLangUpdater';
+import { getMessages } from 'next-intl/server';
+import { Toaster } from '@/components/ui/toaster';
+import { GeistMono } from 'geist/font/mono';
+import localFont from 'next/font/local';
+import '@/app/globals.css';
 
-type Props = {
+// BUG-05 : polices self-hostées via next/font. Google Fonts étant injoignable depuis cette
+// machine (build de prod impossible avec next/font/google), Syne et Outfit sont servies en
+// local — woff2 variables dans ./fonts, extraites de @fontsource-variable — et Geist Mono
+// vient du package `geist` (localFont embarqué). Les noms de variables sont ceux qu'attend
+// tailwind.config.js (--font-syne / --font-outfit / --font-geist-mono).
+const syne = localFont({
+  src: './fonts/syne-Variable.woff2',
+  variable: '--font-syne',
+  display: 'swap',
+});
+
+const outfit = localFont({
+  src: './fonts/outfit-Variable.woff2',
+  variable: '--font-outfit',
+  display: 'swap',
+});
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-};
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export default async function LocaleLayout({ children, params }: Props) {
+}) {
   const { locale } = await params;
-
-  if (!routing.locales.includes(locale as any)) notFound();
-
-  setRequestLocale(locale);
-
   const messages = await getMessages();
-  const dir = locale === 'ar' ? 'rtl' : 'ltr';
-
   return (
-    <>
-      <HTMLLangUpdater locale={locale} dir={dir} />
-      <NextIntlClientProvider messages={messages} locale={locale}>
-        {children}
-      </NextIntlClientProvider>
-    </>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} data-scroll-behavior="smooth">
+      <body className={`${syne.variable} ${outfit.variable} ${GeistMono.variable} font-body bg-ink-50 text-ink-900`}>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+          <Toaster /> {/* BUG-04 : conteneur global des notifications */}
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

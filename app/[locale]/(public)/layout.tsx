@@ -1,39 +1,38 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { Truck, Menu, X, ChevronRight, ArrowRight, MapPin, Phone, Mail, Clock } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
+import { Truck, X, ChevronRight, ArrowRight, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { LanguageSelector } from '@/components/LanguageSelector';
+import { MobileMenu } from '@/components/MobileMenu';
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
-  const locale = useLocale();
   const t = useTranslations('nav');
+  const tHome = useTranslations('home'); // BUG-23 : footer traduit
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-ink-200">
         <nav className="container-custom flex h-16 items-center justify-between" aria-label="Main navigation">
-          <Link href={`/${locale}`} className="flex items-center gap-2" aria-label="Xixi Autocars - Accueil">
-            <Truck className="h-8 w-8 text-primary-600" />
-            <span className="font-bold text-xl text-neutral-900 hidden sm:block">Xixi Autocars</span>
+          <Link href="/" className="flex items-center gap-2 hover:border-accent-300" aria-label="Xixi Autocars - Accueil">
+            <Truck className="h-8 w-8 text-accent-600" />
+            <span className="font-bold text-xl text-ink-900 hidden sm:block">Xixi Autocars</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <Link href={`/${locale}`} className="text-sm font-medium text-neutral-700 hover:text-primary-600 transition-colors">
+            <Link href="/" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
               {t('home')}
             </Link>
-            <Link href={`/${locale}/catalogue`} className="text-sm font-medium text-neutral-700 hover:text-primary-600 transition-colors">
+            <Link href="/catalogue" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
               {t('catalog')}
             </Link>
-            <Link href={`/${locale}/contact`} className="text-sm font-medium text-neutral-700 hover:text-primary-600 transition-colors">
+            <Link href="/contact" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
               {t('contact')}
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
             <LanguageSelector />
-            <button className="md:hidden p-2 text-neutral-600 hover:text-neutral-900" aria-label="Menu">
-              <Menu className="h-6 w-6" />
-            </button>
+            <MobileMenu />
           </div>
         </nav>
       </header>
@@ -42,35 +41,31 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         {children}
       </main>
 
-      <footer className="bg-neutral-900 text-white py-12">
+      <footer className="bg-ink-900 text-white py-12">
         <div className="container-custom">
           <div className="grid gap-8 md:grid-cols-4">
             <div className="md:col-span-2">
-              <Link href={`/${locale}`} className="flex items-center gap-2 mb-4">
-                <Truck className="h-8 w-8 text-primary-400" />
+              <Link href="/" className="flex items-center gap-2 mb-4 text-accent-400 hover:border-accent-300">
+                <Truck className="h-8 w-8 text-accent-400" />
                 <span className="font-bold text-xl">Xixi Autocars</span>
               </Link>
-              <p className="text-neutral-400 max-w-xs">Votre garage de confiance depuis 1980. Véhicules neufs et d'occasion, révisés et garantis.</p>
+              <p className="text-ink-400 max-w-xs">{tHome('footer.pitch')}</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">{t('contact')}</h4>
-              <address className="not-italic text-neutral-400 space-y-2">
+              <address className="not-italic text-ink-400 space-y-2">
                 <p>2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing</p>
-                <p><a href="tel:+8619112816914" className="hover:text-primary-400">+86 191 1281 6914</a></p>
-                <p><a href="mailto:contact@mongarage.fr" className="hover:text-primary-400">contact@mongarage.fr</a></p>
+                <p><a href="tel:+8619112816914" className="hover:text-accent-400 hover:border-accent-300">+86 191 1281 6914</a></p>
+                <p><a href="mailto:contact@mongarage.fr" className="hover:text-accent-400 hover:border-accent-300">contact@mongarage.fr</a></p>
               </address>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Horaires</h4>
-              <p className="text-neutral-400 text-sm space-y-1">
-                Lun-Ven: 9h-19h<br />
-                Sam: 9h-18h<br />
-                Dim: Fermé
-              </p>
+              <h4 className="font-semibold mb-4">{tHome('garage.hours')}</h4>
+              <p className="text-ink-400 text-sm whitespace-pre-line">{tHome('footer.hours')}</p>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-neutral-800 text-center text-neutral-500 text-sm">
-            © 2024 Xixi Autocars. Tous droits réservés.
+          <div className="mt-8 pt-8 border-t border-ink-800 text-center text-ink-500 text-sm">
+            {tHome('footer.rights')}
           </div>
         </div>
       </footer>

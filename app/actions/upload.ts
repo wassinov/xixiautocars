@@ -44,9 +44,10 @@ export async function uploadCarImage(
       return { error: 'Format non supporté. Utilisez JPG, PNG ou WebP.' };
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5 MB
+    // 4 Mo max : la limite Vercel des fonctions serverless est ~4,5 Mo par requête.
+    const maxSize = 4 * 1024 * 1024; // 4 MB
     if (file.size > maxSize) {
-      return { error: 'Fichier trop volumineux. Maximum 5 MB.' };
+      return { error: 'Fichier trop volumineux. Maximum 4 MB.' };
     }
 
     // Générer le nom de fichier

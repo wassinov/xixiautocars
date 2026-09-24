@@ -11,6 +11,48 @@
     "logout": "Logout"
   },
   "home": {
+    "metaTitle": "Xixi Autocars - New and used vehicles for sale",
+    "metaDescription": "Discover our selection of new and used vehicles. Trade-in, financing, warranty and maintenance. Your trusted garage.",
+    "heroSpotlight": "Featured vehicle",
+    "featuredEmpty": "No featured vehicles at the moment.",
+    "process": {
+      "title": "Our 5-step process",
+      "subtitle": "From sourcing to delivery, we handle everything for you.",
+      "steps": {
+        "search": { "title": "Sourcing", "desc": "We identify the ideal vehicle based on your criteria and budget." },
+        "inspection": { "title": "Inspection", "desc": "Every vehicle undergoes a rigorous 150-point technical check." },
+        "payment": { "title": "Secure payment", "desc": "Protected transaction via our certified banking partners." },
+        "shipping": { "title": "Shipping", "desc": "Transport from the factory or stock straight to your door." },
+        "delivery": { "title": "Delivery", "desc": "Keys handed over at home, paperwork in order, ready to drive." }
+      }
+    },
+    "logistics": {
+      "badge": "Feature · International logistics",
+      "title": "From the factory to your door: <span>total control</span>",
+      "description": "Our logistics network covers 12 European countries. Every vehicle is tracked in real time, transported in enclosed trucks and delivered with a complete file.",
+      "cta": "Learn more",
+      "imageAlt": "International logistics - Vehicle transport"
+    },
+    "trust": {
+      "title": "Why choose Xixi Autocars?",
+      "subtitle": "Four pillars of trust for a worry-free purchase.",
+      "items": {
+        "inspection": { "title": "150-point inspection", "desc": "Every vehicle is checked, serviced and certified before sale." },
+        "network": { "title": "International network", "desc": "Access to manufacturer stocks and partners in 12 European countries." },
+        "documents": { "title": "Complete documentation", "desc": "Registration card, certificate of conformity and full history provided." },
+        "payment": { "title": "Protected payment", "desc": "Funds held in escrow until actual delivery of the vehicle." }
+      }
+    },
+    "testimonials": {
+      "title": "They trust us",
+      "subtitle": "Hundreds of satisfied customers across Europe.",
+      "ratingLabel": "Rating: {rating} out of 5"
+    },
+    "footer": {
+      "pitch": "Your trusted garage since 1980. New and used vehicles, serviced and guaranteed.",
+      "hours": "Mon-Fri: 9am-7pm\nSat: 9am-6pm\nSun: closed",
+      "rights": "© 2024 Xixi Autocars. All rights reserved."
+    },
     "hero": {
       "badge": "Family garage since 1980",
       "title": "Your next vehicle <span>is waiting</span>",
@@ -81,6 +123,8 @@
     "page": "Page {current} of {total}",
     "noResults": "No vehicles match your criteria.",
     "clearFilters": "Reset filters",
+    "options": "Options",
+    "selectBrandFirst": "Select a brand",
     "bodyTypes": {
       "sedan": "Sedan",
       "suv": "SUV",
@@ -128,7 +172,22 @@
       "tradein": "Trade-in your old vehicle",
       "financing": "Financing solutions"
     },
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "gallery": {
+      "noImages": "No image available",
+      "imageOf": "Image {current} of {total}",
+      "previous": "Previous image",
+      "next": "Next image",
+      "closeFullscreen": "Close fullscreen",
+      "goToImage": "Go to image {index}",
+      "viewImage": "View image {index}",
+      "thumbnails": "Thumbnails",
+      "primary": "Main",
+      "fullscreen": "View fullscreen ({count} photos)",
+      "close": "Close",
+      "galleryOf": "{name} gallery"
+    },
+    "availableAtGarage": "Vehicle available at Xixi Autocars."
   },
   "contact": {
     "title": "Contact us",
@@ -158,7 +217,8 @@
         "testDrive": "Test drive request",
         "financing": "Financing / Trade-in",
         "other": "Other"
-      }
+      },
+      "messagePrefix": "You wish to be contacted regarding the vehicle {vehicle}"
     },
     "info": {
       "title": "Practical information",
@@ -170,7 +230,19 @@
       "quickCall": "Need a quick answer?",
       "quickCallDesc": "Call us directly during opening hours, we'll be happy to help.",
       "callNow": "Call now"
-    }
+    },
+    "description": "Contact Xixi Autocars for any information request, test drive, financing or trade-in. Response within 24h.",
+    "engagements": {
+      "title": "Our commitments",
+      "responseTime": "Response guaranteed within 24 business hours",
+      "personalizedSupport": "Personalized support for your project",
+      "freeQuote": "Free and no-obligation quote"
+    },
+    "visitUs": {
+      "title": "Or come visit us",
+      "description": "Our showroom is open Monday to Saturday. Come discover our vehicles in person."
+    },
+    "viewCatalog": "View the catalog"
   },
   "admin": {
     "login": {
@@ -310,7 +382,7 @@
       "uploadTitle": "Add images",
       "dragDrop": "Drag and drop images here",
       "orClick": "or click to select",
-      "formats": "PNG, JPG, WebP - Max 5MB per image",
+      "formats": "PNG, JPG, WebP - Max 4MB per image",
       "uploading": "Uploading...",
       "noImages": "No images for this vehicle",
       "addFirst": "Add first image above",
@@ -326,7 +398,9 @@
       "dropImagesHere": "Drop images here",
       "dragDropImagesHere": "Drag and drop images here",
       "orClickToSelect": "or click to select",
-      "fileFormats": "PNG, JPG, WebP - Max 5MB per image",
+      "fileFormats": "PNG, JPG, WebP - Max 4MB per image",
+      "fileTooLarge": "File is too large (max 4 MB)",
+      "fileInvalidType": "Unsupported format (PNG, JPG or WebP)",
       "saveVehicleFirst": "Save the vehicle first to add photos.",
       "imagesCount": "Images ({count})",
       "image": "Image",
@@ -391,6 +465,7 @@
         "RLS policies: public read, authenticated write"
       ],
       "rlsTitle": "Recommended RLS policies",
+      "rlsDesc": "Copy these policies into the Supabase SQL editor: public read for the site, write restricted to authenticated accounts.",
       "users": "Admin users",
       "usersDesc": "Authentication handled by Supabase Auth. To add an admin:",
       "usersSteps": [
@@ -446,6 +521,14 @@
     "deleted": "Deleted",
     "imageDeleted": "Image deleted",
     "toProcess": "To process",
-    "currency": "Currency"
+    "currency": "Currency",
+    "vehiclesAvailable": "{total} vehicles available",
+    "messages": "messages",
+    "about": "About",
+    "success": "Success",
+    "saving": "Saving…",
+    "colorPlaceholder": "e.g. Blue",
+    "notSpecified": "Not specified",
+    "descriptionPlaceholder": "Describe the vehicle, its history, its features…"
   }
 }

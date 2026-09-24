@@ -2,13 +2,22 @@ import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { CarCard } from '@/components/CarCard';
 import { FilterSidebar } from '@/components/FilterSidebar';
-import { ChevronLeft, ChevronRight, Filter, X } from 'lucide-react';
-import Link from 'next/link';
+import { MobileFilters } from '@/components/MobileFilters';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
 import type { CarWithRelations } from '@/types/car';
+import { cn } from '@/lib/utils';
+import { magazineContainer, revealDelay } from '@/lib/utils';
+import { languagesAlternates } from '@/lib/seo';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Catalogue - Xixi Autocars',
-  description: 'Parcourez notre catalogue de véhicules neufs et d\'occasion. Filtres par marque, modèle, prix, carburant, kilométrage...',
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('catalog');
+  return {
+    title: `${t('title')} - Xixi Autocars`,
+    description: 'Parcourez notre catalogue de véhicules neufs et d\'occasion. Filtres par marque, modèle, prix, carburant, kilométrage...',
+    alternates: { languages: languagesAlternates('/catalogue') }, // BUG-24 : hreflang × 4 locales
+  };
 };
 
 const ITEMS_PER_PAGE = 12;
@@ -53,7 +62,7 @@ async function getCars(searchParams: SearchParams) {
     .order('created_at', { ascending: false });
 
   if (searchParams.brand) query = query.eq('models.brand_id', searchParams.brand);
-  if (searchParams.model) query = query.eq('model_id', searchParams.model);
+  if (searchParams.model) query = query.eq('models.id', searchParams.model); // BUG-08 : le filtre Modèle cible models.id (FK de cars.model_id), pas brand_id
   if (searchParams.body_type) query = query.eq('models.body_type', searchParams.body_type);
   if (searchParams.fuel_type) query = query.eq('fuel_type', searchParams.fuel_type);
   if (searchParams.gearbox) query = query.eq('gearbox', searchParams.gearbox);
@@ -69,28 +78,29 @@ async function getCars(searchParams: SearchParams) {
   const { data, error, count } = await query;
   if (error) throw error;
 
-  // `models` est une relation plusieurs-vers-un : Supabase retourne un OBJET unique
-  // (models.brands est lui-même un objet unique). La ligne est passée telle quelle
-  // à CarCard, qui lit car.models?.name / car.models?.brands?.name / car.car_images (tableau).
-  const transformedCars = (data || []) as CarWithRelations[];
+  const transformedCars = (data || []) as unknown as CarWithRelations[]; // BUG-07 : to-one = objet au runtime
 
   return { cars: transformedCars, total: count || 0, page, totalPages: Math.ceil((count || 0) / ITEMS_PER_PAGE) };
 }
 
-async function getBrands() {
+// BUG-09 : options de filtres réelles (marques/modèles) pour la sidebar
+async function getFilterOptions() {
   const supabase = await createClient();
-  const { data } = await supabase.from('brands').select('id, name').order('name');
-  return data || [];
-}
-
-function formatPrice(price: number, currency: string) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency, maximumFractionDigits: 0 }).format(price);
+  const [{ data: brands }, { data: models }] = await Promise.all([
+    supabase.from('brands').select('id, name').order('name'),
+    supabase.from('models').select('id, name, brand_id').order('name'),
+  ]);
+  return {
+    brands: (brands ?? []) as { id: string; name: string }[],
+    models: (models ?? []) as { id: string; name: string; brand_id: string }[],
+  };
 }
 
 export default async function CataloguePage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const t = await getTranslations('catalog');
   const params = await searchParams;
   const { cars, total, page, totalPages } = await getCars(params);
-  const brands = await getBrands();
+  const { brands, models } = await getFilterOptions(); // BUG-09
 
   const hasFilters = Object.keys(params).some((k) => k !== 'page' && k !== 'sort');
 
@@ -102,62 +112,79 @@ export default async function CataloguePage({ searchParams }: { searchParams: Pr
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <div className="container-custom py-10 lg:py-16">
-        <header className="mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-neutral-900">Notre catalogue</h1>
-          <p className="mt-2 text-neutral-600">{total} véhicule{total > 1 ? 's' : ''} disponible{total > 1 ? 's' : ''}</p>
+    <div className="min-h-screen bg-ink-50">
+      <div className={magazineContainer('py-section lg:py-section-lg')}>
+        <header className="mb-10">
+          <h1 className="text-3xl font-display font-bold text-ink-900 animate-reveal">{t('title')}</h1>
+          <p className="mt-2 text-body-lg text-ink-600 animate-reveal delay-100">
+            {t('results', { count: total })}
+          </p>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          <FilterSidebar />
+        {hasFilters && (
+          <div className="mb-8 animate-reveal">
+            <Link href="/catalogue" className="inline-flex items-center gap-2 text-sm font-medium text-accent-600 hover:text-accent-700 hover:border-accent-300 transition-colors">
+              <X className="h-4 w-4" />
+              {t('clear')}
+            </Link>
+          </div>
+        )}
 
-          <div className="flex-1">
-            {hasFilters && (
-              <div className="hidden lg:block mb-6 flex items-center gap-2 text-sm text-neutral-600 bg-white p-3 rounded-lg border">
-                <span>Filtres actifs</span>
-                <Link href="/catalogue" className="ml-auto text-primary-600 hover:text-primary-700 font-medium">
-                  Tout effacer
-                </Link>
-              </div>
-            )}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+          <MobileFilters brands={brands} models={models} />
+          <FilterSidebar brands={brands} models={models} />
 
+          <div className="flex-1 min-w-0">
             {cars.length > 0 ? (
               <>
                 <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                   {cars.map((car, i) => (
-                    <CarCard key={car.id} car={car} priority={i < 4} />
+                    <CarCard key={car.id} car={car} priority={i < 4} className={cn(revealDelay(i), 'hover:border-accent-300')} />
                   ))}
                 </div>
 
                 {totalPages > 1 && (
-                  <nav className="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+                  <nav className="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
                     {page > 1 && (
-                      <Link href={createPageUrl(page - 1)} className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors">
-                        <ChevronLeft className="h-4 w-4 inline-block mr-1" />
-                        Précédent
+                      <Link
+                        href={createPageUrl(page - 1)}
+                        className={cn(
+                          'inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-ink-700',
+                          'bg-white border border-ink-300 rounded-md',
+                          'hover:bg-ink-50 hover:border-ink-400 hover:border-accent-300 transition-colors duration-200'
+                        )}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                        {t('prev')}
                       </Link>
                     )}
 
-                    <span className="px-4 py-2 text-sm font-medium text-neutral-600">
-                      Page {page} sur {totalPages}
+                    <span className="px-4 py-2.5 text-sm font-medium text-ink-600">
+                      {t('page', { current: page, total: totalPages })}
                     </span>
 
                     {page < totalPages && (
-                      <Link href={createPageUrl(page + 1)} className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors">
-                        Suivant
-                        <ChevronRight className="h-4 w-4 inline-block ml-1" />
+                      <Link
+                        href={createPageUrl(page + 1)}
+                        className={cn(
+                          'inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-ink-700',
+                          'bg-white border border-ink-300 rounded-md',
+                          'hover:bg-ink-50 hover:border-ink-400 hover:border-accent-300 transition-colors duration-200'
+                        )}
+                      >
+                        {t('next')}
+                        <ChevronRight className="h-4 w-4" />
                       </Link>
                     )}
                   </nav>
                 )}
               </>
             ) : (
-              <div className="text-center py-16 bg-white rounded-xl border">
-                <p className="text-neutral-600 mb-4">Aucun véhicule ne correspond à vos critères.</p>
-                <Link href="/catalogue" className="inline-flex items-center gap-2 text-primary-600 font-medium hover:text-primary-700">
+              <div className="text-center py-16 bg-white rounded-2xl border border-ink-200 animate-reveal">
+                <p className="text-ink-600 mb-4">{t('noResults')}</p>
+                <Link href="/catalogue" className="inline-flex items-center gap-2 text-accent-600 font-medium hover:text-accent-700 hover:border-accent-300 transition-colors">
                   <X className="h-4 w-4" />
-                  Réinitialiser les filtres
+                  {t('clearFilters')}
                 </Link>
               </div>
             )}

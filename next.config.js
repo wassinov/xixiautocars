@@ -3,9 +3,10 @@ const withNextIntl = require('next-intl/plugin')('./i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    turbo: {},
     serverActions: {
-      bodySizeLimit: '2mb',
+      // Aligné sur la limite produit de 5 Mo/fichier (upload.ts + dropzone) :
+      // 6 mb laisse la marge pour la sérialisation du FormData autour du fichier.
+      bodySizeLimit: '6mb',
     },
   },
   outputFileTracingRoot: require('path').join(__dirname),

@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
 import { CarCard } from '@/components/CarCard';
 import { ContactForm } from '@/components/ContactForm';
-import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon, MessageSquare, Smartphone, Mail as MailIcon } from 'lucide-react';
-import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
+import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon, MessageCircle, MessageSquare, Mail as MailIcon } from 'lucide-react';
+import { Link } from '@/i18n';
 import type { CarWithRelations } from '@/types/car';
 import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
 import { languagesAlternates } from '@/lib/seo';
-import { GARAGE_INFO_ID } from '@/lib/constants'; // BUG-27 : singleton garage_infos
+import { GARAGE_INFO_ID } from '@/lib/constants';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -59,11 +59,13 @@ export default async function HomePage() {
       let value = line;
 
       if (lower.includes('wechat') || lower.includes('微信')) {
-        icon = <MessageSquare className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />;
+        // WeChat icon - vert WeChat officiel
+        icon = <MessageCircle className="h-5 w-5 text-[#07C160] shrink-0" aria-hidden="true" />;
         label = 'WeChat';
         value = line.replace(/^.*(wechat|微信)[:\s]*/i, '').trim();
       } else if (lower.includes('whatsapp')) {
-        icon = <MessageSquare className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />;
+        // WhatsApp icon - vert WhatsApp officiel
+        icon = <MessageSquare className="h-5 w-5 text-[#25D366] shrink-0" aria-hidden="true" />;
         label = 'WhatsApp';
         value = line.replace(/^.*whatsapp[:\s]*/i, '').trim();
       } else if (lower.includes('téléphone') || lower.includes('phone') || lower.match(/^[\d\s+.-]{8,}$/)) {
@@ -411,20 +413,20 @@ export default async function HomePage() {
                     return mainDesc ? <p className="text-base text-ink-600">{mainDesc}</p> : null;
                   })()}
 
-                  {/* Contact lines with icons */}
+                  {/* Contact lines with icons - improved grid layout */}
                   {(() => {
                     const lines = parseGarageInfoLines(garageInfo.about_text || '').filter(l => l.icon && l.label);
                     if (lines.length === 0) return null;
                     return (
-                      <div className="space-y-3">
+                      <div className="grid gap-4 sm:grid-cols-2">
                         {lines.map((line, i) => (
-                          <div key={i} className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors">
-                            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
+                          <div key={i} className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
                               {line.icon}
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-medium text-ink-900">{line.label}</h4>
-                              <p className="mt-1 text-ink-600 break-all">{line.value}</p>
+                              <p className="mt-1 text-ink-600 break-all text-sm">{line.value}</p>
                             </div>
                           </div>
                         ))}

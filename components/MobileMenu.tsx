@@ -24,7 +24,7 @@ export function MobileMenu() {
           <Menu className="h-6 w-6" />
         </button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72 p-0">
+      <SheetContent side="right" className="w-72 p-0 bg-white">
         <SheetHeader className="border-b border-ink-200 p-4 text-left">
           <SheetTitle className="flex items-center gap-2 text-lg font-bold text-ink-900">
             <Truck className="h-6 w-6 text-accent-600" />

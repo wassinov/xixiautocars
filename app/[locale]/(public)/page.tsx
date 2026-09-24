@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
 import { CarCard } from '@/components/CarCard';
 import { ContactForm } from '@/components/ContactForm';
-import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon } from 'lucide-react';
+import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon, MessageSquare, Smartphone, Mail as MailIcon } from 'lucide-react';
 import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
 import type { CarWithRelations } from '@/types/car';
 import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
@@ -46,6 +46,43 @@ export default async function HomePage() {
   const locale = await getLocale(); // BUG-22 : formats prix localisés
   const t = await getTranslations('home'); // BUG-23 : contenus traduits
   const supabase = await createClient();
+
+  // Utilitaire : parse garage about_text → lignes avec icônes (utilise t résolu)
+  function parseGarageInfoLines(text: string) {
+    if (!text) return [];
+    // Split par \n (littéral ou réel)
+    const lines = text.split(/\n|\r\n/).map(l => l.trim()).filter(Boolean);
+    return lines.map(line => {
+      const lower = line.toLowerCase();
+      let icon: React.ReactNode = null;
+      let label = '';
+      let value = line;
+
+      if (lower.includes('wechat') || lower.includes('微信')) {
+        icon = <MessageSquare className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />;
+        label = 'WeChat';
+        value = line.replace(/^.*(wechat|微信)[:\s]*/i, '').trim();
+      } else if (lower.includes('whatsapp')) {
+        icon = <MessageSquare className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />;
+        label = 'WhatsApp';
+        value = line.replace(/^.*whatsapp[:\s]*/i, '').trim();
+      } else if (lower.includes('téléphone') || lower.includes('phone') || lower.match(/^[\d\s+.-]{8,}$/)) {
+        icon = <Phone className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />;
+        label = t('garage.phone');
+        value = line.replace(/^.*(téléphone|phone|tél)[:\s]*/i, '').trim();
+      } else if (lower.includes('email') || lower.includes('mail') || lower.includes('@')) {
+        icon = <MailIcon className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />;
+        label = t('garage.email');
+        value = line.replace(/^.*(email|mail)[:\s]*/i, '').trim();
+      } else if (lower.includes('adresse') || lower.includes('address') || lower.includes('rue') || lower.includes('district') || lower.includes('chongqing')) {
+        icon = <MapPin className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />;
+        label = t('garage.address');
+        value = line.replace(/^.*(adresse|address)[:\s]*/i, '').trim();
+      }
+
+      return { icon, label, value, raw: line };
+    });
+  }
 
   const result = await Promise.all([
       supabase
@@ -364,7 +401,37 @@ export default async function HomePage() {
             <div className="lg:col-span-2 space-y-8">
               <div className={revealDelay(0)}>
                 <h2 className="text-2xl font-display font-bold text-ink-900">{garageInfo.name}</h2>
-                <p className="mt-4 text-base text-ink-600 whitespace-pre-line">{garageInfo.about_text}</p>
+                
+                {/* Garage description + parsed contact lines with icons */}
+                <div className="mt-6 space-y-4">
+                  {/* Main description (first non-contact line) */}
+                  {(() => {
+                    const lines = parseGarageInfoLines(garageInfo.about_text || '');
+                    const mainDesc = lines.find(l => !l.icon && !l.label)?.raw || garageInfo.about_text;
+                    return mainDesc ? <p className="text-base text-ink-600">{mainDesc}</p> : null;
+                  })()}
+
+                  {/* Contact lines with icons */}
+                  {(() => {
+                    const lines = parseGarageInfoLines(garageInfo.about_text || '').filter(l => l.icon && l.label);
+                    if (lines.length === 0) return null;
+                    return (
+                      <div className="space-y-3">
+                        {lines.map((line, i) => (
+                          <div key={i} className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center">
+                              {line.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-ink-900">{line.label}</h4>
+                              <p className="mt-1 text-ink-600 break-all">{line.value}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
+                </div>
 
                 <div className="mt-8 grid gap-6 sm:grid-cols-2">
                   <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">

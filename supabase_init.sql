@@ -59,8 +59,7 @@ create table if not exists garage_infos (
   google_maps_url text,
   opening_hours text,
   about_text text,
-  logo_url text,
-  unique(id) -- Ensures only one row
+  logo_url text
 );
 
 -- Table: contact_messages
@@ -123,42 +122,41 @@ on contact_messages for select
 using (true);
 
 -- Policies for admin write access (INSERT, UPDATE, DELETE) on all tables
--- Assuming admin is any authenticated user (auth.uid() is not null)
--- In production, you might want to restrict further by email or role using auth.jwt()
+-- Restrict to specific admin email: admin@xixiautocars.com
 create policy "Admin write access on brands"
 on brands for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 create policy "Admin write access on models"
 on models for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 create policy "Admin write access on cars"
 on cars for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 create policy "Admin write access on car_images"
 on car_images for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 create policy "Admin write access on garage_infos"
 on garage_infos for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 create policy "Admin write access on contact_messages"
 on contact_messages for all
-using (auth.uid() is not null)
-with check (auth.uid() is not null);
+using (auth.jwt() ->> 'email' = 'admin@xixiautocars.com')
+with check (auth.jwt() ->> 'email' = 'admin@xixiautocars.com');
 
 -- Insert a default garage_infos row (if not exists) to ensure singleton behavior
 insert into garage_infos (id, name, address, phone, email, google_maps_url, opening_hours, about_text, logo_url)
 values (
-  '00000000-0000-0000-0000-000000000000',
+  uuid_generate_v4(),
   'Xixi Autocars',
   '2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing',
   '+8619112816914',
@@ -169,7 +167,3 @@ values (
   '/images/garage-logo.png'
 )
 on conflict (id) do nothing;
-
--- Note: The above UUID for garage_infos is fixed to ensure only one row exists.
--- In a real scenario, you might want to generate a proper UUID and use a unique constraint.
--- However, for simplicity and to meet the requirement of a single row, we use a fixed UUID.

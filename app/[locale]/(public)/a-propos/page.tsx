@@ -90,6 +90,26 @@ export default async function AboutPage() {
 
   const garageLines = garageInfo?.about_text ? parseGarageInfoLines(garageInfo.about_text) : [];
 
+  // Parse opening_hours from DB into formatted lines
+  function parseOpeningHours(text: string) {
+    if (!text) return [];
+    // Try multiple separators: comma, semicolon, newline
+    const parts = text.split(/[,;\n]/).map(p => p.trim()).filter(Boolean);
+    const result = [];
+    for (const part of parts) {
+      // Find first colon to split days/hours (handles colons in time like "9h-19h:30")
+      const colonIdx = part.indexOf(':');
+      if (colonIdx > 0) {
+        const days = part.slice(0, colonIdx).trim();
+        const hours = part.slice(colonIdx + 1).trim();
+        if (days && hours) result.push({ days, hours });
+      }
+    }
+    return result;
+  }
+
+  const openingHours = garageInfo?.opening_hours ? parseOpeningHours(garageInfo.opening_hours) : [];
+
   return (
     <>
       <section className="py-20 lg:py-28 bg-ink-50" aria-labelledby="about-hero">
@@ -296,7 +316,21 @@ export default async function AboutPage() {
                 <Clock className="h-6 w-6" aria-hidden="true" />
               </div>
               <h3 className="mt-4 text-xl font-display font-semibold text-ink-900">{t('info.hours.title')}</h3>
-              <p className="mt-2 text-ink-600 whitespace-pre-line">{t('info.hours.value')}</p>
+              <div className="mt-2 text-ink-600 whitespace-pre-line">
+                {openingHours.length > 0 ? (
+                  openingHours.map((oh, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="font-medium shrink-0">{oh.days} :</span>
+                      <span>{oh.hours}</span>
+                    </div>
+                  ))
+                ) : garageInfo?.opening_hours ? (
+                  // Fallback: afficher le texte brut si parsing échoue
+                  garageInfo.opening_hours
+                ) : (
+                  t('info.hours.value')
+                )}
+              </div>
             </article>
           </div>
         </div>

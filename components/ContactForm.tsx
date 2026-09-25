@@ -101,7 +101,7 @@ export function ContactForm({ initialCarId, carName, className }: ContactFormPro
 
   return (
     <form onSubmit={handleSubmit} className={cn('space-y-6', className)} noValidate>
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-3">
         <FormField label={t('name')} required error={errors.full_name} id="full_name">
           <Input
             id="full_name"

@@ -307,9 +307,9 @@ export default async function HomePage() {
       </section>
 
       {/* Raisons de choisir Xixi */}
-      <section className="py-section lg:py-section-lg bg-ink-50" aria-labelledby="trust-title">
+      <section className="py-12 lg:py-16 bg-ink-50" aria-labelledby="trust-title">
         <div className={magazineContainer()}>
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 id="trust-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900 animate-reveal">{t('trust.title')}</h2>
             <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('trust.subtitle')}</p>
           </div>
@@ -333,9 +333,9 @@ export default async function HomePage() {
       </section>
 
       {/* Témoignages */}
-      <section className="py-section lg:py-section-lg bg-white" aria-labelledby="testimonials-title">
+      <section className="py-12 lg:py-16 bg-white" aria-labelledby="testimonials-title">
         <div className={magazineContainer()}>
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 id="testimonials-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900 animate-reveal">{t('testimonials.title')}</h2>
             <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('testimonials.subtitle')}</p>
           </div>
@@ -398,15 +398,15 @@ export default async function HomePage() {
       </section>
 
       {/* Infos Garage + Contact Form */}
-      <section className="py-section lg:py-section-lg bg-ink-50" aria-labelledby="garage-title">
+      <section className="py-12 lg:py-16 bg-ink-50" aria-labelledby="garage-title">
         <div className={magazineContainer()}>
-          <div className="grid gap-12 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-8">
+          <div className="grid gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-4 space-y-6">
               <div className={revealDelay(0)}>
                 <h2 className="text-2xl font-display font-bold text-ink-900">{garageInfo.name}</h2>
                 
                 {/* Garage description */}
-                <div className="mt-6 space-y-4">
+                <div className="mt-4 space-y-3">
                   {/* Main description (first non-contact line) */}
                   {(() => {
                     const lines = parseGarageInfoLines(garageInfo.about_text || '');
@@ -414,13 +414,13 @@ export default async function HomePage() {
                     return mainDesc ? <p className="text-base text-ink-600">{mainDesc}</p> : null;
                   })()}
 
-                  {/* Unified contact list - 3 equal columns */}
-                  <div className="grid gap-6 lg:grid-cols-3">
+                  {/* Unified contact list - 2 equal columns */}
+                  <div className="grid gap-4 lg:grid-cols-2">
                     {/* Column 1: Phone + WeChat + WhatsApp (stacked) */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                       {/* Phone from DB */}
-                      <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                      <div className="flex items-center gap-2 p-3 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-ink-50 flex items-center justify-center">
                           <Phone className="h-5 w-5 text-accent-600" aria-hidden="true" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -435,8 +435,8 @@ export default async function HomePage() {
                         if (lines.length === 0) return null;
                         const line = lines[0];
                         return (
-                          <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
-                            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                          <div className="flex items-center gap-2 p-3 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-ink-50 flex items-center justify-center">
                               {line.icon}
                             </div>
                             <div className="flex-1 min-w-0">
@@ -453,8 +453,8 @@ export default async function HomePage() {
                         if (lines.length === 0) return null;
                         const line = lines[0];
                         return (
-                          <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
-                            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                          <div className="flex items-center gap-2 p-3 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-ink-50 flex items-center justify-center">
                               {line.icon}
                             </div>
                             <div className="flex-1 min-w-0">
@@ -467,11 +467,11 @@ export default async function HomePage() {
                     </div>
 
                     {/* Column 2: QR Code */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                       {/* WeChat QR Code */}
                       {garageInfo.wechat_qr_url && (
-                        <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
-                          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                        <div className="flex items-center gap-2 p-3 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-ink-50 flex items-center justify-center">
                             <MessageCircle className="h-5 w-5 text-[#07C160]" aria-hidden="true" />
                           </div>
                           <div className="flex-1 min-w-0 flex flex-col items-center">
@@ -484,12 +484,12 @@ export default async function HomePage() {
                               <Image
                                 src={garageInfo.wechat_qr_url}
                                 alt="WeChat QR Code"
-                                width={140}
-                                height={140}
+                                width={120}
+                                height={120}
                                 className="rounded-lg border border-ink-200 hover:border-accent-300 transition-colors"
                               />
                             </a>
-                            <p className="mt-2 text-base font-medium text-[#07C160] text-center">WeChat Scannez moi !</p>
+                            <p className="mt-2 text-sm font-medium text-[#07C160] text-center">WeChat Scannez moi !</p>
                           </div>
                         </div>
                       )}
@@ -497,15 +497,12 @@ export default async function HomePage() {
                       {/* Empty spacer - keeps column height balanced */}
                       <div className="flex-1" />
                     </div>
-
-                    {/* Column 3: Empty */}
-                    <div className="flex-1" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className={revealDelay(1)}>
+            <div className={`${revealDelay(1)} lg:col-span-8`}>
               <div className="p-6 bg-white rounded-2xl border border-ink-200 sticky top-24 hover:border-accent-300">
                 <h3 className="text-xl font-display font-bold text-ink-900">{t('garage.contactTitle')}</h3>
                 <p className="mt-2 text-base text-ink-600">{t('garage.contactDesc')}</p>

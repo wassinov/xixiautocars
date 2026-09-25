@@ -50,8 +50,9 @@ export default async function HomePage() {
   // Utilitaire : parse garage about_text → lignes avec icônes (utilise t résolu)
   function parseGarageInfoLines(text: string) {
     if (!text) return [];
-    // Split par \n (littéral ou réel)
-    const lines = text.split(/\n|\r\n/).map(l => l.trim()).filter(Boolean);
+    // Split par \n (réel) OU \n littéral (backslash-n dans la DB)
+    const normalized = text.replace(/\\n/g, '\n');
+    const lines = normalized.split(/\n|\r\n/).map(l => l.trim()).filter(Boolean);
     return lines.map(line => {
       const lower = line.toLowerCase();
       let icon: React.ReactNode = null;
@@ -404,7 +405,7 @@ export default async function HomePage() {
               <div className={revealDelay(0)}>
                 <h2 className="text-2xl font-display font-bold text-ink-900">{garageInfo.name}</h2>
                 
-                {/* Garage description + parsed contact lines with icons */}
+                {/* Garage description */}
                 <div className="mt-6 space-y-4">
                   {/* Main description (first non-contact line) */}
                   {(() => {
@@ -413,14 +414,28 @@ export default async function HomePage() {
                     return mainDesc ? <p className="text-base text-ink-600">{mainDesc}</p> : null;
                   })()}
 
-                  {/* Contact lines with icons - improved grid layout */}
-                  {(() => {
-                    const lines = parseGarageInfoLines(garageInfo.about_text || '').filter(l => l.icon && l.label);
-                    if (lines.length === 0) return null;
-                    return (
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        {lines.map((line, i) => (
-                          <div key={i} className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                  {/* Unified contact list - 3 equal columns */}
+                  <div className="grid gap-6 lg:grid-cols-3">
+                    {/* Column 1: Phone + WeChat + WhatsApp (stacked) */}
+                    <div className="flex flex-col gap-4">
+                      {/* Phone from DB */}
+                      <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                          <Phone className="h-5 w-5 text-accent-600" aria-hidden="true" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-ink-900">{t('garage.phone')}</h4>
+                          <a href={`tel:${garageInfo.phone.replace(/\s/g, '')}`} className="mt-1 text-ink-600 hover:text-accent-600 transition-colors break-all text-sm">{garageInfo.phone}</a>
+                        </div>
+                      </div>
+
+                      {/* WeChat from about_text */}
+                      {(() => {
+                        const lines = parseGarageInfoLines(garageInfo.about_text || '').filter(l => l.label === 'WeChat');
+                        if (lines.length === 0) return null;
+                        const line = lines[0];
+                        return (
+                          <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
                             <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
                               {line.icon}
                             </div>
@@ -429,46 +444,62 @@ export default async function HomePage() {
                               <p className="mt-1 text-ink-600 break-all text-sm">{line.value}</p>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    );
-                  })()}
-                </div>
+                        );
+                      })()}
 
-                <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
-                    <MapPin className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
-                    <div>
-                      <h3 className="font-medium text-ink-900">{t('garage.address')}</h3>
-                      <p className="mt-1 text-ink-600">{garageInfo.address}</p>
-                      {garageInfo.google_maps_url && (
-                        <a href={garageInfo.google_maps_url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm text-accent-600 hover:text-accent-700 transition-colors">
-                          <MapPin className="h-3.5 w-3.5" />
-                          {t('garage.map')}
-                        </a>
+                      {/* WhatsApp from about_text */}
+                      {(() => {
+                        const lines = parseGarageInfoLines(garageInfo.about_text || '').filter(l => l.label === 'WhatsApp');
+                        if (lines.length === 0) return null;
+                        const line = lines[0];
+                        return (
+                          <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                              {line.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-ink-900">{line.label}</h4>
+                              <a href={`https://wa.me/${line.value.replace(/[^\d+]/g, '')}`} target="_blank" rel="noopener noreferrer" className="mt-1 text-ink-600 hover:text-accent-600 transition-colors break-all text-sm">{line.value}</a>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+
+                    {/* Column 2: QR Code */}
+                    <div className="flex flex-col gap-4">
+                      {/* WeChat QR Code */}
+                      {garageInfo.wechat_qr_url && (
+                        <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300 transition-colors hover:shadow-lg">
+                          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-ink-50 flex items-center justify-center">
+                            <MessageCircle className="h-5 w-5 text-[#07C160]" aria-hidden="true" />
+                          </div>
+                          <div className="flex-1 min-w-0 flex flex-col items-center">
+                            <a
+                              href="https://u.wechat.com/EPx-9YxlHCnOcLsyXh7joCw?s=2"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block"
+                            >
+                              <Image
+                                src={garageInfo.wechat_qr_url}
+                                alt="WeChat QR Code"
+                                width={140}
+                                height={140}
+                                className="rounded-lg border border-ink-200 hover:border-accent-300 transition-colors"
+                              />
+                            </a>
+                            <p className="mt-2 text-base font-medium text-[#07C160] text-center">WeChat Scannez moi !</p>
+                          </div>
+                        </div>
                       )}
+
+                      {/* Empty spacer - keeps column height balanced */}
+                      <div className="flex-1" />
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
-                    <Clock className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
-                    <div>
-                      <h3 className="font-medium text-ink-900">{t('garage.hours')}</h3>
-                      <p className="mt-1 text-ink-600 whitespace-pre-line">{garageInfo.opening_hours}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
-                    <Phone className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
-                    <div>
-                      <h3 className="font-medium text-ink-900">{t('garage.phone')}</h3>
-                      <a href={`tel:${garageInfo.phone.replace(/\s/g, '')}`} className="mt-1 text-ink-600 hover:text-accent-600 transition-colors">{garageInfo.phone}</a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl border border-ink-200 hover:border-accent-300">
-                    <Mail className="h-5 w-5 text-accent-600 mt-0.5 shrink-0" aria-hidden="true" />
-                    <div>
-                      <h3 className="font-medium text-ink-900">{t('garage.email')}</h3>
-                      <a href={`mailto:${garageInfo.email}`} className="mt-1 text-ink-600 hover:text-accent-600 transition-colors">{garageInfo.email}</a>
-                    </div>
+
+                    {/* Column 3: Empty */}
+                    <div className="flex-1" />
                   </div>
                 </div>
               </div>

@@ -24,10 +24,12 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> & {
   variant?: 'default' | 'destructive' | 'success' | 'warning';
+  title?: React.ReactNode;
+  description?: React.ReactNode;
 };
 
 const Toast = React.forwardRef<React.ElementRef<typeof ToastPrimitives.Root>, ToastProps>(
-  ({ className, variant = 'default', ...props }, ref) => {
+  ({ className, variant = 'default', title, description, ...props }, ref) => {
     const variants = {
       default: 'border-ink-200 bg-white text-ink-900 bg-opacity-100',
       destructive: 'border-terracotta-200 bg-terracotta-50 text-terracotta-900 bg-opacity-100',
@@ -46,8 +48,8 @@ const Toast = React.forwardRef<React.ElementRef<typeof ToastPrimitives.Root>, To
         {...props}
       >
         <div className="grid gap-1 flex-1">
-          <ToastPrimitives.Title className="font-display font-semibold text-base" />
-          <ToastPrimitives.Description className="text-sm text-ink-600" />
+          {title && <div className="font-display font-semibold text-base">{title}</div>}
+          {description && <div className="text-sm text-ink-600">{description}</div>}
         </div>
         <ToastPrimitives.Close
           className="absolute right-3 top-3 rounded-lg p-1 text-ink-400 opacity-0 transition-opacity hover:text-ink-700 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent-600 group-hover:opacity-100"

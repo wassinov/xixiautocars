@@ -78,6 +78,16 @@ export default function CarFormPage() {
 
   const [images, setImages] = useState<Array<{ id: string; car_id: string; image_url: string; is_primary: boolean; order_index: number; created_at: string }>>([]);
 
+  // DEBUG: check auth session
+  useEffect(() => {
+    const checkSession = async () => {
+      const supabase = createClient();
+      const { data: { user }, error } = await supabase.auth.getUser();
+      console.log('🔐 [CarForm] Auth session:', { user: user?.email, error });
+    };
+    checkSession();
+  }, []);
+
   const loadImages = async (carId: string) => {
     const supabase = createClient();
     const { data } = await supabase
@@ -206,10 +216,16 @@ export default function CarFormPage() {
         features: formData.features || {},
       };
 
+      // DEBUG: log payload and carId
+      console.log('🔄 [CarForm] UPDATE payload:', JSON.stringify(payload, null, 2));
+      console.log('🔄 [CarForm] carId:', carId);
+      console.log('🔄 [CarForm] isEditing:', isEditing);
+
       let error;
       let newCarId: string | null = null;
       if (isEditing) {
-        const { error: updateError } = await supabase.from('cars').update(payload).eq('id', carId);
+        const { error: updateError, data } = await supabase.from('cars').update(payload).eq('id', carId).select();
+        console.log('📥 [CarForm] UPDATE result:', { error: updateError, data });
         error = updateError;
       } else {
         const { data: newCar, error: insertError } = await supabase.from('cars').insert(payload).select('id').single();

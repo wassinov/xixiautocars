@@ -55,8 +55,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <h4 className="font-semibold mb-4">{t('contact')}</h4>
               <address className="not-italic text-ink-400 space-y-2">
                 <p>2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing</p>
-                <p><a href="tel:+8619112816914" className="hover:text-accent-400 hover:border-accent-300">+86 191 1281 6914</a></p>
-                <p><a href="mailto:contact@mongarage.fr" className="hover:text-accent-400 hover:border-accent-300">contact@mongarage.fr</a></p>
+                <p><a href="mailto:contact@xixiautocars.com" className="hover:text-accent-400 hover:border-accent-300">contact@xixiautocars.com</a></p>
               </address>
             </div>
             <div>

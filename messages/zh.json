@@ -3,6 +3,7 @@
     "home": "首页",
     "catalog": "产品目录",
     "contact": "联系我们",
+    "about": "关于我们",
     "login": "登录",
     "dashboard": "仪表盘",
     "cars": "车辆",
@@ -92,6 +93,60 @@
       "map": "在Google地图上查看",
       "contactTitle": "联系我们",
       "contactDesc": "有疑问？有项目？我们将在24小时内回复。"
+    }
+  },
+  "about": {
+    "metaTitle": "关于 Xixi Autocars - 家族车行始于 1980 年",
+    "metaDescription": "了解 Xixi Autocars 的历史、价值观与团队，您在重庆值得信赖的车行。新车二手车销售、置换、融资服务。",
+    "hero": {
+      "title": "关于 Xixi Autocars",
+      "subtitle": "您值得信赖的车行，始于 1980 年。以激情、专业与透明陪伴您完成购车之旅。",
+      "ctaContact": "联系我们",
+      "ctaCatalog": "浏览车辆"
+    },
+    "history": {
+      "title": "我们的故事",
+      "paragraph1": "Xixi Autocars 由 Xiao Ming 于 1980 年创立，源于一家族对汽车的热爱。从沙坪坝区的一个小修理厂起步，历经数十年发展，已成为重庆新车二手车销售的信赖标杆。",
+      "paragraph2": "至今，企业仍为家族独立经营。这种独立性让我们能将客户利益置于每项决策核心，不受财团或加盟网络施压。",
+      "paragraph3": "凭借 40 余年经验，我们已陪伴数千家庭完成选车。驶离车行的每一辆车，均经由我们团队完成 150 项检测、保养与认证。"
+    },
+    "values": {
+      "title": "我们的价值观",
+      "subtitle": "四大支柱指引我们的每一次日常行动。",
+      "items": {
+        "quality": { "title": "无妥协的品质", "desc": "每辆车上架前均通过 150 项严格检测。" },
+        "transparency": { "title": "完全透明", "desc": "完整履历、清晰报价、无隐形收费。买得放心。" },
+        "service": { "title": "卓越客户服务", "desc": "倾听、建议、陪伴。售前售中售后，我们始终在您身边。" },
+        "expertise": { "title": "公认专业度", "desc": "认证团队、持续技术监测、精通全品牌车型。" }
+      }
+    },
+    "team": {
+      "title": "我们的团队",
+      "subtitle": "充满激情的专家为您服务，拥有数十年累积经验。"
+    },
+    "trust": {
+      "title": "为何选择我们",
+      "subtitle": "四项切实承诺，让您无后顾之忧。",
+      "items": {
+        "inspection": { "title": "150 项检测", "desc": "每辆车售前均完成检测、保养与认证。" },
+        "network": { "title": "国际网络", "desc": "覆盖 12 个欧洲国家的厂家与合作伙伴库存。" },
+        "documents": { "title": "手续齐全", "desc": "行驶证、合格证、完整履历一应俱全。" },
+        "payment": { "title": "资金托管", "desc": "货款托管至车辆实际交付方可释放。" }
+      }
+    },
+    "info": {
+      "title": "实用信息",
+      "subtitle": "轻松找到我们，随时欢迎联系。",
+      "address": { "title": "地址" },
+      "phone": { "title": "电话" },
+      "email": { "title": "邮箱" },
+      "hours": { "title": "营业时间", "value": "周一至五：9:00-19:00\n周六：9:00-18:00\n周日：休息" }
+    },
+    "cta": {
+      "title": "准备好来看看了吗？",
+      "description": "欢迎到店体验车辆，或随时联系我们咨询。",
+      "contact": "联系我们",
+      "catalog": "浏览产品目录"
     }
   },
   "catalog": {

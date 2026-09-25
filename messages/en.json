@@ -3,6 +3,7 @@
     "home": "Home",
     "catalog": "Catalog",
     "contact": "Contact",
+    "about": "About",
     "login": "Login",
     "dashboard": "Dashboard",
     "cars": "Vehicles",
@@ -92,6 +93,60 @@
       "map": "View on Google Maps",
       "contactTitle": "Contact us",
       "contactDesc": "A question? A project? We'll reply within 24h."
+    }
+  },
+  "about": {
+    "metaTitle": "About Xixi Autocars - Family garage since 1980",
+    "metaDescription": "Discover the history, values and team of Xixi Autocars, your trusted garage in Chongqing. New and used vehicle sales, trade-in, financing.",
+    "hero": {
+      "title": "About Xixi Autocars",
+      "subtitle": "Your trusted garage since 1980. Passion, expertise and transparency to guide you in your vehicle purchase.",
+      "ctaContact": "Contact us",
+      "ctaCatalog": "View our vehicles"
+    },
+    "history": {
+      "title": "Our story",
+      "paragraph1": "Founded in 1980 by Xiao Ming, Xixi Autocars was born from a family passion for automobiles. What started as a small repair shop in Shapingba district has become over the decades a trusted reference for new and used vehicle sales in Chongqing.",
+      "paragraph2": "Today, the business remains family-owned and independent. This freedom allows us to put our clients' interests at the heart of every decision, without pressure from financial groups or imposed networks.",
+      "paragraph3": "With over 40 years of experience, we have accompanied thousands of families in choosing their vehicle. Every car leaving our garage has been inspected, serviced and certified by our team."
+    },
+    "values": {
+      "title": "Our values",
+      "subtitle": "Four pillars that guide every one of our daily actions.",
+      "items": {
+        "quality": { "title": "Uncompromising quality", "desc": "Every vehicle undergoes a 150-point inspection before being offered for sale." },
+        "transparency": { "title": "Total transparency", "desc": "Complete history, clear pricing, no hidden fees. You know exactly what you're buying." },
+        "service": { "title": "Exceptional customer service", "desc": "Listening, advising, supporting. We're here before, during and after the sale." },
+        "expertise": { "title": "Recognized expertise", "desc": "Certified team, constant technology watch, mastery of all brands." }
+      }
+    },
+    "team": {
+      "title": "Our team",
+      "subtitle": "Enthusiasts at your service, with decades of combined experience."
+    },
+    "trust": {
+      "title": "Why choose us",
+      "subtitle": "Four concrete commitments for your peace of mind.",
+      "items": {
+        "inspection": { "title": "150-point inspection", "desc": "Every vehicle is checked, serviced and certified before sale." },
+        "network": { "title": "International network", "desc": "Access to manufacturer and partner stocks in 12 European countries." },
+        "documents": { "title": "Documents in order", "desc": "Registration, certificate of conformity, full history provided." },
+        "payment": { "title": "Protected payment", "desc": "Funds held in escrow until effective delivery of the vehicle." }
+      }
+    },
+    "info": {
+      "title": "Practical information",
+      "subtitle": "Find us easily and contact us whenever you wish.",
+      "address": { "title": "Address" },
+      "phone": { "title": "Phone" },
+      "email": { "title": "Email" },
+      "hours": { "title": "Hours", "value": "Mon-Fri: 9am-7pm\nSat: 9am-6pm\nSun: closed" }
+    },
+    "cta": {
+      "title": "Ready to visit us?",
+      "description": "Come discover our vehicles on site or contact us for any question.",
+      "contact": "Contact us",
+      "catalog": "Browse catalog"
     }
   },
   "catalog": {

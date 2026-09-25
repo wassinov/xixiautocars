@@ -3,6 +3,7 @@
     "home": "Accueil",
     "catalog": "Catalogue",
     "contact": "Contact",
+    "about": "À propos",
     "login": "Connexion",
     "dashboard": "Tableau de bord",
     "cars": "Véhicules",
@@ -92,6 +93,60 @@
       "map": "Voir sur Google Maps",
       "contactTitle": "Nous contacter",
       "contactDesc": "Une question ? Un projet ? Nous vous répondrons sous 24h."
+    }
+  },
+  "about": {
+    "metaTitle": "À propos de Xixi Autocars - Garage familial depuis 1980",
+    "metaDescription": "Découvrez l'histoire, les valeurs et l'équipe de Xixi Autocars, votre garage de confiance à Chongqing. Vente de véhicules neufs et d'occasion, reprise, financement.",
+    "hero": {
+      "title": "À propos de Xixi Autocars",
+      "subtitle": "Votre garage de confiance depuis 1980. Passion, expertise et transparence pour vous accompagner dans l'achat de votre véhicule.",
+      "ctaContact": "Nous contacter",
+      "ctaCatalog": "Voir nos véhicules"
+    },
+    "history": {
+      "title": "Notre histoire",
+      "paragraph1": "Fondé en 1980 par Xiao Ming, Xixi Autocars est né d'une passion familiale pour l'automobile. Ce qui a commencé comme un petit atelier de réparation dans le district de Shapingba est devenu au fil des décennies une référence incontournable pour l'achat de véhicules neufs et d'occasion à Chongqing.",
+      "paragraph2": "Aujourd'hui encore, l'entreprise reste familiale et indépendante. Cette liberté nous permet de placer l'intérêt de nos clients au cœur de chaque décision, sans pression de groupes financiers ou de réseaux imposés.",
+      "paragraph3": "Avec plus de 40 ans d'expérience, nous avons accompagné des milliers de familles dans le choix de leur véhicule. Chaque voiture qui quitte notre garage a été inspectée, révisée et certifiée par nos soins."
+    },
+    "values": {
+      "title": "Nos valeurs",
+      "subtitle": "Quatre piliers qui guident chacune de nos actions au quotidien.",
+      "items": {
+        "quality": { "title": "Qualité irréprochable", "desc": "Chaque véhicule passe un contrôle de 150 points avant d'être mis en vente." },
+        "transparency": { "title": "Transparence totale", "desc": "Historique complet, prix clair, pas de frais cachés. Vous savez ce que vous achetez." },
+        "service": { "title": "Service client d'exception", "desc": "Écoute, conseil, accompagnement. Nous sommes là avant, pendant et après la vente." },
+        "expertise": { "title": "Expertise reconnue", "desc": "Équipe certifiée, veille technologique constante, maîtrise de toutes les marques." }
+      }
+    },
+    "team": {
+      "title": "Notre équipe",
+      "subtitle": "Des passionnés à votre service, forts de décennies d'expérience cumulée."
+    },
+    "trust": {
+      "title": "Pourquoi nous choisir",
+      "subtitle": "Quatre engagements concrets pour votre tranquillité d'esprit.",
+      "items": {
+        "inspection": { "title": "Inspection 150 points", "desc": "Chaque véhicule est contrôlé, révisé et certifié avant la vente." },
+        "network": { "title": "Réseau international", "desc": "Accès aux stocks constructeurs et partenaires dans 12 pays européens." },
+        "documents": { "title": "Documents en règle", "desc": "Carte grise, certificat de conformité, historique complet fournis." },
+        "payment": { "title": "Paiement protégé", "desc": "Fonds séquestrés jusqu'à la livraison effective du véhicule." }
+      }
+    },
+    "info": {
+      "title": "Informations pratiques",
+      "subtitle": "Retrouvez-nous facilement et contactez-nous quand vous le souhaitez.",
+      "address": { "title": "Adresse" },
+      "phone": { "title": "Téléphone" },
+      "email": { "title": "Email" },
+      "hours": { "title": "Horaires", "value": "Lun-Ven : 9h-19h\nSam : 9h-18h\nDim : fermé" }
+    },
+    "cta": {
+      "title": "Prêt à nous rendre visite ?",
+      "description": "Venez découvrir nos véhicules sur place ou contactez-nous pour toute question.",
+      "contact": "Nous contacter",
+      "catalog": "Parcourir le catalogue"
     }
   },
   "catalog": {

@@ -25,6 +25,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <Link href="/catalogue" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
               {t('catalog')}
             </Link>
+            <Link href="/a-propos" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
+              {t('about')}
+            </Link>
             <Link href="/contact" className="text-sm font-medium text-ink-700 hover:text-accent-600 hover:border-accent-300 transition-colors">
               {t('contact')}
             </Link>

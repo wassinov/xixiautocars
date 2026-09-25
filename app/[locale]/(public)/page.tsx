@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
 import { CarCard } from '@/components/CarCard';
 import { ContactForm } from '@/components/ContactForm';
-import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon, MessageCircle, MessageSquare, Mail as MailIcon } from 'lucide-react';
+import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clock, CheckCircle, Globe, Ship, FileText, CreditCard as CreditCardIcon, MessageCircle, MessageSquare, Mail as MailIcon, Star } from 'lucide-react';
 import { Link } from '@/i18n';
 import type { CarWithRelations } from '@/types/car';
 import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
@@ -30,10 +30,10 @@ const PROCESS_STEPS = [
 ];
 
 const TRUST_REASONS = [
-  { icon: CheckCircle, key: 'inspection' },
-  { icon: Globe, key: 'network' },
-  { icon: FileText, key: 'documents' },
-  { icon: CreditCardIcon, key: 'payment' },
+  { icon: Star, key: 'inspection' },
+  { icon: Star, key: 'network' },
+  { icon: Star, key: 'documents' },
+  { icon: Star, key: 'payment' },
 ];
 
 const TESTIMONIALS = [
@@ -349,7 +349,7 @@ export default async function HomePage() {
               )}>
                 <div className="flex items-center gap-1" aria-label={t('testimonials.ratingLabel', { rating: testimonial.rating })}>
                   {[...Array(testimonial.rating)].map((_, idx) => (
-                    <CheckCircle key={idx} className="h-5 w-5 text-terracotta-500 fill-terracotta-500" aria-hidden="true" />
+                    <Star key={idx} className="h-5 w-5 text-terracotta-500 fill-terracotta-500" aria-hidden="true" />
                   ))}
                 </div>
                 <blockquote className="mt-4 text-base text-ink-700 italic leading-relaxed">

@@ -37,9 +37,9 @@ const TRUST_REASONS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Marie D.', location: 'Lyon', vehicle: 'Peugeot 3008', rating: 5, text: 'Processus transparent de A à Z. Livraison à domicile en 2 semaines, véhicule impeccable.' },
-  { name: 'Thomas R.', location: 'Marseille', vehicle: 'BMW X1', rating: 5, text: 'Reprise de mon ancienne voiture au juste prix. Financement clair, pas de mauvaise surprise.' },
-  { name: 'Sophie L.', location: 'Bordeaux', vehicle: 'Toyota Yaris', rating: 5, text: 'Équipe réactive et professionnelle. Documents reçus avant la livraison, top !' },
+  { name: 'Marie D.', location: 'Lyon', vehicle: 'BYD Atto 3', rating: 5, text: 'Processus transparent de A à Z. Livraison à domicile en 2 semaines, véhicule impeccable.' },
+  { name: 'Thomas R.', location: 'Marseille', vehicle: 'MG4 Electric', rating: 5, text: 'Reprise de mon ancienne voiture au juste prix. Financement clair, pas de mauvaise surprise.' },
+  { name: 'Sophie L.', location: 'Bordeaux', vehicle: 'Chery Omoda 5', rating: 5, text: 'Équipe réactive et professionnelle. Documents reçus avant la livraison, top !' },
 ];
 
 export default async function HomePage() {

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { Link } from '@/i18n';
-import { Truck, MapPin, Phone, Mail, Clock, Users, Award, Wrench, Calendar, Shield, CheckCircle, Star, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Users, Award, Wrench, Calendar, Shield, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
 import { languagesAlternates } from '@/lib/seo';
 import { GARAGE_INFO_ID } from '@/lib/constants';
@@ -26,11 +26,15 @@ export default async function AboutPage() {
   const supabase = await createClient();
 
   // Fetch garage info
-  const { data: garageInfo } = await supabase
+  const { data: garageInfo, error: garageError } = await supabase
     .from('garage_infos')
     .select('*')
     .eq('id', GARAGE_INFO_ID)
     .single();
+
+  if (garageError) {
+    console.warn('[AboutPage] Erreur garage_infos:', garageError.message);
+  }
 
   // Get team members from translations (3 members: indices 0, 1, 2)
   const teamMembers = [
@@ -112,43 +116,15 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-ink-50" aria-labelledby="about-hero">
+      <section className="py-12 lg:py-16 bg-ink-50" aria-labelledby="about-hero">
         <div className={magazineContainer()}>
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 id="about-hero" className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-ink-900 animate-reveal">
-              {t('hero.title')}
-            </h1>
-            <p className="mt-6 text-body-lg text-ink-600 animate-reveal delay-100 max-w-2xl mx-auto">
-              {t('hero.subtitle')}
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-reveal delay-200">
-              <Link href="/contact" className={cn(
-                'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-ink-900',
-                'bg-white rounded-lg hover:bg-ink-100 active:bg-ink-200',
-                'hover:border-accent-300 transition-all duration-300 ease-in-out'
-              )}>
-                {t('hero.ctaContact')}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-              <Link href="/catalogue" className={cn(
-                'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-white',
-                'bg-accent-600 rounded-lg hover:bg-accent-700 active:bg-accent-800',
-                'hover:border-accent-300 transition-all duration-300 ease-in-out'
-              )}>
-                {t('hero.ctaCatalog')}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Notre Histoire */}
-      <section className="py-12 lg:py-16 bg-white" aria-labelledby="history-title">
-        <div className={magazineContainer()}>
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
+          <h1 id="about-hero" className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-ink-900 animate-reveal text-center mb-8">
+            {t('hero.title')}
+          </h1>
+          <div className="grid gap-12 lg:grid-cols-2 items-start">
             <div className={revealDelay(0)}>
-              <h2 id="history-title" className="text-3xl sm:text-4xl font-display font-bold text-ink-900">{t('history.title')}</h2>
-              <div className="mt-6 space-y-4 text-base text-ink-600 leading-relaxed">
+
+              <div className="space-y-4 text-base text-ink-600 leading-relaxed">
                 <p>{t('history.paragraph1')}</p>
                 <p>{t('history.paragraph2')}</p>
                 <p>{t('history.paragraph3')}</p>
@@ -163,14 +139,37 @@ export default async function AboutPage() {
                     fill
                     className="object-cover"
                     sizes="50vw"
+                    priority
                   />
                 ) : (
-                  <div className="flex items-center justify-center w-full h-full text-ink-400">
-                    <Truck className="h-24 w-24" />
-                  </div>
+                  <Image
+                    src="/logo.jpg"
+                    alt="Xixi Autocars"
+                    width={400}
+                    height={300}
+                    className="object-contain mx-auto my-auto"
+                    priority
+                  />
                 )}
               </div>
             </div>
+          </div>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-reveal delay-200">
+            <Link href="/contact" className={cn(
+              'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-ink-900',
+              'bg-white rounded-lg hover:bg-ink-100 active:bg-ink-200',
+              'hover:border-accent-300 transition-all duration-300 ease-in-out'
+            )}>
+              {t('hero.ctaContact')}
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link href="/catalogue" className={cn(
+              'inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-medium text-white',
+              'bg-accent-600 rounded-lg hover:bg-accent-700 active:bg-accent-800',
+              'hover:border-accent-300 transition-all duration-300 ease-in-out'
+            )}>
+              {t('hero.ctaCatalog')}
+            </Link>
           </div>
         </div>
       </section>

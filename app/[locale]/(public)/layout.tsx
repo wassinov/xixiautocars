@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés selon la locale (as-needed)
-import { Truck, X, ChevronRight, ArrowRight, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { ChevronRight, ArrowRight, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { MobileMenu } from '@/components/MobileMenu';
@@ -12,10 +13,15 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-ink-200">
-        <nav className="container-custom flex h-16 items-center justify-between" aria-label="Main navigation">
+        <nav className="container-custom flex h-20 items-center justify-between" aria-label="Main navigation">
           <Link href="/" className="flex items-center gap-2 hover:border-accent-300" aria-label="Xixi Autocars - Accueil">
-            <Truck className="h-8 w-8 text-accent-600" />
-            <span className="font-bold text-xl text-ink-900 hidden sm:block">Xixi Autocars</span>
+            <Image
+              src="/logo.jpg"
+              alt="Xixi Autocars"
+              width={128}
+              height={128}
+              priority
+            />
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -49,8 +55,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           <div className="grid gap-8 md:grid-cols-4">
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-2 mb-4 text-accent-400 hover:border-accent-300">
-                <Truck className="h-8 w-8 text-accent-400" />
-                <span className="font-bold text-xl">Xixi Autocars</span>
+                <Image
+                  src="/logo.jpg"
+                  alt="Xixi Autocars"
+                  width={48}
+                  height={48}
+                  className="h-10 w-auto"
+                />
               </Link>
               <p className="text-ink-400 max-w-xs">{tHome('footer.pitch')}</p>
             </div>

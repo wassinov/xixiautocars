@@ -11,6 +11,9 @@ export const localeNames: Record<string, string> = {
   en: 'English',
   ar: 'العربية',
   zh: '中文',
+  ru: 'Русский',
+  es: 'Español',
+  fa: 'فارسی',
 };
 
 export const localeFlags: Record<string, string> = {
@@ -18,4 +21,7 @@ export const localeFlags: Record<string, string> = {
   en: '🇬🇧',
   ar: '🇸🇦',
   zh: '🇨🇳',
+  ru: '🇷🇺',
+  es: '🇪🇸',
+  fa: '🇮🇷',
 };

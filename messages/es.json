@@ -1,0 +1,595 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "catalog": "Catálogo",
+    "contact": "Contacto",
+    "about": "Nosotros",
+    "login": "Iniciar sesión",
+    "dashboard": "Panel de control",
+    "cars": "Vehículos",
+    "messages": "Mensajes",
+    "settings": "Ajustes",
+    "logout": "Cerrar sesión"
+  },
+  "home": {
+    "metaTitle": "Xixi Autocars - Venta de vehículos nuevos y de ocasión",
+    "metaDescription": "Descubre nuestra selección de vehículos nuevos y de ocasión. Recompra, financiación, garantía y mantenimiento. Tu concesionario de confianza.",
+    "heroSpotlight": "Selección del momento",
+    "featuredEmpty": "Ningún vehículo destacado por el momento.",
+    "process": {
+      "title": "Nuestro proceso en 5 pasos",
+      "subtitle": "De la búsqueda a la entrega, nos ocupamos de todo por ti.",
+      "steps": {
+        "search": { "title": "Búsqueda", "desc": "Identificamos el vehículo ideal según tus criterios y presupuesto." },
+        "inspection": { "title": "Inspección", "desc": "Cada vehículo pasa un control técnico riguroso de 150 puntos." },
+        "payment": { "title": "Pago seguro", "desc": "Transacción protegida a través de nuestros socios bancarios certificados." },
+        "shipping": { "title": "Expedición", "desc": "Transporte asegurado desde la fábrica o el stock hasta tu puerta." },
+        "delivery": { "title": "Entrega", "desc": "Entrega de llaves a domicilio, documentos en regla, listo para circular." }
+      }
+    },
+    "logistics": {
+      "badge": "Reportaje · Logística internacional",
+      "title": "De la fábrica a tu puerta: <span>el control total</span>",
+      "description": "Nuestra red logística cubre 12 países europeos. Cada vehículo se sigue en tiempo real, transportado en camión cerrado, entregado con expediente completo.",
+      "cta": "Saber más",
+      "imageAlt": "Logística internacional - Transporte de vehículos"
+    },
+    "trust": {
+      "title": "¿Por qué elegir Xixi Autocars?",
+      "subtitle": "Cuatro pilares de confianza para tu compra con total tranquilidad.",
+      "items": {
+        "inspection": { "title": "Inspección 150 puntos", "desc": "Cada vehículo es controlado, revisado y certificado antes de la venta." },
+        "network": { "title": "Red internacional", "desc": "Acceso a stocks de fabricantes y socios en 12 países europeos." },
+        "documents": { "title": "Documentos en regla", "desc": "Tarjeta gris, certificado de conformidad, historial completo proporcionados." },
+        "payment": { "title": "Pago protegido", "desc": "Fondos en depósito hasta la entrega efectiva del vehículo." }
+      }
+    },
+    "testimonials": {
+      "title": "Confían en nosotros",
+      "subtitle": "Cientos de clientes satisfechos en toda Europa.",
+      "ratingLabel": "Nota: {rating} sobre 5"
+    },
+    "footer": {
+      "pitch": "Tu concesionario de confianza desde 1980. Vehículos nuevos y de ocasión, revisados y garantizados.",
+      "hours": "Lun-Vie: 9h-19h\nSáb: 9h-18h\nDom: cerrado",
+      "rights": "© 2024 Xixi Autocars. Todos los derechos reservados."
+    },
+    "hero": {
+      "badge": "Concesionario familiar desde 1980",
+      "title": "Tu próximo vehículo <span>te espera</span>",
+      "description": "Amplia elección de vehículos nuevos y de ocasión, revisados y garantizados. Recompra, financiación y entrega a domicilio.",
+      "ctaCatalog": "Ver catálogo",
+      "ctaContact": "Contactar"
+    },
+    "featured": {
+      "title": "Nuestros vehículos destacados",
+      "subtitle": "Seleccionados para ti, disponibles inmediatamente",
+      "viewAll": "Ver todo el catálogo"
+    },
+    "services": {
+      "title": "Nuestros servicios",
+      "subtitle": "Todo para simplificar tu compra y el mantenimiento de tu vehículo",
+      "items": {
+        "delivery": { "title": "Entrega a domicilio", "desc": "Entregamos tu vehículo en toda la Francia metropolitana." },
+        "warranty": { "title": "Garantía 12 meses", "desc": "Todos nuestros vehículos de ocasión están garantizados 12 meses mínimo." },
+        "maintenance": { "title": "Mantenimiento y reparación", "desc": "Nuestro taller asegura el mantenimiento y reparación de tu coche." },
+        "financing": { "title": "Financiación a medida", "desc": "Soluciones de financiación adaptadas a tu presupuesto, con o sin aportación." },
+        "tradein": { "title": "Recompra de tu antiguo vehículo", "desc": "Estimación gratuita y recompra al contado de tu vehículo actual." },
+        "admin": { "title": "Trámites administrativos", "desc": "Gestionamos la matriculación y todas las formalidades por ti." }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para encontrar tu vehículo?",
+      "description": "Contáctanos para una prueba, una recompra o simplemente para un consejo.",
+      "contact": "Contactar",
+      "catalog": "Ver catálogo"
+    },
+    "garage": {
+      "about": "Somos un concesionario familiar apasionado por los automóviles desde 1980.",
+      "address": "Dirección",
+      "hours": "Horarios",
+      "phone": "Teléfono",
+      "email": "Email",
+      "map": "Ver en Google Maps",
+      "contactTitle": "Contactar",
+      "contactDesc": "¿Una pregunta? ¿Un proyecto? Te responderemos en 24h."
+    }
+  },
+  "about": {
+    "metaTitle": "Sobre Xixi Autocars - Concesionario familiar desde 1980",
+    "metaDescription": "Descubre la historia, valores y equipo de Xixi Autocars, tu concesionario de confianza en Chongqing. Venta de vehículos nuevos y de ocasión, recompra, financiación.",
+    "hero": {
+      "title": "Sobre Xixi Autocars",
+      "subtitle": "Tu concesionario de confianza desde 1980. Pasión, experiencia y transparencia para acompañarte en la compra de tu vehículo.",
+      "ctaContact": "Contactar",
+      "ctaCatalog": "Ver nuestros vehículos"
+    },
+    "history": {
+      "title": "Nuestra historia",
+      "paragraph1": "Fundado en 1980 por Xiao Ming, Xixi Autocars nació de una pasión familiar por el automóvil. Lo que empezó como un pequeño taller de reparación en el distrito de Shapingba se convirtió en una referencia imprescindible para la compra de vehículos nuevos y de ocasión en Chongqing.",
+      "paragraph2": "Hoy, la empresa sigue siendo familiar e independiente. Esta libertad nos permite poner el interés de nuestros clientes en el centro de cada decisión, sin presión de grupos financieros o redes impuestas.",
+      "paragraph3": "Con más de 40 años de experiencia, hemos acompañado a miles de familias en la elección de su vehículo. Cada coche que sale de nuestro garaje ha sido inspeccionado, revisado y certificado por nuestros equipos."
+    },
+    "values": {
+      "title": "Nuestros valores",
+      "subtitle": "Cuatro pilares que guían cada una de nuestras acciones cotidianas.",
+      "items": {
+        "quality": { "title": "Calidad irreprochable", "desc": "Cada vehículo pasa un control de 150 puntos antes de ponerse a la venta." },
+        "transparency": { "title": "Transparencia total", "desc": "Historial completo, precio claro, sin gastos ocultos. Sabes lo que compras." },
+        "service": { "title": "Servicio al cliente excepcional", "desc": "Escucha, consejo, acompañamiento. Estamos antes, durante y después de la venta." },
+        "expertise": { "title": "Experiencia reconocida", "desc": "Equipo certificado, vigilancia tecnológica constante, dominio de todas las marcas." }
+      }
+    },
+    "team": {
+      "title": "Nuestro equipo",
+      "subtitle": "Apasionados a tu servicio, con décadas de experiencia acumulada.",
+      "members": [
+        { "name": "Xixi", "role": "Fundador y Director", "bio": "Apasionado del automóvil desde hace 30 años, fundó Xixi Autocars en 1980." },
+        { "name": "Li Wei", "role": "Responsable de Ventas", "bio": "Experto en vehículos nuevos y de ocasión, acompaña a cada cliente con transparencia." },
+        { "name": "Chen Hong", "role": "Responsable Taller", "bio": "Técnico certificado, vela para que cada vehículo sea perfecto antes de la entrega." }
+      ]
+    },
+    "trust": {
+      "title": "Por qué elegirnos",
+      "subtitle": "Cuatro compromisos concretos para tu tranquilidad.",
+      "items": {
+        "inspection": { "title": "Inspección 150 puntos", "desc": "Cada vehículo es controlado, revisado y certificado antes de la venta." },
+        "network": { "title": "Red internacional", "desc": "Acceso a stocks de fabricantes y socios en 12 países europeos." },
+        "documents": { "title": "Documentos en regla", "desc": "Tarjeta gris, certificado de conformidad, historial completo proporcionados." },
+        "payment": { "title": "Pago protegido", "desc": "Fondos en depósito hasta la entrega efectiva del vehículo." }
+      }
+    },
+    "info": {
+      "title": "Información práctica",
+      "subtitle": "Encuéntranos fácilmente y contáctanos cuando quieras.",
+      "address": { "title": "Dirección" },
+      "phone": { "title": "Teléfono" },
+      "email": { "title": "Email" },
+      "contact": { "title": "Contactar" },
+      "hours": { "title": "Horarios", "value": "Lun-Vie: 9h-19h\nSáb: 9h-18h\nDom: cerrado" }
+    },
+    "cta": {
+      "title": "¿Listo para visitarnos?",
+      "description": "Ven a descubrir nuestros vehículos in situ o contáctanos para cualquier pregunta.",
+      "contact": "Contactar",
+      "catalog": "Ver catálogo"
+    }
+  },
+  "catalog": {
+    "title": "Nuestro catálogo",
+    "filters": "Filtros",
+    "clear": "Limpiar",
+    "reset": "Reiniciar filtros",
+    "noFilters": "Ningún filtro activo",
+    "results": "{count} vehículo{count, plural, one {} other {s}} disponible{count, plural, one {} other {s}}",
+    "brand": "Marca",
+    "model": "Modelo",
+    "bodyType": "Tipo de carrocería",
+    "fuel": "Combustible",
+    "gearbox": "Caja de cambios",
+    "price": "Precio (€)",
+    "year": "Año",
+    "mileage": "Kilometraje",
+    "min": "Mín",
+    "max": "Máx",
+    "newOnly": "Solo vehículos nuevos",
+    "featuredOnly": "Solo destacados",
+    "allBrands": "Todas las marcas",
+    "allModels": "Todos los modelos",
+    "allTypes": "Todos los tipos",
+    "allFuels": "Todos los combustibles",
+    "allGearboxes": "Todas",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {current} de {total}",
+    "noResults": "Ningún vehículo corresponde a tus criterios.",
+    "clearFilters": "Reiniciar filtros",
+    "options": "Opciones",
+    "selectBrandFirst": "Selecciona una marca",
+    "bodyTypes": {
+      "sedan": "Berlina",
+      "suv": "SUV",
+      "wagon": "Familiar",
+      "city": "Urbano",
+      "coupe": "Coupé",
+      "convertible": "Descapotable",
+      "utility": "Utilitario",
+      "minivan": "Monovolumen"
+    },
+    "fuels": {
+      "gasoline": "Gasolina",
+      "diesel": "Diésel",
+      "hybrid": "Híbrido",
+      "electric": "Eléctrico",
+      "lpg": "GLP",
+      "e85": "E85"
+    },
+    "gearboxes": {
+      "manual": "Manual",
+      "automatic": "Automático",
+      "sequential": "Secuencial"
+    }
+  },
+  "car": {
+    "new": "Nuevo",
+    "featured": "Destacado",
+    "specs": "Especificaciones técnicas",
+    "description": "Descripción",
+    "features": "Equipamiento y opciones",
+    "year": "Año",
+    "mileage": "Kilometraje",
+    "fuel": "Combustible",
+    "gearbox": "Caja",
+    "color": "Color",
+    "bodyType": "Carrocería",
+    "price": "Precio",
+    "contactTitle": "Contáctanos sobre este vehículo",
+    "includedServices": "Servicios incluidos",
+    "services": {
+      "warranty": "Garantía 12 meses mínimo",
+      "inspected": "Vehículo revisado y controlado",
+      "admin": "Trámites administrativos gratuitos",
+      "delivery": "Entrega a domicilio posible",
+      "tradein": "Recompra de tu antiguo vehículo",
+      "financing": "Soluciones de financiación"
+    },
+    "viewDetails": "Ver detalles",
+    "gallery": {
+      "noImages": "Ninguna imagen disponible",
+      "imageOf": "Imagen {current} de {total}",
+      "previous": "Imagen anterior",
+      "next": "Imagen siguiente",
+      "closeFullscreen": "Cerrar pantalla completa",
+      "goToImage": "Ir a la imagen {index}",
+      "viewImage": "Ver imagen {index}",
+      "thumbnails": "Miniaturas",
+      "primary": "Principal",
+      "fullscreen": "Pantalla completa ({count} fotos)",
+      "close": "Cerrar",
+      "galleryOf": "Galería {name}"
+    },
+    "availableAtGarage": "Vehículo disponible en Xixi Autocars."
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¿Pregunta sobre un vehículo? ¿Necesitas financiación? ¿Quieres probar un coche? Nuestro equipo te responde en 24h.",
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": "Nombre completo",
+      "email": "Email",
+      "phone": "Teléfono",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "success": "Mensaje enviado",
+      "successDesc": "Te responderemos lo antes posible.",
+      "error": "Error",
+      "errorDesc": "Imposible enviar el mensaje",
+      "required": "Los campos marcados con * son obligatorios.",
+      "placeholders": {
+        "name": "Juan Pérez",
+        "email": "juan.perez@email.es",
+        "phone": "+34 600 123 456",
+        "message": "Describe tu solicitud..."
+      },
+      "subjects": {
+        "info": "Solicitud de información",
+        "testDrive": "Solicitud de prueba",
+        "financing": "Financiación / Recompra",
+        "other": "Otro"
+      },
+      "messagePrefix": "Quieres ser contactado sobre el vehículo {vehicle}"
+    },
+    "info": {
+      "title": "Información práctica",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "email": "Email",
+      "hours": "Horarios de apertura",
+      "directions": "Cómo llegar",
+      "quickCall": "¿Necesitas una respuesta rápida?",
+      "quickCallDesc": "Llámanos directamente en horario de apertura, estaremos encantados de informarte.",
+      "callNow": "Llamar ahora"
+    },
+    "description": "Contacta Xixi Autocars para cualquier solicitud de información, prueba de vehículo, financiación o recompra. Respuesta en 24h.",
+    "engagements": {
+      "title": "Nuestros compromisos",
+      "responseTime": "Respuesta garantizada en 24h laborables",
+      "personalizedSupport": "Acompañamiento personalizado para tu proyecto",
+      "freeQuote": "Presupuesto gratuito y sin compromiso"
+    },
+    "visitUs": {
+      "title": "O ven a vernos",
+      "description": "Nuestro showroom está abierto de lunes a sábado. Ven a descubrir nuestros vehículos in situ."
+    },
+    "viewCatalog": "Ver catálogo"
+  },
+  "admin": {
+    "login": {
+      "title": "Acceso Admin",
+      "subtitle": "Accede al panel de gestión",
+      "email": "Email",
+      "password": "Contraseña",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "submit": "Conectar",
+      "submitting": "Conectando...",
+      "success": "Conexión exitosa",
+      "successDesc": "Redirigiendo al panel...",
+      "error": "Error",
+      "back": "Volver al sitio público"
+    },
+    "dashboard": {
+      "title": "Panel de control",
+      "subtitle": "Visión general de la actividad del concesionario",
+      "kpis": {
+        "totalCars": "Vehículos totales",
+        "newCars": "Vehículos nuevos",
+        "unreadMessages": "Mensajes no leídos",
+        "featuredCars": "Destacados"
+      },
+      "recentCars": "Últimos vehículos añadidos",
+      "recentMessages": "Últimos mensajes",
+      "viewAll": "Ver todo",
+      "quickActions": "Acciones rápidas",
+      "actions": {
+        "addCar": { "title": "Añadir vehículo", "desc": "Nuevo en catálogo" },
+        "manageCars": { "title": "Gestionar vehículos", "desc": "Lista, modificar, eliminar" },
+        "messages": { "title": "Mensajes clientes", "desc": "{count} no leídos" },
+        "settings": { "title": "Ajustes", "desc": "Concesionario, usuarios" }
+      },
+      "status": {
+        "new": "Nuevo",
+        "read": "Leído",
+        "replied": "Respondido",
+        "featured": "Destacado"
+      }
+    },
+    "cars": {
+      "title": "Gestión de vehículos",
+      "addNew": "Nuevo vehículo",
+      "search": "Buscar marca, modelo...",
+      "filters": "Filtros",
+      "clearFilters": "Limpiar filtros",
+      "brand": "Marca",
+      "allBrands": "Todas las marcas",
+      "condition": "Nuevo / Ocasión",
+      "allConditions": "Todos",
+      "new": "Nuevos",
+      "used": "Ocasión",
+      "featured": "Destacados",
+      "allFeatured": "Todos",
+      "featuredYes": "Destacados",
+      "featuredNo": "No destacados",
+      "availability": "Disponibilidad",
+      "allAvailability": "Todas",
+      "available": "Disponibles",
+      "sold": "Vendidos/Retirados",
+      "table": {
+        "image": "Imagen",
+        "vehicle": "Vehículo",
+        "year": "Año",
+        "mileage": "Kilometraje",
+        "price": "Precio",
+        "status": "Estados",
+        "date": "Fecha",
+        "actions": "Acciones"
+      },
+      "statuses": {
+        "new": "Nuevo",
+        "featured": "Destacado",
+        "sold": "Vendido",
+        "available": "Disponible"
+      },
+      "actions": {
+        "view": "Ver detalles",
+        "edit": "Modificar",
+        "images": "Imágenes",
+        "delete": "Eliminar"
+      },
+      "noCars": "Ningún vehículo por el momento",
+      "pagination": {
+        "prev": "Anterior",
+        "next": "Siguiente",
+        "page": "Página {current} de {total}"
+      }
+    },
+    "carForm": {
+      "title": "Nuevo vehículo",
+      "editTitle": "Modificar vehículo",
+      "subtitle": "Rellena la información del vehículo",
+      "mainInfo": "Información principal",
+      "brand": "Marca",
+      "model": "Modelo",
+      "year": "Año",
+      "mileage": "Kilometraje",
+      "price": "Precio",
+      "currency": "Moneda",
+      "color": "Color",
+      "gearbox": "Caja de cambios",
+      "fuel": "Combustible",
+      "condition": "Estado",
+      "description": "Descripción y equipamiento",
+      "descriptionLabel": "Descripción",
+      "features": "Equipamiento y opciones (JSON)",
+      "featuresHelp": "Formato JSON. Clave = nombre del equipamiento, valor = true/false o texto.",
+      "statuses": "Estados",
+      "carImages": "Fotos del vehículo",
+      "isNew": "Vehículo nuevo",
+      "isFeatured": "Destacar (página inicio)",
+      "isAvailable": "Disponible para venta",
+      "cancel": "Cancelar",
+      "save": "Crear",
+      "update": "Actualizar",
+      "saving": "Guardando...",
+      "selectBrand": "Seleccionar marca",
+      "selectModel": "Seleccionar modelo",
+      "selectBrandFirst": "Selecciona primero una marca",
+      "selectGearbox": "Seleccionar",
+      "selectFuel": "Seleccionar",
+      "selectCondition": "Seleccionar",
+      "conditions": {
+        "excellent": "Excelente",
+        "veryGood": "Muy bueno",
+        "good": "Bueno",
+        "fair": "Correcto",
+        "restore": "A restaurar"
+      }
+    },
+    "carImages": {
+      "title": "Gestión de imágenes",
+      "subtitle": "Arrastra y suelta para reordenar. La primera imagen = imagen principal.",
+      "uploadTitle": "Añadir imágenes",
+      "dragDrop": "Arrastra y suelta tus imágenes aquí",
+      "orClick": "o haz clic para seleccionar",
+      "formats": "PNG, JPG, WebP - Máx 4MB por imagen",
+      "uploading": "Subiendo...",
+      "noImages": "Ninguna imagen para este vehículo",
+      "addFirst": "Añade la primera imagen arriba",
+      "primary": "Principal",
+      "deleteConfirm": "¿Eliminar esta imagen?",
+      "reorderHint": "Arrastra para reordenar",
+      "error": "Error",
+      "success": "Éxito",
+      "imageAdded": "Imagen añadida",
+      "confirmDelete": "Confirmar eliminación?",
+      "imageDeleted": "Imagen eliminada",
+      "imageSetPrimary": "Imagen principal definida",
+      "dropImagesHere": "Suelta las imágenes aquí",
+      "dragDropImagesHere": "Arrastra y suelta tus imágenes aquí",
+      "orClickToSelect": "o haz clic para seleccionar",
+      "fileFormats": "PNG, JPG, WebP - Máx 4MB por imagen",
+      "fileTooLarge": "Archivo demasiado grande (máximo 4 MB)",
+      "fileInvalidType": "Formato no soportado (PNG, JPG o WebP)",
+      "saveVehicleFirst": "Guarda primero el vehículo para añadir fotos.",
+      "imagesCount": "Imágenes ({count})",
+      "image": "Imagen",
+      "alreadyPrimary": "Ya principal",
+      "setAsPrimary": "Definir como principal",
+      "deleteImage": "Eliminar imagen",
+      "noImages": "Ninguna imagen para este vehículo",
+      "addFirstImage": "Añade la primera imagen arriba"
+    },
+    "messages": {
+      "title": "Mensajes de clientes",
+      "search": "Buscar nombre, email...",
+      "status": "Estado",
+      "allStatus": "Todos los estados",
+      "statusNew": "Nuevos",
+      "statusRead": "Leídos",
+      "statusReplied": "Respondidos",
+      "clearFilters": "Limpiar filtros",
+      "table": {
+        "id": "#",
+        "client": "Cliente",
+        "contact": "Contacto",
+        "vehicle": "Vehículo",
+        "message": "Mensaje",
+        "status": "Estado",
+        "date": "Fecha",
+        "actions": "Acciones"
+      },
+      "noVehicle": "Sin vehículo",
+      "actions": {
+        "markRead": "Marcar como leído",
+        "markReplied": "Marcar como respondido",
+        "delete": "Eliminar"
+      },
+      "deleteConfirm": "¿Eliminar este mensaje?",
+      "pagination": {
+        "prev": "Anterior",
+        "next": "Siguiente",
+        "page": "Página {current} de {total}"
+      }
+    },
+    "settings": {
+      "title": "Ajustes del concesionario",
+      "subtitle": "Configura la información pública de tu concesionario",
+      "info": "Información del concesionario",
+      "name": "Nombre del concesionario",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "email": "Email de contacto",
+      "mapsUrl": "Enlace Google Maps",
+      "hours": "Horarios de apertura",
+      "hoursHelp": "Una línea por día o franja horaria",
+      "about": "Presentación del concesionario",
+      "logoUrl": "URL del logo",
+      "logoHelp": "URL accesible públicamente (Supabase Storage, CDN, etc.)",
+      "save": "Guardar cambios",
+      "storage": "Almacenamiento imágenes",
+      "bucketInfo": "Bucket Supabase Storage: car-images",
+      "bucketDetails": [
+        "Las imágenes se suben a car-images/{{car_id}}/",
+        "URLs públicas generadas automáticamente",
+        "Políticas RLS: lectura pública, escritura autenticada"
+      ],
+      "rlsTitle": "Políticas RLS recomendadas",
+      "rlsDesc": "Copia estas políticas en el editor SQL Supabase: lectura pública para visualización del sitio, escritura para cuentas autenticadas.",
+      "users": "Usuarios administradores",
+      "usersDesc": "La autenticación la gestiona Supabase Auth. Para añadir un admin:",
+      "usersSteps": [
+        "Ir a Supabase Dashboard → Authentication → Users",
+        "Clic en \"Invite user\" o crear cuenta",
+        "El usuario podrá conectarse en /login",
+        "Todos los usuarios autenticados tienen acceso admin (RLS: auth.uid() is not null)"
+      ],
+      "restrictNote": "Para restringir: modificar políticas RLS con auth.jwt() ->> 'email'"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "notFound": "Página no encontrada",
+    "back": "Volver",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Modificar",
+    "view": "Ver",
+    "create": "Crear",
+    "update": "Actualizar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "yes": "Sí",
+    "no": "No",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "page": "Página",
+    "of": "de",
+    "items": "elementos",
+    "item": "elemento",
+    "total": "Total",
+    "none": "Ninguno",
+    "select": "Seleccionar",
+    "optional": "Opcional",
+    "required": "Obligatorio",
+    "available": "Disponibles",
+    "vehicles": "vehículos",
+    "viewAll": "Ver todo",
+    "noData": "Sin datos",
+    "upToDate": "Actualizado",
+    "needResponse": "Requieren respuesta",
+    "featuredOnHome": "Destacados en inicio",
+    "confirmDelete": "¿Confirmar eliminación?",
+    "created": "Creado con éxito",
+    "updated": "Actualizado con éxito",
+    "saveError": "Error al guardar",
+    "deleted": "Eliminado",
+    "imageDeleted": "Imagen eliminada",
+    "toProcess": "A procesar",
+    "messages": "mensajes",
+    "currency": "Moneda",
+    "vehiclesAvailable": "{total} vehículos disponibles",
+    "about": "Nosotros",
+    "success": "Éxito",
+    "saving": "Guardando...",
+    "colorPlaceholder": "Ej. Azul",
+    "notSpecified": "No especificado",
+    "descriptionPlaceholder": "Describe el vehículo, su historial, equipamiento..."
+  }
+}

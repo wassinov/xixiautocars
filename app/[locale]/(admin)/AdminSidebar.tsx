@@ -1,7 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
-import { Truck, Menu, X, LayoutDashboard, LogOut, ChevronLeft, Mail, Users, Settings } from 'lucide-react';
+import { Menu, LayoutDashboard, LogOut, ChevronLeft, Mail, Users, Settings, Truck } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n';
 import { cn } from '@/lib/utils';
@@ -48,10 +49,15 @@ export default function AdminSidebar() {
         </SheetTrigger>
         <SheetContent side="left" className="w-72 p-0 rtl:left-auto rtl:right-0 bg-white border-r border-ink-200">
           <nav className="flex h-full flex-col">
-            <div className="flex h-16 items-center px-6 border-b border-ink-200">
-              <Link href="/dashboard" className="flex items-center gap-2">
-                <Truck className="h-8 w-8 text-accent-600" />
-                <span className="font-display font-bold text-lg text-ink-900">Admin</span>
+            <div className="flex h-28 items-center px-6 border-b border-ink-200">
+              <Link href="/dashboard" className="flex w-full items-center justify-center gap-2">
+                <Image
+                  src="/logo.jpg"
+                  alt="Xixi Autocars"
+                  width={160}
+                  height={160}
+                  className="h-20 w-auto"
+                />
               </Link>
             </div>
             <div className="flex-1 space-y-1 p-4 overflow-y-auto">
@@ -88,10 +94,15 @@ export default function AdminSidebar() {
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col bg-white border-r border-ink-200 rtl:left-auto rtl:right-0">
-        <div className="flex h-16 items-center px-6 border-b border-ink-200">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <Truck className="h-8 w-8 text-accent-600" />
-            <span className="font-display font-bold text-lg text-ink-900">Xixi Autocars Admin</span>
+        <div className="flex h-28 items-center px-6 border-b border-ink-200">
+          <Link href="/dashboard" className="flex w-full items-center justify-center gap-2">
+            <Image
+              src="/logo.jpg"
+              alt="Xixi Autocars"
+              width={200}
+              height={200}
+              className="h-24 w-auto"
+            />
           </Link>
         </div>
         <nav className="flex-1 space-y-1 p-4 overflow-y-auto">

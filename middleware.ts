@@ -9,6 +9,9 @@ const COUNTRY_TO_LOCALE: Record<string, string> = {
   'US': 'en', 'GB': 'en', 'AU': 'en', 'IN': 'en',
   'MA': 'ar', 'DZ': 'ar', 'TN': 'ar', 'SA': 'ar',
   'AE': 'ar', 'EG': 'ar', 'QA': 'ar', 'KW': 'ar',
+  'RU': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru',
+  'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es', 'CL': 'es', 'VE': 'es', 'EC': 'es', 'GT': 'es', 'CU': 'es', 'BO': 'es', 'DO': 'es', 'HN': 'es', 'PY': 'es', 'NI': 'es', 'SV': 'es', 'CR': 'es', 'PA': 'es', 'UY': 'es',
+  'IR': 'fa', 'AF': 'fa', 'TJ': 'fa',
 };
 
 async function getLocaleFromIP(request: NextRequest): Promise<string | null> {

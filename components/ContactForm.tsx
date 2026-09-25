@@ -27,6 +27,17 @@ interface ContactFormProps {
   className?: string;
 }
 
+// FormField moved OUTSIDE to prevent recreation on every render (fixes cursor focus loss)
+const FormField = ({ label, required, error, children, id }: { label: string; required?: boolean; error?: string; children: React.ReactNode; id: string }) => (
+  <div className="space-y-1.5">
+    <Label htmlFor={id} className="text-sm text-ink-700 font-body">
+      {label} {required && <span className="text-terracotta-600">*</span>}
+    </Label>
+    {children}
+    {error && <p id={`${id}-error`} className="text-sm text-terracotta-600" role="alert">{error}</p>}
+  </div>
+);
+
 export function ContactForm({ initialCarId, carName, className }: ContactFormProps) {
   const t = useTranslations('contact.form');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,16 +99,6 @@ export function ContactForm({ initialCarId, carName, className }: ContactFormPro
       setIsSubmitting(false);
     }
   };
-
-  const FormField = ({ label, required, error, children, id }: { label: string; required?: boolean; error?: string; children: React.ReactNode; id: string }) => (
-    <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-sm text-ink-700 font-body">
-        {label} {required && <span className="text-terracotta-600">*</span>}
-      </Label>
-      {children}
-      {error && <p id={`${id}-error`} className="text-sm text-terracotta-600" role="alert">{error}</p>}
-    </div>
-  );
 
   return (
     <form onSubmit={handleSubmit} className={cn('space-y-6', className)} noValidate>

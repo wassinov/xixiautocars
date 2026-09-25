@@ -122,7 +122,12 @@
     },
     "team": {
       "title": "Our team",
-      "subtitle": "Enthusiasts at your service, with decades of combined experience."
+      "subtitle": "Enthusiasts at your service, with decades of combined experience.",
+      "members": [
+        { "name": "Xixi", "role": "Founder & Director", "bio": "Passionate about automobiles for 30 years, he founded Xixi Autocars in 1980." },
+        { "name": "Li Wei", "role": "Sales Manager", "bio": "Expert in new and used vehicles, he guides each client with transparency." },
+        { "name": "Chen Hong", "role": "Workshop Manager", "bio": "Certified technician, he ensures every vehicle is perfect before delivery." }
+      ]
     },
     "trust": {
       "title": "Why choose us",
@@ -140,6 +145,7 @@
       "address": { "title": "Address" },
       "phone": { "title": "Phone" },
       "email": { "title": "Email" },
+      "contact": { "title": "Contact us" },
       "hours": { "title": "Hours", "value": "Mon-Fri: 9am-7pm\nSat: 9am-6pm\nSun: closed" }
     },
     "cta": {

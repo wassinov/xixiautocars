@@ -32,6 +32,25 @@ export default async function AboutPage() {
     .eq('id', GARAGE_INFO_ID)
     .single();
 
+  // Get team members from translations (3 members: indices 0, 1, 2)
+  const teamMembers = [
+    {
+      name: t('team.members.0.name'),
+      role: t('team.members.0.role'),
+      bio: t('team.members.0.bio'),
+    },
+    {
+      name: t('team.members.1.name'),
+      role: t('team.members.1.role'),
+      bio: t('team.members.1.bio'),
+    },
+    {
+      name: t('team.members.2.name'),
+      role: t('team.members.2.role'),
+      bio: t('team.members.2.bio'),
+    },
+  ];
+
   // Parse about_text into structured lines
   function parseGarageInfoLines(text: string) {
     if (!text) return [];
@@ -171,7 +190,7 @@ export default async function AboutPage() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TEAM_MEMBERS.map((member, i) => (
+            {teamMembers.map((member, i) => (
               <article key={member.name} className={cn(
                 'p-6 bg-ink-50 rounded-2xl border border-ink-200 text-center',
                 'hover:border-accent-300 transition-all duration-300 ease-in-out',
@@ -223,7 +242,8 @@ export default async function AboutPage() {
             <p className="mt-3 text-body-lg text-ink-600 animate-reveal delay-100">{t('info.subtitle')}</p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Col 1: Adresse + Email (empilés) */}
             <article className="p-6 bg-ink-50 rounded-2xl border border-ink-200 hover:border-accent-300 transition-all duration-300 ease-in-out">
               <div className="w-12 h-12 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
                 <MapPin className="h-6 w-6" aria-hidden="true" />
@@ -232,32 +252,45 @@ export default async function AboutPage() {
               <address className="mt-2 not-italic text-ink-600 whitespace-pre-line">
                 {garageInfo?.address || '2M-2 Zhongchuang incubator, Kangcheng North Road, Xianglushan Street, Shapingba District, Chongqing'}
               </address>
+              {/* Email */}
+              <div className="mt-6 flex items-center gap-3">
+                <Mail className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />
+                <a href="mailto:contact@xixiautocars.com" className="text-ink-600 hover:text-accent-600 transition-colors">
+                  contact@xixiautocars.com
+                </a>
+              </div>
             </article>
 
+            {/* Col 2: Téléphone, WeChat, WhatsApp (empilés) */}
             <article className="p-6 bg-ink-50 rounded-2xl border border-ink-200 hover:border-accent-300 transition-all duration-300 ease-in-out">
               <div className="w-12 h-12 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
                 <Phone className="h-6 w-6" aria-hidden="true" />
               </div>
-              <h3 className="mt-4 text-xl font-display font-semibold text-ink-900">{t('info.phone.title')}</h3>
-              <p className="mt-2 text-ink-600">
-                <a href={`tel:${garageInfo?.phone?.replace(/\s/g, '') || '+8619112816914'}`} className="hover:text-accent-600 transition-colors">
-                  {garageInfo?.phone || '+86 191 1281 6914'}
-                </a>
-              </p>
-            </article>
-
-            <article className="p-6 bg-ink-50 rounded-2xl border border-ink-200 hover:border-accent-300 transition-all duration-300 ease-in-out">
-              <div className="w-12 h-12 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
-                <Mail className="h-6 w-6" aria-hidden="true" />
+              <h3 className="mt-4 text-xl font-display font-semibold text-ink-900">{t('info.contact.title')}</h3>
+              <div className="mt-4 space-y-4">
+                {/* Téléphone */}
+                <div className="flex items-center gap-3">
+                  <Phone className="h-5 w-5 text-accent-600 shrink-0" aria-hidden="true" />
+                  <a href={`tel:${garageInfo?.phone?.replace(/\s/g, '') || '+8619112816914'}`} className="text-ink-600 hover:text-accent-600 transition-colors">
+                    {garageInfo?.phone || '+86 191 1281 6914'}
+                  </a>
+                </div>
+                {/* WeChat */}
+                <div className="flex items-center gap-3">
+                  <MessageCircle className="h-5 w-5 text-[#07C160] shrink-0" aria-hidden="true" />
+                  <span className="text-ink-600">WeChat: XX827378447</span>
+                </div>
+                {/* WhatsApp */}
+                <div className="flex items-center gap-3">
+                  <MessageSquare className="h-5 w-5 text-[#25D366] shrink-0" aria-hidden="true" />
+                  <a href="https://wa.me/8619112816914" target="_blank" rel="noopener noreferrer" className="text-ink-600 hover:text-accent-600 transition-colors">
+                    WhatsApp: +86 191 1281 6914
+                  </a>
+                </div>
               </div>
-              <h3 className="mt-4 text-xl font-display font-semibold text-ink-900">{t('info.email.title')}</h3>
-              <p className="mt-2 text-ink-600">
-                <a href="mailto:contact@xixiautocars.com" className="hover:text-accent-600 transition-colors">
-                  contact@xixiautocars.com
-                </a>
-              </p>
             </article>
 
+            {/* Col 3: Horaires */}
             <article className="p-6 bg-ink-50 rounded-2xl border border-ink-200 hover:border-accent-300 transition-all duration-300 ease-in-out">
               <div className="w-12 h-12 rounded-xl bg-sage-100 flex items-center justify-center text-sage-600">
                 <Clock className="h-6 w-6" aria-hidden="true" />
@@ -305,13 +338,6 @@ const VALUES = [
   { icon: Shield, key: 'transparency' },
   { icon: Users, key: 'service' },
   { icon: Award, key: 'expertise' },
-];
-
-// Équipe - données statiques pour l'instant
-const TEAM_MEMBERS = [
-  { name: 'Xixi', role: 'Fondateur & Directeur', bio: 'Passionné d\'automobile depuis 30 ans, il a fondé Xixi Autocars en 1980.' },
-  { name: 'Li Wei', role: 'Responsable Ventes', bio: 'Expert en véhicules neufs et occasions, il accompagne chaque client avec transparence.' },
-  { name: 'Chen Hong', role: 'Responsable Atelier', bio: 'Technicien certifié, il veille à ce que chaque véhicule soit parfait avant la livraison.' },
 ];
 
 // Réutiliser TRUST_REASONS de la page d'accueil

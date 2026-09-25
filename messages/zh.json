@@ -122,7 +122,12 @@
     },
     "team": {
       "title": "我们的团队",
-      "subtitle": "充满激情的专家为您服务，拥有数十年累积经验。"
+      "subtitle": "充满激情的专家为您服务，拥有数十年累积经验。",
+      "members": [
+        { "name": "Xixi", "role": "创始人兼总监", "bio": "对汽车充满热情 30 年，于 1980 年创立了 Xixi Autocars。" },
+        { "name": "Li Wei", "role": "销售经理", "bio": "新车二手车专家，以透明方式陪伴每位客户。" },
+        { "name": "Chen Hong", "role": "车间经理", "bio": "认证技师，确保每辆车交付前均处于完美状态。" }
+      ]
     },
     "trust": {
       "title": "为何选择我们",
@@ -140,6 +145,7 @@
       "address": { "title": "地址" },
       "phone": { "title": "电话" },
       "email": { "title": "邮箱" },
+      "contact": { "title": "联系我们" },
       "hours": { "title": "营业时间", "value": "周一至五：9:00-19:00\n周六：9:00-18:00\n周日：休息" }
     },
     "cta": {

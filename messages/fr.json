@@ -122,7 +122,12 @@
     },
     "team": {
       "title": "Notre équipe",
-      "subtitle": "Des passionnés à votre service, forts de décennies d'expérience cumulée."
+      "subtitle": "Des passionnés à votre service, forts de décennies d'expérience cumulée.",
+      "members": [
+        { "name": "Xixi", "role": "Fondateur & Directeur", "bio": "Passionné d'automobile depuis 30 ans, il a fondé Xixi Autocars en 1980." },
+        { "name": "Li Wei", "role": "Responsable Ventes", "bio": "Expert en véhicules neufs et occasions, il accompagne chaque client avec transparence." },
+        { "name": "Chen Hong", "role": "Responsable Atelier", "bio": "Technicien certifié, il veille à ce que chaque véhicule soit parfait avant la livraison." }
+      ]
     },
     "trust": {
       "title": "Pourquoi nous choisir",
@@ -140,6 +145,7 @@
       "address": { "title": "Adresse" },
       "phone": { "title": "Téléphone" },
       "email": { "title": "Email" },
+      "contact": { "title": "Nous contacter" },
       "hours": { "title": "Horaires", "value": "Lun-Ven : 9h-19h\nSam : 9h-18h\nDim : fermé" }
     },
     "cta": {

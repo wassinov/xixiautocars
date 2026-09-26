@@ -9,7 +9,8 @@ import { GARAGE_INFO_ID } from '@/lib/constants'; // BUG-27 : singleton garage_i
 import { getTranslations, getLocale } from 'next-intl/server'; // BUG-02 : getTranslations/getLocale sont async en next-intl v4
 import type { CarWithRelations } from '@/types/car';
 import { cn, magazineContainer, revealDelay, formatPrice, formatMileage } from '@/lib/utils';
-import { languagesAlternates } from '@/lib/seo'; // BUG-24 : hreflang
+import { languagesAlternates, SITE_URL } from '@/lib/seo'; // BUG-24 : hreflang
+import { ProductSchema, BreadcrumbSchema } from '@/components/schema';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -125,6 +126,43 @@ export default async function CarDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-ink-50">
+      <BreadcrumbSchema
+        locale={locale}
+        items={[
+          { name: 'Accueil', href: '/' },
+          { name: 'Catalogue', href: '/catalogue' },
+          { name: `${car.models?.brands?.name} ${car.models?.name}`, href: `/catalogue/${id}` },
+        ]}
+      />
+      <ProductSchema
+        name={`${car.models?.brands?.name} ${car.models?.name}`}
+        description={car.description || `${car.models?.brands?.name} ${car.models?.name} ${car.year} - ${formatPrice(car.price, car.currency, locale)}`}
+        brand={car.models?.brands?.name || 'Unknown'}
+        model={car.models?.name || 'Unknown'}
+        year={car.year}
+        mileage={car.mileage || 0}
+        fuelType={car.fuel_type || 'gasoline'}
+        vehicleTransmission={car.gearbox || 'manual'}
+        color={car.color || 'Unknown'}
+        bodyType={car.models?.body_type || 'sedan'}
+        price={car.price}
+        currency={car.currency || 'EUR'}
+        availability={car.is_available ? 'InStock' : 'OutOfStock'}
+        images={car.car_images?.map((img) => img.image_url).filter(Boolean) || []}
+        sku={car.id}
+        condition={car.is_new ? 'NewCondition' : 'UsedCondition'}
+        sellerName={garage?.name || 'Xixi Autocars'}
+        sellerUrl={SITE_URL}
+        sellerTelephone={garage?.phone || '+86 23 1234 5678'}
+        sellerAddress={{
+          streetAddress: '2M-2 Zhongchuang incubator, Kangcheng North Road',
+          addressLocality: 'Chongqing',
+          addressRegion: 'Shapingba District',
+          postalCode: '400000',
+          addressCountry: 'CN',
+        }}
+        vehicleIdentificationNumber={undefined}
+      />
       <nav className="border-b border-ink-200 bg-white/80 backdrop-blur sticky top-0 z-40" aria-label="Fil d'Ariane">
         <div className={magazineContainer('py-3')}>
           <ol className="flex items-center gap-2 text-sm text-ink-500">

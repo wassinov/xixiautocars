@@ -3,7 +3,7 @@
 // Fallback dev : localhost (sera remplacé par NEXT_PUBLIC_SITE_URL en prod).
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-export const LOCALES = ['fr', 'en', 'ar', 'zh'] as const;
+export const LOCALES = ['fr', 'en', 'ar', 'zh', 'ru', 'es', 'fa'] as const;
 
 // localePrefix: 'as-needed' → la locale par défaut (fr) n'est pas préfixée, les autres oui.
 // '/' et '' sont normalisés ('/zh/' → '/zh') : une seule forme d'URL par page, cohérente avec next-intl.

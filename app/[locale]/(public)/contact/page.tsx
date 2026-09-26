@@ -5,8 +5,9 @@ import { MapPin, Phone, Mail, Clock, Map, ArrowRight, CheckCircle } from 'lucide
 import { Link } from '@/i18n'; // BUG-20 : liens auto-préfixés par locale (fr = canonique nue)
 import { GARAGE_INFO_ID } from '@/lib/constants'; // BUG-27 : singleton garage_infos
 import { cn, magazineContainer, revealDelay } from '@/lib/utils';
-import { languagesAlternates } from '@/lib/seo'; // BUG-24 : hreflang
-import { getTranslations } from 'next-intl/server';
+import { languagesAlternates, SITE_URL } from '@/lib/seo'; // BUG-24 : hreflang
+import { getTranslations, getLocale } from 'next-intl/server';
+import { BreadcrumbSchema, LocalBusinessSchema } from '@/components/schema';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations('contact'); // BUG-01 : getTranslations est async en next-intl v4
@@ -37,6 +38,35 @@ export default async function ContactPage() {
 
   return (
     <div className="min-h-screen bg-ink-50">
+      <BreadcrumbSchema
+        locale={await getLocale()}
+        items={[
+          { name: 'Accueil', href: '/' },
+          { name: 'Contact', href: '/contact' },
+        ]}
+      />
+      <LocalBusinessSchema
+        name="Xixi Autocars"
+        description={garageInfo.about_text || 'Garage familial spécialisé dans la vente de véhicules neufs et d\'occasion, import/export, financement et services après-vente.'}
+        address={{
+          streetAddress: '2M-2 Zhongchuang incubator, Kangcheng North Road',
+          addressLocality: 'Chongqing',
+          addressRegion: 'Shapingba District',
+          postalCode: '400000',
+          addressCountry: 'CN',
+        }}
+        telephone="+86 23 1234 5678"
+        email="contact@xixiautocars.com"
+        url={SITE_URL}
+        logo={`${SITE_URL}/logo.jpg`}
+        image={`${SITE_URL}/og-image.jpg`}
+        openingHours={['Monday 09:00-19:00', 'Tuesday 09:00-19:00', 'Wednesday 09:00-19:00', 'Thursday 09:00-19:00', 'Friday 09:00-19:00', 'Saturday 09:00-18:00']}
+        priceRange="€€"
+        currenciesAccepted="EUR, CNY"
+        paymentAccepted="Cash, Credit Card, Bank Transfer, Financing"
+        areaServed={['France', 'China', 'Europe', 'International']}
+        geo={{ latitude: 29.5630, longitude: 106.5516 }}
+      />
       <section className="relative overflow-hidden bg-gradient-to-b from-accent-50 via-white to-white" aria-labelledby="contact-hero-title">
         <div className={magazineContainer('py-section lg:py-section-lg text-center')}>
           <h1 id="contact-hero-title" className="text-3xl lg:text-display-xl font-display font-bold text-ink-900 animate-reveal">{t('title')}</h1>

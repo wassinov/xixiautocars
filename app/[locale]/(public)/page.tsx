@@ -7,9 +7,10 @@ import { ArrowRight, Truck, Shield, Wrench, CreditCard, MapPin, Phone, Mail, Clo
 import { Link } from '@/i18n';
 import type { CarWithRelations } from '@/types/car';
 import { cn, formatPrice, magazineContainer, revealDelay } from '@/lib/utils';
-import { languagesAlternates } from '@/lib/seo';
+import { languagesAlternates, SITE_URL } from '@/lib/seo';
 import { GARAGE_INFO_ID } from '@/lib/constants';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { LocalBusinessSchema, BreadcrumbSchema } from '@/components/schema';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations('home'); // BUG-23 (Étape 31) : metadata home traduite (ex titre FR figé sur les 4 locales)
@@ -137,6 +138,34 @@ export default async function HomePage() {
 
   return (
     <main className="bg-ink-50">
+      <LocalBusinessSchema
+        name="Xixi Autocars"
+        description={garageInfo.about_text || 'Garage familial spécialisé dans la vente de véhicules neufs et d\'occasion, import/export, financement et services après-vente.'}
+        address={{
+          streetAddress: '2M-2 Zhongchuang incubator, Kangcheng North Road',
+          addressLocality: 'Chongqing',
+          addressRegion: 'Shapingba District',
+          postalCode: '400000',
+          addressCountry: 'CN',
+        }}
+        telephone="+86 23 1234 5678"
+        email="contact@xixiautocars.com"
+        url={SITE_URL}
+        logo={`${SITE_URL}/logo.jpg`}
+        image={`${SITE_URL}/og-image.jpg`}
+        openingHours={['Monday 09:00-19:00', 'Tuesday 09:00-19:00', 'Wednesday 09:00-19:00', 'Thursday 09:00-19:00', 'Friday 09:00-19:00', 'Saturday 09:00-18:00']}
+        priceRange="€€"
+        currenciesAccepted="EUR, CNY"
+        paymentAccepted="Cash, Credit Card, Bank Transfer, Financing"
+        areaServed={['France', 'China', 'Europe', 'International']}
+        geo={{ latitude: 29.5630, longitude: 106.5516 }}
+      />
+      <BreadcrumbSchema
+        locale={locale}
+        items={[
+          { name: 'Accueil', href: '/' },
+        ]}
+      />
       {/* Hero Asymétrique */}
       <section className="relative overflow-hidden bg-gradient-to-b from-accent-50 via-white to-white py-12 lg:py-24" aria-labelledby="hero-title">
         <div className={magazineContainer()}>

@@ -38,9 +38,22 @@ const TRUST_REASONS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Marie D.', location: 'Lyon', vehicle: 'BYD Atto 3', rating: 5, text: 'Processus transparent de A à Z. Livraison à domicile en 2 semaines, véhicule impeccable.' },
-  { name: 'Thomas R.', location: 'Marseille', vehicle: 'MG4 Electric', rating: 5, text: 'Reprise de mon ancienne voiture au juste prix. Financement clair, pas de mauvaise surprise.' },
-  { name: 'Sophie L.', location: 'Bordeaux', vehicle: 'Chery Omoda 5', rating: 5, text: 'Équipe réactive et professionnelle. Documents reçus avant la livraison, top !' },
+  // Tunisie
+  { name: 'Amine B.', location: 'Tunis', vehicle: 'BYD Atto 3', rating: 5, text: 'Processus transparent de A à Z. Livraison à domicile en 2 semaines, véhicule impeccable.' },
+  { name: 'Leila M.', location: 'Sfax', vehicle: 'MG4 Electric', rating: 5, text: 'Reprise de mon ancienne voiture au juste prix. Financement clair, pas de mauvaise surprise.' },
+  { name: 'Youssef K.', location: 'Sousse', vehicle: 'Chery Omoda 5', rating: 5, text: 'Équipe réactive et professionnelle. Documents reçus avant la livraison, top !' },
+  // Algérie
+  { name: 'Karim A.', location: 'Alger', vehicle: 'BYD Seal', rating: 5, text: 'Importation sans souci, tout géré par Xixi. Ma BYD Seal est parfaite.' },
+  { name: 'Fatima Z.', location: 'Oran', vehicle: 'MG ZS EV', rating: 5, text: 'Service client exceptionnel. Livraison rapide à Oran, papiers en règle.' },
+  { name: 'Ahmed R.', location: 'Constantine', vehicle: 'Chery Tiggo 7 Pro', rating: 5, text: 'Meilleur prix trouvé pour mon Tiggo 7. Trade-in de mon ancien véhicule inclus.' },
+  // Iran
+  { name: 'Reza M.', location: 'Téhéran', vehicle: 'BYD Han', rating: 5, text: 'Processus d\'import fluide. La BYD Han est livrée avec tous les documents.' },
+  { name: 'Sara A.', location: 'Mashhad', vehicle: 'MG Marvel R', rating: 5, text: 'Financement sur mesure, équipe très professionnelle. Je recommande.' },
+  { name: 'Ali K.', location: 'Ispahan', vehicle: 'Chery Omoda 5', rating: 5, text: 'Qualité de service au top. Véhicule conforme, livré dans les délais.' },
+  // Russie
+  { name: 'Dmitri V.', location: 'Moscou', vehicle: 'BYD Atto 3', rating: 5, text: 'Процесс прозрачный от А до Я. Доставка за 2 недели, автомобиль в идеальном состоянии.' },
+  { name: 'Elena S.', location: 'Saint-Pétersbourg', vehicle: 'MG4 Electric', rating: 5, text: 'Обмен старой машины по честной цене. Финансирование понятное, без сюрпризов.' },
+  { name: 'Alexei K.', location: 'Kazan', vehicle: 'Chery Tiggo 8 Pro', rating: 5, text: 'Команда отзывчивая и профессиональная. Документы получены до доставки, отлично!' },
 ];
 
 export default async function HomePage() {
